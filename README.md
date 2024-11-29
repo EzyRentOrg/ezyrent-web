@@ -4,6 +4,22 @@ Welcome to the **EzyRent Web** repository! This project is the web version of Ez
 
 ---
 
+## Table of Contents
+1. [Branch Overview](#branch-overview)  
+   - [Main](#1-main)  
+   - [Develop](#2-develop)  
+   - [Staging](#3-staging)  
+2. [Getting Started](#getting-started)  
+   - [Prerequisites](#prerequisites)  
+   - [Steps to Set Up the Project Locally](#steps-to-set-up-the-project-locally)  
+3. [Workflow Guidelines](#workflow-guidelines)  
+   - [For Developers](#for-developers)  
+4. [Key Commands](#key-commands)  
+5. [Contributing](#contributing)  
+6. [Contact](#contact)  
+
+---
+
 ## Branch Overview
 
 ### 1. **Main**
