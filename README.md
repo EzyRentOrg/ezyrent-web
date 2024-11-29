@@ -6,46 +6,111 @@ Welcome to the **EzyRent Web** repository! This project is the web version of Ez
 
 ## Table of Contents
 1. [Branch Overview](#branch-overview)  
-   - [Main](#1-main)  
-   - [Develop](#2-develop)  
-   - [Staging](#3-staging)  
-2. [Getting Started](#getting-started)  
+2. [Project Architecture](#project-architecture)
+3. [Tech Stack](#tech-stack)
+4. [Getting Started](#getting-started)  
    - [Prerequisites](#prerequisites)  
+   - [Environment Variables](#environment-variables)
    - [Steps to Set Up the Project Locally](#steps-to-set-up-the-project-locally)  
-3. [Workflow Guidelines](#workflow-guidelines)  
-   - [For Developers](#for-developers)  
-4. [Key Commands](#key-commands)  
-5. [Contributing](#contributing)  
-6. [Contact](#contact)  
+5. [Workflow Guidelines](#workflow-guidelines)  
+6. [Key Commands](#key-commands)  
+7. [Contributing](#contributing)  
+8. [Contact](#contact)  
 
 ---
 
 ## Branch Overview
 
 ### 1. **Main**
-- The production-ready branch.
-- **Direct pushes are not allowed.** All changes must be merged via Pull Requests (PRs) from `staging`.
+- Production-ready branch containing the stable version of the application.
+- **Direct pushes are prohibited.** All changes must be merged via Pull Requests (PRs) from `staging`.
 
 ### 2. **Develop**
-- The branch for active development and feature implementation.
-- Developers should create feature or bugfix branches from `develop` and merge them back after testing.
+- Active development branch where new features and bug fixes are implemented.
+- Developers create feature or bugfix branches from `develop` and merge them back after completing their work.
 
 ### 3. **Staging**
-- A pre-production branch used for integration testing and QA.
-- Changes from `develop` are merged here for further testing before deployment to production.
+- A pre-production branch for integration testing and QA.
+- Aggregates changes from `develop` and prepares them for deployment to `main`.
+
+---
+
+## Project Architecture
+
+### Overview
+EzyRent Web is built with a focus on modularity, scalability, and performance:
+- **Frontend Framework**: Next.js with Server-Side Rendering (SSR) and Static Site Generation (SSG)
+- **State Management**: React Context API (or Redux for complex state scenarios)
+- **Styling**: TailwindCSS with reusable component structures
+
+### Structure
+```plaintext
+/src
+├── components/         # Reusable UI components
+├── pages/              # Next.js page components
+├── services/           # API and data fetching logic
+├── hooks/              # Custom React hooks
+├── contexts/           # React context providers
+├── styles/             # Global and Tailwind CSS
+└── utils/              # Utility functions
+```
+
+---
+
+## Tech Stack
+
+### Core Technologies
+- **Frontend Framework**: Next.js 13+
+- **TypeScript**: For type safety and scalability
+- **Styling**: TailwindCSS
+- **HTTP Client**: Axios
+- **Validation**: Zod
+- **Form Handling**: React Hook Form
+
+### Development Tools
+- **Linting**: ESLint
+- **Formatting**: Prettier
+- **Testing**: Jest, React Testing Library
+- **CI/CD**: GitHub Actions
+
+### Deployment
+- **Hosting**: Vercel
+- **Version Control**: GitHub
 
 ---
 
 ## Getting Started
 
 ### Prerequisites
-
 - **Node.js** (latest LTS version recommended)
-- A package manager: `npm`
+- **npm** (default package manager)
+- **Git** (for version control)
 - A code editor, preferably **VS Code**
-- Ensure `npm` is installed for managing dependencies.
 
----
+### Environment Variables
+
+Create an `.env.local` file in the root directory with the following variables:
+
+```bash
+# API Configuration
+NEXT_PUBLIC_API_BASE_URL=https://api.ezyrent.com/v1
+NEXT_PUBLIC_API_KEY=your_api_key_here
+
+# Authentication
+NEXT_PUBLIC_AUTH_DOMAIN=your_auth_domain
+NEXT_PUBLIC_AUTH_CLIENT_ID=your_client_id
+
+# Optional Features
+NEXT_PUBLIC_ENABLE_ANALYTICS=true
+NEXT_PUBLIC_SENTRY_DSN=your_sentry_dsn_optional
+
+# Development Flags
+NEXT_PUBLIC_FEATURE_FLAGGING=true
+```
+
+**Important**:
+- Never commit `.env.local` to version control.
+- Use secure storage for environment secrets.
 
 ### Steps to Set Up the Project Locally
 
@@ -55,35 +120,23 @@ Welcome to the **EzyRent Web** repository! This project is the web version of Ez
    cd ezyrent-web
    ```
 
-2. **Select the Appropriate Branch**:
-   - For active development:
-     ```bash
-     git checkout develop
-     ```
-   - For testing in a staging environment:
-     ```bash
-     git checkout staging
-     ```
-   - For production-ready code:
-     ```bash
-     git checkout main
-     ```
+2. **Checkout the Appropriate Branch**:
+   ```bash
+   git checkout develop
+   ```
 
 3. **Install Dependencies**:
    ```bash
    npm install
    ```
 
-4. **Set Up Environment Variables**:
-   - Create an `.env.local` file in the root directory.
-   - Populate it with necessary keys such as API endpoints and secrets. Refer to `.env.example` for guidance.
+4. **Run the Development Server**:
+   ```bash
+   npm run dev
+   ```
 
-5. **Run the Development Server**:
-   - Start the server:
-     ```bash
-     npm run dev
-     ```
-   - Access the application at `http://localhost:3000` (or the port specified in your `.env.local` file).
+5. **Access the Application**:
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
@@ -91,82 +144,59 @@ Welcome to the **EzyRent Web** repository! This project is the web version of Ez
 
 ### Feature Development
 
-1. **Create a New Branch**:
-   - Branch off from `develop` for your feature or bug fix:
-     ```bash
-     git checkout develop
-     git pull
-     git checkout -b feature/your-feature-name
-     ```
+1. Create a new branch from `develop`:
+   ```bash
+   git checkout develop
+   git pull
+   git checkout -b feature/your-feature-name
+   ```
 
-2. **Develop and Test**:
-   - Implement your changes.
-   - Run the development server to verify the application:
-     ```bash
-     npm run dev
-     ```
-   - Test your feature thoroughly.
-
-3. **Push Changes**:
+3. Commit your changes:
    ```bash
    git add .
-   git commit -m "Add: Description of your changes"
+   git commit -m "Add: Description of changes"
    git push origin feature/your-feature-name
    ```
 
-4. **Submit a Pull Request**:
-   - Open a PR to merge your branch into `develop`.
-   - Include a detailed description and testing instructions.
+4. Create a PR to `develop`.
 
----
-
-### Testing and Deployment
-
-1. **Merge to Staging**:
-   - After all features and fixes are tested in `develop`, create a PR to merge `develop` into `staging`.
-   - Perform broader testing in the staging environment.
-
-2. **Merge to Main**:
-   - Once QA is complete and all features are approved in `staging`, create a PR to merge `staging` into `main`.
-   - Deploy the `main` branch to production.
+5. After PR is approved and merged
+   ```bash
+   git checkout develop
+   git pull origin develop
+   git branch -d feature/your-feature-name   # Deletes local branch
+   git push origin --delete feature/your-feature-name  # Deletes remote branch
+   ```
+6. After testing, merge `develop` into `staging` and subsequently into `main`.
 
 ---
 
 ## Key Commands
 
-### Start the Development Server
+### Development Server
 ```bash
 npm run dev
 ```
 
-### Build for Production
+### Production Build
 ```bash
 npm run build
 ```
 
-### Lint and Format Code
+### Linting
 ```bash
 npm run lint
 ```
 
 ---
 
-## Contribution Guidelines
-
-- Follow branch naming conventions: `feature/`, `bugfix/`, `hotfix/`.
-- Always pull the latest changes before starting work:
-  ```bash
-  git pull origin develop
-  ```
-- Write clear and descriptive commit messages.
-- Test your code locally before submitting a PR.
+## Contributing
+- Follow branch naming conventions (`feature/`, `bugfix/`, etc.).
+- Write descriptive commit messages.
+- Test changes locally before creating PRs.
 
 ---
 
 ## Contact
-
-For issues or inquiries:
-- Email: support@ezyrent.com
-- Slack: [EzyRent Dev Team](ezyrentteam.slack.com)
-
-Happy coding! 🚀
+- **Email**: support@ezyrent.com
+- **Slack**: [EzyRent Dev Team](ezyrentteam.slack.com)
