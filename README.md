@@ -47,10 +47,10 @@ EzyRent Web is built with a focus on modularity, scalability, and performance:
 ```plaintext
 ezyrent-web/
   ├── app/                # Main application logic and pages
-     ├── (auth)/                # Application auth logic and pages
-     ├── (api)/                # Application API logic
-     ├── index.tsx                # Main application entry point
-     ├── +not-found.tsx                # Not found pages
+     ├── (auth)/          # Application auth logic and pages
+     ├── (api)/           # Application API logic
+     ├── index.tsx        # Main application entry point
+     ├── +not-found.tsx   # Not found pages
   ├── components/         # Reusable UI components
   ├── lib/                # Utility functions and shared logic
   ├── types/              # TypeScript types and interfaces
