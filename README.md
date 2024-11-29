@@ -116,7 +116,7 @@ NEXT_PUBLIC_FEATURE_FLAGGING=true
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/ezyrent-web.git
+   git clone https://github.com/EzyRentOrg/ezyrent-web.git
    cd ezyrent-web
    ```
 
