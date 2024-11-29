@@ -45,14 +45,17 @@ EzyRent Web is built with a focus on modularity, scalability, and performance:
 
 ### Structure
 ```plaintext
-/src
-├── components/         # Reusable UI components
-├── pages/              # Next.js page components
-├── services/           # API and data fetching logic
-├── hooks/              # Custom React hooks
-├── contexts/           # React context providers
-├── styles/             # Global and Tailwind CSS
-└── utils/              # Utility functions
+ezyrent-web/
+  ├── app/                # Main application logic and pages
+     ├── (auth)/                # Application auth logic and pages
+     ├── (api)/                # Application API logic
+     ├── index.tsx                # Main application entry point
+     ├── +not-found.tsx                # Not found pages
+  ├── components/         # Reusable UI components
+  ├── lib/                # Utility functions and shared logic
+  ├── types/              # TypeScript types and interfaces
+  ├── assets/             # Static assets (images, fonts, etc.)
+  └── scripts/            # Automation and other scripts
 ```
 
 ---
