@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import React, { useState, useRef, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
@@ -210,7 +210,7 @@ export default function VerificationForm({
           </p>
         </div>
 
-          <span>use 123456 as test code</span>
+        <span>use 123456 as test code</span>
         <div className="flex justify-center gap-2">
           {code.map((digit, index) => (
             <VerificationInput

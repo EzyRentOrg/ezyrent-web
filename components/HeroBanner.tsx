@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils/cn';
 import React, { ReactNode, useState } from 'react';
-import { ChevronDown, ChevronUp} from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface HeroBannerProps {
   icon?: ReactNode;

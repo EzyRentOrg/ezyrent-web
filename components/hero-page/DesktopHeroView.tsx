@@ -1,13 +1,7 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils/cn';
-import {
-  House,
-  MapPin,
-  PlayCircle,
-  Search,
-  Wallet
-} from 'lucide-react';
+import { House, MapPin, PlayCircle, Search, Wallet } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import HeroBanner from '@/components/HeroBanner';
 import ClientLayout from '@/app/clientLayout';

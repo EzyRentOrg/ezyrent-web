@@ -13,8 +13,8 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "lint:strict": "next lint '*/**/*.{js,jsx,ts,tsx}'",
-    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
-    "check": "prettier --check \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,css}\"",
+    "check": "prettier --check \"**/*.{ts,tsx,js,jsx,css}\"",
     "prettier": "prettier --write .",
     "prepare": "husky"
   },
