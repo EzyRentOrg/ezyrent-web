@@ -63,10 +63,6 @@ html {
   overflow-x: hidden;
 }
 
-body {
-  background: linear-gradient(180deg, #dedbff 13.5%, #fdfcff 100%);
-}
-
 /* Remove date icon for Chrome, Safari, Edge, Opera */
 input[type='date']::-webkit-calendar-picker-indicator {
   content: url('/calendar.svg');

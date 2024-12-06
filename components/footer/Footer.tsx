@@ -4,7 +4,7 @@ import MobileFooter from './MobileFooter';
 
 export default function Footer() {
   return (
-    <footer className="w-full mt-auto bg-[#000929]">
+    <footer className="footer self-end bg-[#000929]">
       <DesktopFooter />
       <MobileFooter />
     </footer>

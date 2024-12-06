@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import ClientLayout from '@/app/clientLayout';
+import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import TestimonialCard from './TestimonialCard';
 import { testimonials } from '@/config/testimonial';
 import { Button } from '../ui/button';
@@ -117,7 +117,7 @@ export default function Testimonial() {
 
   return (
     <div className="my-10">
-      <ClientLayout>
+      <MaxWidthWrapper>
         <div className="max-w-[699px] mx-auto text-center mb-8 px-4">
           <p className="font-semibold text-2xl md:text-3xl text-[#7065F0]">
             Testimonial
@@ -207,7 +207,7 @@ export default function Testimonial() {
             view more <ArrowRight size={32} className="h-8 w-8" />
           </Button>
         </div>
-      </ClientLayout>
+      </MaxWidthWrapper>
     </div>
   );
 }
