@@ -3,7 +3,7 @@ import ClientLayout from '../clientLayout';
 
 export default function FAQ() {
   return (
-    <ClientLayout className="flex-grow  min-h-calc(100vh-200px)] mt-20">
+    <ClientLayout className="flex-grow  min-h-calc(100vh-200px)] ">
       <div className="flex flex-col">
         <div className="flex flex-col space-y-4">
           <p className="text-[#7065F0] text-5xl font-semibold leading-10">
