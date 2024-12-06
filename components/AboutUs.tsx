@@ -1,4 +1,4 @@
-import ClientLayout from '@/app/clientLayout';
+import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import { cn } from '@/lib/utils/cn';
 import Image from 'next/image';
 import React from 'react';
@@ -22,7 +22,7 @@ const weAreAndWeDo: WeAreAndWeDo[] = [
 export default function AboutUs() {
   return (
     <div className="my-10 md:mt-20 lg:my-40">
-      <ClientLayout className="">
+      <MaxWidthWrapper className="">
         <div className="max-w-[42em] text-center mx-auto">
           <h2 className="capitalize text-[#000929] font-semibold text-[1.5rem] md:text-5xl leading-[67.2px] ">
             about us
@@ -95,7 +95,7 @@ export default function AboutUs() {
             ))}
           </div>
         </div>
-      </ClientLayout>
+      </MaxWidthWrapper>
     </div>
   );
 }

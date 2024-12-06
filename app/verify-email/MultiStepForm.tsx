@@ -6,7 +6,7 @@ import VerificationForm from './VerificationForm';
 import BasicInfo from './BasicInfo';
 import { Separator } from '@/components/ui/separator';
 import { Check } from 'lucide-react';
-import ClientLayout from '../clientLayout';
+import MaxWidthWrapper from '../maxWidthWrapper';
 
 export default function MultiStepForm() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -88,7 +88,7 @@ export default function MultiStepForm() {
 
   return (
     <div className="py-6">
-      <ClientLayout>
+      <MaxWidthWrapper>
         <div>{steps[currentStep - 1].component}</div>
         <div className="flex justify-center mt-12">
           {steps.map((step, index) => (
@@ -115,7 +115,7 @@ export default function MultiStepForm() {
             </div>
           ))}
         </div>
-      </ClientLayout>
+      </MaxWidthWrapper>
     </div>
   );
 }

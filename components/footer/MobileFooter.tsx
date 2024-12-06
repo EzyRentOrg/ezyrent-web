@@ -4,12 +4,12 @@ import Contact from './Contact';
 import FooterQuickLinks from './FooterQuickLinks';
 import Support from './Support';
 import DownloadApp from './DownloadApp';
-import ClientLayout from '@/app/clientLayout';
+import MaxWidthWrapper from '@/app/maxWidthWrapper';
 
 export default function MobileFooter() {
   return (
-    <ClientLayout>
-      <div className="md:hidden text-white pt-16 pb-14 grid gap-5">
+    <MaxWidthWrapper className="md:hidden">
+      <div className="text-white pt-16 pb-14 grid gap-5">
         <NewsletterForm />
         <Contact />
         <div className="flex justify-between">
@@ -18,6 +18,6 @@ export default function MobileFooter() {
         </div>
         <DownloadApp />
       </div>
-    </ClientLayout>
+    </MaxWidthWrapper>
   );
 }

@@ -3,7 +3,7 @@
 import { houseListing } from '@/config/houseListing';
 import React from 'react';
 import HouseListingCard from './HouseListingCard';
-import ClientLayout from '@/app/clientLayout';
+import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import { Button } from './ui/button';
 import { ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils/cn';
 export default function BasedOnYourLocation() {
   return (
     <div className="mt-10">
-      <ClientLayout>
+      <MaxWidthWrapper>
         <div className="max-w-[699px] mx-auto flex flex-col space-y-2 items-center mb-8">
           <p className="first-letter:capitalize font-semibold text-[1.5rem] md:text-[3rem] text-[#7065F0]">
             Based on your location
@@ -44,7 +44,7 @@ export default function BasedOnYourLocation() {
             view more <ArrowRight size={32} className="h-8 w-8" />
           </Button>
         </div>
-      </ClientLayout>
+      </MaxWidthWrapper>
     </div>
   );
 }

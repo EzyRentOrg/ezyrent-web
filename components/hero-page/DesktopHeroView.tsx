@@ -4,12 +4,12 @@ import { cn } from '@/lib/utils/cn';
 import { House, MapPin, PlayCircle, Search, Wallet } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import HeroBanner from '@/components/HeroBanner';
-import ClientLayout from '@/app/clientLayout';
+import MaxWidthWrapper from '@/app/maxWidthWrapper';
 
 export default function DesktopHeroView() {
   return (
-    <header className=" hidden md:block bg-desktop-gradient min:h-screen ipad-height-adjust pt-[96px]">
-      <ClientLayout className="">
+    <header className="hidden md:block bg-desktop-gradient ipad-height-adjust ">
+      <MaxWidthWrapper className="">
         {/* right side */}
         <div className="flex ">
           <div className="mt-14 xl:mt-24 flex flex-col space-y-5">
@@ -94,7 +94,7 @@ export default function DesktopHeroView() {
             </Button>
           </div>
         </div>
-      </ClientLayout>
+      </MaxWidthWrapper>
     </header>
   );
 }
