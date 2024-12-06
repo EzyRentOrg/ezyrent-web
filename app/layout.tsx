@@ -21,19 +21,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={cn(
-          dmSans.className,
-          'antialiased '
-        )}
-      >
-          <Header />
+      <body className={cn(dmSans.className, 'antialiased ')}>
+        <Header />
         <div className="flex flex-col">
           <GoogleOAuthProvider clientId="...">
             <main className="flex-grow">{children}</main>
           </GoogleOAuthProvider>
         </div>
-          <Footer />
+        <Footer />
       </body>
     </html>
   );

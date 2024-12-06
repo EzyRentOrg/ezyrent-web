@@ -19,7 +19,7 @@ export const RelativeImage = styled.img`
 `;
 
 export const MainContainer = styled.div`
-  minheight: 100vh; 
+  minheight: 100vh;
   display: flex;
   justify-content: center;
   background: linear-gradient(180deg, #dedbff 13.5%, #fdfcff 100%);
