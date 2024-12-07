@@ -12,7 +12,7 @@ export default function BestDeal() {
     'slideRight' | 'slideLeft'
   >('slideRight');
   const [isLargeScreen, setIsLargeScreen] = useState(false);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [screenWidth, setScreenWidth] = useState(0);
 
   const itemsPerPage = isLargeScreen ? 4 : 3;
   const isAtStart = currentIndex === 0;
@@ -25,11 +25,16 @@ export default function BestDeal() {
       setIsLargeScreen(width >= 1440);
     };
 
-    updateScreenWidth();
-    window.addEventListener('resize', updateScreenWidth);
+    // Only run this effect in the client-side
+    if (typeof window !== 'undefined') {
+      updateScreenWidth();
+      window.addEventListener('resize', updateScreenWidth);
+    }
 
     return () => {
-      window.removeEventListener('resize', updateScreenWidth);
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', updateScreenWidth);
+      }
     };
   }, []);
 
@@ -55,16 +60,16 @@ export default function BestDeal() {
   return (
     <MaxWidthWrapper>
       <section
-        className="mt-20 px-10"
+        className="mt-40 px-10"
         aria-labelledby="location-houses-heading"
       >
         <div className="flex items-center w-full mb-10">
-          <h2
+          <h3
             id="location-houses-heading"
             className="first-letter:capitalize font-semibold text-[1.5rem] text-[#7065F0]"
           >
             Best deals
-          </h2>
+          </h3>
           <div className="flex items-center space-x-10 ml-auto">
             <button
               onClick={handlePrev}

@@ -10,9 +10,9 @@ export default function BasedOnYourLocation() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animationDirection, setAnimationDirection] = useState<
     'slideRight' | 'slideLeft'
-    >('slideRight');
+  >('slideRight');
   const [isLargeScreen, setIsLargeScreen] = useState(false);
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [screenWidth, setScreenWidth] = useState(0);
 
   const itemsPerPage = isLargeScreen ? 4 : 3;
   const isAtStart = currentIndex === 0;
@@ -25,11 +25,16 @@ export default function BasedOnYourLocation() {
       setIsLargeScreen(width >= 1440);
     };
 
-    updateScreenWidth(); 
-    window.addEventListener('resize', updateScreenWidth);
+    // Only run this effect in the client-side
+    if (typeof window !== 'undefined') {
+      updateScreenWidth();
+      window.addEventListener('resize', updateScreenWidth);
+    }
 
     return () => {
-      window.removeEventListener('resize', updateScreenWidth); 
+      if (typeof window !== 'undefined') {
+        window.removeEventListener('resize', updateScreenWidth);
+      }
     };
   }, []);
 
@@ -53,15 +58,18 @@ export default function BasedOnYourLocation() {
   );
 
   return (
-      <MaxWidthWrapper>
-    <section className="mt-10 px-10" aria-labelledby="location-houses-heading">
+    <MaxWidthWrapper>
+      <section
+        className="mt-10 px-10"
+        aria-labelledby="location-houses-heading"
+      >
         <div className="flex items-center w-full mb-10">
-          <h2
+          <h3
             id="location-houses-heading"
             className="first-letter:capitalize font-semibold text-[1.5rem] text-[#7065F0]"
           >
             Based on your location
-          </h2>
+          </h3>
           <div className="flex items-center space-x-10 ml-auto">
             <button
               onClick={handlePrev}
@@ -126,7 +134,7 @@ export default function BasedOnYourLocation() {
             View more <ArrowRight size={32} className="h-8 w-8" />
           </Button>
         </div>
-    </section>
-      </MaxWidthWrapper>
+      </section>
+    </MaxWidthWrapper>
   );
 }
