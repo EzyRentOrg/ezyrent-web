@@ -85,10 +85,6 @@ input[type='date']::-ms-clear {
 
 /*Tailwind class */
 @layer utilities {
-  .bg-desktop-gradient {
-    background: linear-gradient(180deg, #dedbff 13.5%, #fdfcff 100%);
-  }
-
   .bg-mobile-gradient {
     background: linear-gradient(
       71.77deg,
@@ -106,11 +102,19 @@ input[type='date']::-ms-clear {
   }
 
   .hero_banner {
-    background: rgba(255, 255, 255, 0.3);
     background: linear-gradient(
       90deg,
-      rgba(112, 101, 240, 0.3) 0%,
-      rgba(255, 255, 255, 0.3) 100%
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0.5) 100%
+    );
+  }
+
+  .hero_banner-border {
+    border: 1px solid;
+    border-image-source: linear-gradient(
+      90.23deg,
+      rgba(255, 255, 255, 0.49) 0.2%,
+      rgba(112, 101, 240, 0.28) 101.65%
     );
   }
 

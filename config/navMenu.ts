@@ -19,7 +19,8 @@ export const navbarMenu: NavbarMenuItem[] = [
       { label: 'Team', href: '/team' },
       { label: 'Careers', href: '/careers' }
     ]
-  }
+  },
+  { label: 'blog', href: '#' }
 ];
 
 export const navbarMenuAuth: NavbarMenuItem[] = [
