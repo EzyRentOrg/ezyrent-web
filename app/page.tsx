@@ -8,6 +8,7 @@ import Testimonial from '@/components/testimonial/Testimonial';
 import StartYourJourney from '@/components/StartYourJourney';
 import OfferSection from '@/components/OfferSection';
 import BestDeal from '@/components/BestDeal';
+import FAQ from '@/components/FAQ';
 
 export default function Home() {
   return (
@@ -19,9 +20,10 @@ export default function Home() {
       <AboutUs />
       <BasedOnYourLocation />
       <OfferSection />
-      <BestDeal/>
+      <BestDeal />
       <Testimonial />
-      <StartYourJourney />
+      <FAQ/>
+      {/* <StartYourJourney /> */}
     </div>
   );
 }

@@ -107,7 +107,7 @@ export default function Testimonial() {
     if (containerWidth >= 768) {
       availableWidth -= 48;
     } else {
-      availableWidth -= 32;
+      availableWidth -= 90;
     }
 
     const totalGaps = cardsPerView - 1;
@@ -116,40 +116,49 @@ export default function Testimonial() {
   };
 
   return (
-    <div className="my-10">
+    <div className="mt-40 mb-20 pl-10">
       <MaxWidthWrapper>
         <div className="max-w-[699px] mx-auto text-center mb-8 px-4">
-          <p className="font-semibold text-2xl md:text-3xl text-[#7065F0]">
-            Testimonial
+          <p className="font-semibold text-2xl md:text-[3rem] mb-2 text-[#7065F0]">
+            Reviews
           </p>
-          <p className="text-xl md:text-2xl text-[#000929]">
-            See what our property managers, landlords, and tenants have to say
+          <p className="text-xl md:text-2xl text-[#000929] first-letter:capitalize font-semibold">
+            Hear from our community:
+          </p>
+          <p className="text-xl md:text-2xl text-[#000929] first-letter:capitalize">
+            Discover what Property managers, Landlords, and Tenants are saying
+            about their experience. <br />
+            Real stories. Real feedback.
           </p>
         </div>
 
         <div>
-          <div className="w-full flex justify-between mb-8 px-4">
-            <Button
+          <div className="w-fit ml-auto flex items-center space-x-8 mb-8 px-4">
+            <button
               onClick={prevSlide}
-              variant="outline"
               disabled={isAtStart}
               aria-label="Go to previous slide"
-              className="p-2 rounded-full bg-white transition-all duration-200 
-              disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-80"
+              className={cn(
+                'rounded-full bg-[#ffffff] shadow-md shadow-black/40 p-2 flex items-center justify-center cursor-pointer transition-transform duration-300',
+                !isAtStart && 'hover:shadow-sm',
+                isAtStart && 'opacity-50 cursor-not-allowed'
+              )}
             >
               <ChevronLeft className="text-[#0F0F0F]" />
-            </Button>
+            </button>
 
-            <Button
+            <button
               onClick={nextSlide}
-              variant="outline"
               disabled={isAtEnd}
               aria-label="Go to next slide"
-              className="p-2 rounded-full bg-white transition-all duration-200 
-              disabled:opacity-50 disabled:cursor-not-allowed hover:opacity-80"
+              className={cn(
+                'rounded-full bg-[#ffffff] shadow-md shadow-black/40 p-2 flex items-center justify-center cursor-pointer transition-transform duration-300',
+                !isAtEnd && ' hover:shadow-sm',
+                isAtEnd && 'opacity-50 cursor-not-allowed'
+              )}
             >
               <ChevronRight className="text-[#0F0F0F]" />
-            </Button>
+            </button>
           </div>
 
           <div
@@ -186,6 +195,7 @@ export default function Testimonial() {
             </div>
           </div>
 
+          {/* mobile navigation */}
           <div className="flex justify-center mt-4 space-x-2 md:hidden">
             {Array.from({ length: maxIndex + 1 }).map((_, index) => (
               <button
@@ -200,12 +210,6 @@ export default function Testimonial() {
               />
             ))}
           </div>
-        </div>
-
-        <div className="flex items-center justify-center w-full my-10">
-          <Button className={cn('h-[72px] text-xl capitalize')}>
-            view more <ArrowRight size={32} className="h-8 w-8" />
-          </Button>
         </div>
       </MaxWidthWrapper>
     </div>

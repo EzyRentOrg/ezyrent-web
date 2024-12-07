@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function OfferSection() {
   return (
-    <section className=" w-full bg-[#7065F0] pt-10 px-10 lg:h-[701px] overflow-hidden">
+    <section className=" w-full bg-[#7065F0] pt-10 mt-40 px-10 lg:h-[701px] overflow-hidden">
       <MaxWidthWrapper className="relative">
         {/* right section */}
         <div className="text-[#f1f1f1] max-w-[905px] mr-20">

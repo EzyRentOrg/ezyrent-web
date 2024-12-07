@@ -31,7 +31,7 @@ export default function AboutUs() {
             Discover Our Story and Mission
           </p>
         </div>
-        <p className="text-[#000929] mt-16 font-normal text-2xl max-w-[944px] mx-auto">
+        <p className="text-[#000929] mt-10 font-normal text-2xl max-w-[944px] mx-auto">
           <span className="font-semibold">EzyRent </span>is revolutionizing
           property rentals across Nigeria and Africa. Making it seamless to
           find, rent or sell homes from anywhere in the world. With user-first
