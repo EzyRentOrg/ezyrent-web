@@ -3,6 +3,7 @@ import MaxWidthWrapper from '../maxWidthWrapper';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import FAQs from '@/components/ui/faq';
 
 export default function FAQ() {
   return (
@@ -24,10 +25,13 @@ export default function FAQ() {
         <div className="absolute right-0 flex items-center justify-between px-4 py-2 h-full w-[100px] ">
           <Separator orientation="vertical" className="bg-[#E6E6E6] !w-[2px]" />
           <button type="button">
-            <Search size={36} color="#7065F0" className='h-8 w-8' />
+            <Search size={36} color="#7065F0" className="h-8 w-8" />
           </button>
         </div>
       </div>
+
+      {/* faqs */}
+      <FAQs/>
     </MaxWidthWrapper>
   );
 }
