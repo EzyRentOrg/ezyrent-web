@@ -6,11 +6,11 @@ import { Button } from './ui/button';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
-export default function BasedOnYourLocation() {
+export default function BestDeal() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animationDirection, setAnimationDirection] = useState<
     'slideRight' | 'slideLeft'
-    >('slideRight');
+  >('slideRight');
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
@@ -25,11 +25,11 @@ export default function BasedOnYourLocation() {
       setIsLargeScreen(width >= 1440);
     };
 
-    updateScreenWidth(); 
+    updateScreenWidth();
     window.addEventListener('resize', updateScreenWidth);
 
     return () => {
-      window.removeEventListener('resize', updateScreenWidth); 
+      window.removeEventListener('resize', updateScreenWidth);
     };
   }, []);
 
@@ -53,14 +53,17 @@ export default function BasedOnYourLocation() {
   );
 
   return (
-      <MaxWidthWrapper>
-    <section className="mt-10 px-10" aria-labelledby="location-houses-heading">
+    <MaxWidthWrapper>
+      <section
+        className="mt-20 px-10"
+        aria-labelledby="location-houses-heading"
+      >
         <div className="flex items-center w-full mb-10">
           <h2
             id="location-houses-heading"
             className="first-letter:capitalize font-semibold text-[1.5rem] text-[#7065F0]"
           >
-            Based on your location
+            Best deals
           </h2>
           <div className="flex items-center space-x-10 ml-auto">
             <button
@@ -126,7 +129,7 @@ export default function BasedOnYourLocation() {
             View more <ArrowRight size={32} className="h-8 w-8" />
           </Button>
         </div>
-    </section>
-      </MaxWidthWrapper>
+      </section>
+    </MaxWidthWrapper>
   );
 }

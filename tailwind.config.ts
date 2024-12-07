@@ -42,7 +42,7 @@ const config: Config = {
       },
       animation: {
         shake: 'shake 0.5s ease-in-out infinite',
-        slideRight: 'slideRight 0.5s ease-in-out',
+        slideRight: 'slideRight 0.5s ',
         slideLeft: 'slideLeft 0.5s ease-in-out'
       }
     }
