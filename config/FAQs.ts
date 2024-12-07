@@ -3,6 +3,4 @@ interface FAQsContentTypes {
   answer: string;
 }
 
-export const FAQsContent: FAQsContentTypes[] = [
-  
-];
+export const FAQsContent: FAQsContentTypes[] = [];

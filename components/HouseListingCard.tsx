@@ -30,7 +30,7 @@ export default function HouseListingCard({
     <Link
       href={`/house-details/${id}`}
       passHref
-      className="w-full rounded-lg shadow-md relative cursor-pointer transform transition duration-200 hover:shadow-lg md:hover:scale-[1.05]"
+      className="w-full rounded-lg shadow-md relative cursor-pointer "
     >
       {/* Popular Badge */}
       {popular && (
