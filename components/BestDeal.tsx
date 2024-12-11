@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { houseListing } from '@/config/houseListing';
 import HouseListingCard from './ui/house-listing-card';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
@@ -7,7 +7,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 import { useWindowResizer } from '@/hooks/useWindowResizer';
 
-export default function BasedOnYourLocation() {
+export default function BestDeal() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animationDirection, setAnimationDirection] = useState<
     'slideRight' | 'slideLeft'
@@ -18,8 +18,6 @@ export default function BasedOnYourLocation() {
   const itemsPerPage = isLargeScreen ? 6 : 3;
   const isAtStart = currentIndex === 0;
   const isAtEnd = currentIndex + itemsPerPage >= houseListing.length;
-
-  
 
   const handlePrev = () => {
     if (!isAtStart) {
@@ -43,7 +41,7 @@ export default function BasedOnYourLocation() {
   return (
     <MaxWidthWrapper>
       <section
-        className="mt-10 px-10"
+        className="mt-40 px-10"
         aria-labelledby="location-houses-heading"
       >
         <div className="flex items-center w-full mb-10">
@@ -51,7 +49,7 @@ export default function BasedOnYourLocation() {
             id="location-houses-heading"
             className="first-letter:capitalize font-semibold text-[1.5rem] text-[#7065F0]"
           >
-            Based on your location
+            Best deals
           </h3>
           <div className="flex items-center space-x-10 ml-auto">
             <button

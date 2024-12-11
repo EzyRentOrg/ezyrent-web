@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { CardContent, CardFooter, CardTitle } from './ui/card';
+import { CardContent, CardFooter, CardTitle } from './card';
 import { BedDouble, Bath, Diamond, Heart } from 'lucide-react';
 import { HouseListing as HouseListingType } from '@/types/houseListing';
-import PopularLabel from './PopularLabel';
+import PopularLabel from '../PopularLabel';
 import Link from 'next/link';
 
 export default function HouseListingCard({
@@ -30,7 +30,7 @@ export default function HouseListingCard({
     <Link
       href={`/house-details/${id}`}
       passHref
-      className="w-full rounded-lg shadow-md relative cursor-pointer transform transition duration-200 hover:shadow-lg md:hover:scale-[1.05]"
+      className="w-full rounded-lg shadow-md relative cursor-pointer group"
     >
       {/* Popular Badge */}
       {popular && (
@@ -47,7 +47,7 @@ export default function HouseListingCard({
           width={352}
           height={200}
           alt={`Image of a house located at ${address}.`}
-          className="w-full object-cover h-full transition duration-150 ease-in-out hover:scale-[1.05]"
+          className="w-full object-cover h-full transition duration-150 ease-in-out group-hover:scale-[1.05]"
         />
       </div>
 

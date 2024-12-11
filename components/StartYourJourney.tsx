@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils/cn';
 import { ArrowRight, PlayCircle, PauseCircle } from 'lucide-react';
-import ClientLayout from '@/app/clientLayout';
+import MaxWidthWrapper from '@/app/maxWidthWrapper';
 
 const StartYourJourney: React.FC = () => {
   // Initialize refs for each video
@@ -37,7 +37,7 @@ const StartYourJourney: React.FC = () => {
 
   return (
     <div className="my-10">
-      <ClientLayout>
+      <MaxWidthWrapper>
         {/* Video content */}
         <div className="my-10 w-full md:h-[496px] grid md:grid-cols-2 gap-5">
           <div className="relative rounded-lg w-full border h-[250px] md:h-full overflow-hidden">
@@ -119,7 +119,7 @@ const StartYourJourney: React.FC = () => {
             </Button>
           </div>
         </div>
-      </ClientLayout>
+      </MaxWidthWrapper>
     </div>
   );
 };

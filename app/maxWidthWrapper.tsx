@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils/cn';
 import React from 'react';
 
-export default function ClientLayout({
+export default function MaxWidthWrapper({
   children,
   className
 }: {
@@ -11,7 +11,7 @@ export default function ClientLayout({
   return (
     <div
       className={cn(
-        'max-w-[1440px] w-full mx-auto px-2 md:px-8 overflow-x-hidden',
+        'max-w-[1440px] w-[1240px] mx-auto px-2 md:px-10 flex-1',
         className
       )}
     >

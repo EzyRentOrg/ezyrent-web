@@ -3,20 +3,24 @@ import { Mail, MapPin, Phone } from 'lucide-react';
 import React, { ElementType } from 'react';
 
 interface Contact {
+  title: string;
   name: string;
   icon: ElementType;
 }
 
 const ContactItems: Contact[] = [
   {
+    title: 'address',
     name: '4234 Adetounbo Ademola str, Victoria Island, Lagos. ',
     icon: MapPin
   },
   {
+    title: 'phone',
     name: '+234-8127-518-838',
     icon: Phone
   },
   {
+    title: 'email',
     name: 'ezyrent50@gmail.com',
     icon: Mail
   }
@@ -24,7 +28,7 @@ const ContactItems: Contact[] = [
 
 export default function Contact() {
   return (
-    <div className="max-w-[331px] flex flex-col space-y-4">
+    <div className="w-[331px] flex flex-col space-y-4">
       <p className="capitalize text-xl font-[500]">contacts</p>
       <div className="flex flex-col space-y-4">
         {ContactItems.map((item, index) => {
@@ -40,14 +44,24 @@ export default function Contact() {
               key={index}
               href={href}
               className={cn(
-                'w-fit grid grid-cols-[32px_1fr]  md:gap-4  text-[#E6E6E6]',
+                'w-fit grid grid-cols-[32px_1fr]    text-[#475467]',
                 href
                   ? 'hover:text-opacity-65 transition-colors duration-150 ease-in-out'
                   : ''
               )}
             >
-              <Icon size={24} className="h-4 w-4 md:h-6 md:w-6" />
-              <span className="w-full capitalize text-sm md:text-base">
+              <Icon
+                size={14}
+                fill={'#475467'}
+                stroke={'#f1f1f1'}
+                className="h-5 w-5"
+              />
+              <span
+                className={cn(
+                  'w-full first-letter:capitalize text-sm md:text-base',
+                  item.title !== 'email' && ' capitalize'
+                )}
+              >
                 {item.name}
               </span>
             </a>

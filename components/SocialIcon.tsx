@@ -12,7 +12,7 @@ export default function SocialIcon() {
           key={index}
           href={item.href}
           target="_blank"
-          style={{ color: '#E6E6E6', width: 24 }}
+          style={{ color: 'red', width: 24 }}
           onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.65')}
           onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
           rel="noopener noreferrer"

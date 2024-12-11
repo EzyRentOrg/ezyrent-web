@@ -4,16 +4,24 @@ import FooterQuickLinks from './FooterQuickLinks';
 import Contact from './Contact';
 import Support from './Support';
 import DownloadApp from './DownloadApp';
-import ClientLayout from '@/app/clientLayout';
+import Image from 'next/image';
 
 export default function DesktopFooter() {
   return (
-    <ClientLayout className="hidden md:grid md:grid-cols-2 lg:grid-cols-5 2xl:grid-cols-4 gap-20 lg:gap-14 text-white pt-28 pb-14">
-      <NewsletterForm />
-      <Contact />
+    <div className="hidden h-auto md:flex items-start space-x-10 text-[#344054] leading-[22.4px] ">
+      <div className="w-[311px] h-[96px] ">
+        <Image
+          src={'/logo/eazyRentBigLogo.png'}
+          width={311}
+          height={96}
+          alt={'EazyRent Big Logo'}
+          className="object-cover h-full w-full"
+        />
+      </div>
       <FooterQuickLinks />
       <Support />
+      <Contact />
       <DownloadApp />
-    </ClientLayout>
+    </div>
   );
 }
