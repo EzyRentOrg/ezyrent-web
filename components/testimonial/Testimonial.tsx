@@ -1,37 +1,20 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import TestimonialCard from './TestimonialCard';
 import { testimonials } from '@/config/testimonial';
-import { Button } from '../ui/button';
 import { cn } from '@/lib/utils/cn';
+import { useWindowResizer } from '@/hooks/useWindowResizer';
 
 export default function Testimonial() {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [cardsPerView, setCardsPerView] = useState<number>(1);
+  const { cardsPerView } = useWindowResizer();
   const [containerWidth, setContainerWidth] = useState<number>(0);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
-
-  useEffect(() => {
-    const updateLayout = () => {
-      setContainerWidth(window.innerWidth);
-      if (window.innerWidth <= 640) {
-        setCardsPerView(1);
-      } else if (window.innerWidth < 1024) {
-        setCardsPerView(2);
-      } else {
-        setCardsPerView(3);
-      }
-    };
-
-    updateLayout();
-    window.addEventListener('resize', updateLayout);
-    return () => window.removeEventListener('resize', updateLayout);
-  }, []);
 
   useEffect(() => {
     const maxIndex = Math.max(0, testimonials.length - cardsPerView);
