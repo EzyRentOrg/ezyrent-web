@@ -19,7 +19,8 @@ export default function DropdownMenu({ items, label }: DropdownMenuProps) {
     <div className="relative">
       <button
         className="flex items-center space-x-2 cursor-pointer"
-        onClick={toggleDropdown}
+        onMouseEnter={() => setIsOpen(true)}
+        onMouseLeave={() => setIsOpen(false)}
       >
         <span className="capitalize font-[500] leading-6 text-[#000929]">
           {label}
@@ -30,23 +31,26 @@ export default function DropdownMenu({ items, label }: DropdownMenuProps) {
           }`}
         />
       </button>
-      {isOpen && (
-        <div className="fixed z-50 bg-white rounded-md shadow-lg w-max min-w-[200px]">
-          <ul className="py-2">
-            {items.map((item, index) => (
-              <li key={index}>
-                <Link
-                  href={item.href}
-                  className="px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center space-x-2 whitespace-nowrap"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <span>{item.label}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <div className="fixed z-50 pt-8" onMouseEnter={() => setIsOpen(true)}>
+        {isOpen && (
+          <div className=" bg-white rounded-md shadow-lg w-max min-w-[200px]">
+            <ul className="py-2">
+              {items.map((item, index) => (
+                <li key={index}>
+                  <Link
+                    href={item.href}
+                    className="px-4 py-2 text-gray-800 hover:bg-gray-100 flex items-center space-x-2 whitespace-nowrap"
+                    onMouseEnter={() => setIsOpen(true)}
+                    onMouseLeave={() => setIsOpen(false)}
+                  >
+                    <span>{item.label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

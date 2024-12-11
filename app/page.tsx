@@ -6,6 +6,9 @@ import DesktopHeroView from '@/components/hero-page/DesktopHeroView';
 import MobileHeroView from '@/components/hero-page/MobileHeroView';
 import Testimonial from '@/components/testimonial/Testimonial';
 import StartYourJourney from '@/components/StartYourJourney';
+import OfferSection from '@/components/OfferSection';
+import BestDeal from '@/components/BestDeal';
+import FAQ from '@/components/FAQ';
 
 export default function Home() {
   return (
@@ -16,8 +19,11 @@ export default function Home() {
       </div>
       <AboutUs />
       <BasedOnYourLocation />
+      <OfferSection />
+      <BestDeal />
       <Testimonial />
-      <StartYourJourney />
+      <FAQ />
+      {/* <StartYourJourney /> */}
     </div>
   );
 }

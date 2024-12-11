@@ -4,97 +4,88 @@ import { cn } from '@/lib/utils/cn';
 import { House, MapPin, PlayCircle, Search, Wallet } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import HeroBanner from '@/components/HeroBanner';
-import ClientLayout from '@/app/clientLayout';
+import MaxWidthWrapper from '@/app/maxWidthWrapper';
+import { ReactNode } from 'react';
+
+interface HeroBannerContentType {
+  icon?: ReactNode;
+  text: string;
+  type: string;
+  className?: string;
+}
+
+const heroBannerContents: HeroBannerContentType[] = [
+  {
+    icon: <MapPin size={20} fill={'#212121'} stroke="#f1f1f1" />,
+    type: 'Location',
+    text: 'Banana Island, Lagos'
+  },
+  {
+    icon: <House size={20} />,
+    type: 'Property Type',
+    text: 'Classic Apartment'
+  },
+  {
+    icon: <Wallet size={20} />,
+    type: 'Budget',
+    text: 'N900 - N1.7M'
+  }
+];
 
 export default function DesktopHeroView() {
   return (
-    <header className=" hidden md:block bg-desktop-gradient min:h-screen ipad-height-adjust pt-[96px]">
-      <ClientLayout className="">
+    <header className="hidden md:block ipad-height-adjust ">
+      <MaxWidthWrapper className="">
         {/* right side */}
-        <div className="flex ">
-          <div className="mt-14 xl:mt-24 flex flex-col space-y-5">
-            <h1 className="uppercase text-[2rem]  lg:text-[3rem] xl:text-[4rem] lg:leading-[89.6px] font-[900] text-[#7065F0]">
-              FIND A HOME <br />
-              THAT SUITS YOU
-            </h1>
-            <p className="font-normal text-[1.1rem] xl:text-[1.25rem] leading-7 text-[#100A55] ">
-              Want to find a home? We are ready to help you <br />
-              find one that suits your lifestyle and needs
-            </p>
+        <div className="relative flex rounded-[40px] h-[574px] bg-[#7065F0] overflow-hidden mt-28">
+          <div className="pl-10 absolute mt-24 flex flex-col space-y-5">
+            <h1 className="uppercase text-[2rem] lg:text-6xl leading-[84px] font-normal text-[#f1f1f1] flex flex-col space-y-10">
+              <span>FIND THE PERFECT HOME</span>
 
-            {/* cta */}
-            <div className="flex items-center gap-4 ">
-              <Button
-                variant="default"
-                size="lg"
-                className={cn(
-                  'h-[54px] capitalize text-[1.25rem] text-[#f1f1f1] leading-5'
-                )}
-              >
-                discover now
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className={cn(
-                  'border-[#7065F0] h-[54px] capitalize text-[1.25rem] text-[#7065F0] hover:text-[#7065f0]/70 leading-5'
-                )}
-              >
-                watch now <PlayCircle size={24} />
-              </Button>
-            </div>
+              <span>TAILORED TO YOUR</span>
+
+              <span>LIFESTYLE</span>
+            </h1>
+            <p className="font-[300] italic py-5 text-[1.1rem] xl:text-[1.25rem] leading-7 text-[#f1f1f1] ">
+              Looking for a home that truly fits you?
+              <br />
+              We’re here to help you discover the ideal place for
+              <br />
+              your needs, your style, and your life.
+            </p>
           </div>
           {/* left side */}
-          <div className="md:-mr-48 lg:-mr-48">
-            <Image
-              src={'/hero/desktopHeroImage_1102x617.webp'}
-              width={1102}
-              height={617}
-              alt="A beautiful house with a penthouse"
-              className="w-full h-full"
-            />
-          </div>
+          <div className="rounded-tr-3xl rounded-br-3xl bg-[url('/hero/desktopHeroImage_1102x617.webp')] bg-cover w-[1540px] h-[817px] -mt-[104px] ml-[456px] bg-no-repeat" />
         </div>
         {/* banner */}
-        <div className="w-full -mt-10 lg:-mt-20 xl:-mt-28 hero_banner bg-opacity-60 shadow-md backdrop-blur-md h-28 z-5 flex items-center space-x-4 px-8">
-          <div className="w-full flex items-center justify-between">
-            <HeroBanner
-              icon={<MapPin size={20} />}
-              type="Location"
-              text="Banana Island, Lagos"
-            />
-            <Separator
-              orientation="vertical"
-              className="bg-[#ffffff] h-12 w-[1px]"
-            />
-            <HeroBanner
-              icon={<House size={20} />}
-              type="Property Type"
-              text="Classic Apartment"
-            />
-            <Separator
-              orientation="vertical"
-              className="bg-[#ffffff] h-12 w-[1px]"
-            />
-            <HeroBanner
-              icon={<Wallet size={20} />}
-              type="Budget"
-              text="N900 - N1.7M"
-            />
-            <Separator
-              orientation="vertical"
-              className="bg-[#ffffff] h-12 w-[1px]"
-            />
-            <Button
-              size="lg"
-              variant="default"
-              className="bg-[#7065F0] h-12 w-16 -ml-10"
+        <div className=" -mt-10 lg:-mt-20 xl:-mt-14 hero_banner hero_banner-border bg-opacity-60 shadow-md backdrop-blur-md h-28 w-[1116px] mx-auto z-5 flex items-center justify-between px-8 rounded-full">
+          {heroBannerContents.map((heroBannerContent, index) => (
+            <div
+              key={heroBannerContent.type + index}
+              className="flex items-center justify-around w-full"
             >
-              <Search size={32} className="text-stone-300 h-8 w-8" />
-            </Button>
+              <HeroBanner
+                text={heroBannerContent.text}
+                type={heroBannerContent.type}
+                icon={heroBannerContent.icon}
+              />
+              <div className="flex items-center justify-center px-4">
+                <Separator
+                  orientation="vertical"
+                  className="bg-[#0009294D] h-12 w-[1px]"
+                />
+              </div>
+            </div>
+          ))}
+
+          <div className="bg-[#7065F0] rounded-[30px] py-2 px-4 cursor-pointer group transition-all duration-100 transform hover:scale-[1.03] hover:shadow-lg hover:bg-[#5a51d8]">
+            <Search
+              size={32}
+              className="text-stone-50 h-8 w-8 group-hover:animate-pulse duration-100 ease-in-out"
+            />
           </div>
         </div>
-      </ClientLayout>
+      </MaxWidthWrapper>
     </header>
   );
 }
