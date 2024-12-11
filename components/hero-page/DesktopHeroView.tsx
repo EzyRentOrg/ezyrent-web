@@ -37,7 +37,7 @@ export default function DesktopHeroView() {
     <header className="hidden md:block ipad-height-adjust ">
       <MaxWidthWrapper className="">
         {/* right side */}
-        <div className="relative flex rounded-[40px] w-[1240px] h-[574px] mx-auto bg-[#7065F0] overflow-hidden mt-28">
+        <div className="relative flex rounded-[40px] h-[574px] bg-[#7065F0] overflow-hidden mt-28">
           <div className="pl-10 absolute mt-24 flex flex-col space-y-5">
             <h1 className="uppercase text-[2rem] lg:text-6xl leading-[84px] font-normal text-[#f1f1f1] flex flex-col space-y-10">
               <span>FIND THE PERFECT HOME</span>

@@ -4,11 +4,10 @@ import Contact from './Contact';
 import FooterQuickLinks from './FooterQuickLinks';
 import Support from './Support';
 import DownloadApp from './DownloadApp';
-import MaxWidthWrapper from '@/app/maxWidthWrapper';
 
 export default function MobileFooter() {
   return (
-    <MaxWidthWrapper className="md:hidden">
+    <div className="md:hidden">
       <div className="text-white pt-16 pb-14 grid gap-5">
         <NewsletterForm />
         <Contact />
@@ -18,6 +17,6 @@ export default function MobileFooter() {
         </div>
         <DownloadApp />
       </div>
-    </MaxWidthWrapper>
+    </div>
   );
 }

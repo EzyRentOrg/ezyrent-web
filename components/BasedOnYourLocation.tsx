@@ -1,42 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { houseListing } from '@/config/houseListing';
 import HouseListingCard from './ui/house-listing-card';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import { Button } from './ui/button';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
+import { useWindowResizer } from '@/hooks/useWindowResizer';
 
 export default function BasedOnYourLocation() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animationDirection, setAnimationDirection] = useState<
     'slideRight' | 'slideLeft'
-  >('slideRight');
-  const [isLargeScreen, setIsLargeScreen] = useState(false);
-  const [screenWidth, setScreenWidth] = useState(0);
+    >('slideRight');
+  
+  const { isLargeScreen } = useWindowResizer();
 
-  const itemsPerPage = isLargeScreen ? 4 : 3;
+  const itemsPerPage = isLargeScreen ? 6 : 3;
   const isAtStart = currentIndex === 0;
   const isAtEnd = currentIndex + itemsPerPage >= houseListing.length;
 
-  useEffect(() => {
-    const updateScreenWidth = () => {
-      const width = window.innerWidth;
-      setScreenWidth(width);
-      setIsLargeScreen(width >= 1440);
-    };
-
-    // Only run this effect in the client-side
-    if (typeof window !== 'undefined') {
-      updateScreenWidth();
-      window.addEventListener('resize', updateScreenWidth);
-    }
-
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('resize', updateScreenWidth);
-      }
-    };
-  }, []);
+  
 
   const handlePrev = () => {
     if (!isAtStart) {
