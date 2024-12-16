@@ -17,7 +17,7 @@ export default function HouseListingCard({
   sqrFt,
   price,
   popular
-}: HouseListingType) {
+}: HouseListing) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const toggleFavorite = (e: React.MouseEvent) => {
