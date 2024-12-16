@@ -1,5 +1,4 @@
 import React from 'react';
-import FAQs from './ui/faq';
 import FAQWrapper from './ui/faq';
 import { FAQsContent } from '@/config/FAQs';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
