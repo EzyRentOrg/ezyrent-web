@@ -1,4 +1,3 @@
-import { NavbarMenuItem } from '@/types/navbarMenu';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
