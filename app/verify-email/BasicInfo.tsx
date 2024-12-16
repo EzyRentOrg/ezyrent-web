@@ -36,7 +36,7 @@ import 'react-phone-number-input/style.css';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CountryCode } from 'libphonenumber-js';
 import useDelay from '@/hooks/useDelay';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils';
 
 const MAX_FILE_SIZE = 2 * 1024 * 1024; // max file size 2MB
 
