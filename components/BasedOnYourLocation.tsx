@@ -11,15 +11,13 @@ export default function BasedOnYourLocation() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animationDirection, setAnimationDirection] = useState<
     'slideRight' | 'slideLeft'
-    >('slideRight');
-  
+  >('slideRight');
+
   const { isLargeScreen } = useWindowResizer();
 
   const itemsPerPage = isLargeScreen ? 6 : 3;
   const isAtStart = currentIndex === 0;
   const isAtEnd = currentIndex + itemsPerPage >= houseListing.length;
-
-  
 
   const handlePrev = () => {
     if (!isAtStart) {

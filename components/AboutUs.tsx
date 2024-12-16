@@ -1,23 +1,5 @@
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
-import { cn } from '@/lib/utils/cn';
-import Image from 'next/image';
 import React from 'react';
-
-interface WeAreAndWeDo {
-  title: string;
-  text: string;
-}
-
-const weAreAndWeDo: WeAreAndWeDo[] = [
-  {
-    title: 'who we are',
-    text: 'EzyRent is a digital rental solution designed to transform the property rental market starting in Nigeria, and aiming to expand across the African continent'
-  },
-  {
-    title: 'what we do',
-    text: 'EzyRent will streamline the renting process, making it easier for tenants to find properties, and for landlords to manage listings and rentals efficiently'
-  }
-];
 
 export default function AboutUs() {
   return (

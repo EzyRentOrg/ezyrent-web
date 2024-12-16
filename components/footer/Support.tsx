@@ -22,7 +22,7 @@ export default function Support() {
           <Link
             key={index}
             href={link.href}
-            className=" text-[#475467] hover:text-opacity-65 transition-colors duration-150 ease-in-out"
+            className=" text-[#475467] hover:text-opacity-65 transition-colors duration-150 ease-in-out w-fit"
           >
             <p>{link.label}</p>
           </Link>
