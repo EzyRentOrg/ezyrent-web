@@ -1,5 +1,3 @@
-import { Testimonial } from '@/types/testimonial';
-
 export const testimonials: Testimonial[] = [
   {
     image: '/chizoba-320x480.webp',
