@@ -6,7 +6,7 @@ import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import { Separator } from '../ui/separator';
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear(); 
+  const currentYear = new Date().getFullYear();
   return (
     <footer className="py-14 w-full bg-[#FAFAFAFA]">
       <MaxWidthWrapper>

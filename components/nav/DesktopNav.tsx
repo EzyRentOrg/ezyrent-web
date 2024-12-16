@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { usePathname } from 'next/navigation';
-import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import { navbarMenu, navbarMenuAuth } from '@/config/navMenu';
 import Image from 'next/image';
 import Link from 'next/link';

@@ -11,7 +11,7 @@ import { useWindowResizer } from '@/hooks/useWindowResizer';
 export default function Testimonial() {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const { cardsPerView } = useWindowResizer();
-  const [containerWidth, setContainerWidth] = useState<number>(0);
+  const [containerWidth] = useState<number>(0);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
   const touchStartX = useRef<number | null>(null);
   const touchEndX = useRef<number | null>(null);
