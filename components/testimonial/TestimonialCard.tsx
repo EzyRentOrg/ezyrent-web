@@ -7,7 +7,6 @@ import {
   CardFooter,
   CardTitle
 } from '../ui/card';
-import { Testimonial } from '@/types/testimonial';
 
 export default function TestimonialCard({
   name,

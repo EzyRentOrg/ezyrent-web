@@ -1,5 +1,3 @@
-import { HouseListing } from '@/types/houseListing';
-
 export const houseListing: HouseListing[] = [
   {
     id: '1',

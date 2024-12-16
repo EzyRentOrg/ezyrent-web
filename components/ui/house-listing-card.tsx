@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { CardContent, CardFooter, CardTitle } from './card';
 import { BedDouble, Bath, Diamond, Heart } from 'lucide-react';
-import { HouseListing as HouseListingType } from '@/types/houseListing';
 import PopularLabel from '../PopularLabel';
 import Link from 'next/link';
 
@@ -18,7 +17,7 @@ export default function HouseListingCard({
   sqrFt,
   price,
   popular
-}: HouseListingType) {
+}: HouseListing) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const toggleFavorite = (e: React.MouseEvent) => {
