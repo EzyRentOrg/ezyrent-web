@@ -2,8 +2,7 @@
 import React from 'react';
 import { Button } from '@mui/material';
 import { GoogleIcon, AppleIcon } from './CustomIcons'; // Assuming you have these icon components
-import { useGoogleAuthHandler } from '@/lib/utils/googleAuth';
-import { handleSignInWithApple } from '@/lib/utils/appleAuth';
+import { handleSignInWithApple, useGoogleAuthHandler } from '@/lib/utils';
 
 interface SubmitButtonProps {
   onClick: () => void;

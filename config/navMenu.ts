@@ -1,4 +1,4 @@
-import { NavbarMenuItem } from '@/types/navbarMenu';
+
 
 export const navbarMenu: NavbarMenuItem[] = [
   { label: 'rent', href: '#' },

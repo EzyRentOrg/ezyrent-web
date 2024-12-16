@@ -1,5 +1,3 @@
-import { socialIcon } from '@/types/social-icon';
-
 export const socialIcons: socialIcon[] = [
   { label: 'instagram', href: '#', icon: 'instagram.svg' },
   { label: 'facebook', href: '#', icon: 'facebook.svg' },
