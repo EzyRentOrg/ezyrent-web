@@ -7,20 +7,19 @@ import { Button } from './ui/button';
 //   onAppleSignIn?: () => Promise<void>;
 // };
 export default function OAuth() {
-  const handleGoogleSignIn = async () => {
-    // if (onGoogleSignIn) {
-    //   await onGoogleSignIn();
-    // }
-    console.log("google")
-  };
+  // const handleGoogleSignIn = async () => {
+  //   // if (onGoogleSignIn) {
+  //   //   await onGoogleSignIn();
+  //   // }
+  //   console.log('google');
+  // };
 
-  const handleAppleSignIn = async () => {
-    // if (onAppleSignIn) {
-    //   await onAppleSignIn();
-    // }
-    console.log("apple");
-    
-  };
+  // const handleAppleSignIn = async () => {
+  //   // if (onAppleSignIn) {
+  //   //   await onAppleSignIn();
+  //   // }
+  //   console.log('apple');
+  // };
 
   return (
     <div className="w-full">

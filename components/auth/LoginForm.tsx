@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Box, FormControl, TextField, Typography, Link } from '@mui/material';
 import { SubmitButton } from './CustomButtons';
-import { validateForm } from '@/lib/utils/formValidation'; // Import the validation function
+// import { validateForm } from '@/lib/utils/formValidation'; // Import the validation function
 
 const LoginFrom: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -14,13 +14,6 @@ const LoginFrom: React.FC = () => {
   // Handle form submission
   const handleSubmit = () => {
     const formValues = { email, password };
-    const validationErrors = validateForm(formValues); // Use the imported function
-    setErrors(validationErrors);
-
-    if (Object.keys(validationErrors).length === 0) {
-      // If no errors, perform the form submission logic
-      // console.log('Form Submitted', { email, password });
-    }
   };
 
   return (
