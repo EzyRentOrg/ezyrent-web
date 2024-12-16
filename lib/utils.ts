@@ -6,7 +6,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-
 // apple
 export const handleSignInWithApple = () => {
   const clientId = 'YOUR_CLIENT_ID'; // Replace with your actual client ID (Service ID)
@@ -21,9 +20,7 @@ export const handleSignInWithApple = () => {
   window.location.href = appleAuthURL; // Redirects the user to the Apple authentication page
 };
 
-
 // google
-
 
 export const useGoogleAuthHandler = () => {
   const googleLogin = useGoogleLogin({

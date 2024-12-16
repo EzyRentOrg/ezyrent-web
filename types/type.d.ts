@@ -37,5 +37,5 @@ declare interface lappedImageType {
   src: string;
   width: number;
   height: number;
-  alt: string
+  alt: string;
 }
