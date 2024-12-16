@@ -1,7 +1,7 @@
 // src/components/RegisterForm.tsx
 import React, { useState } from 'react';
 import { Box, FormControl, TextField, Typography, Link } from '@mui/material';
-import { SubmitButton } from './CustomButtons';
+
 // import { validateForm } from '@/lib/utils/formValidation'; // Import the validation function
 
 const LoginFrom: React.FC = () => {
@@ -12,7 +12,6 @@ const LoginFrom: React.FC = () => {
   const [errors] = useState<{ [key: string]: string }>({});
 
   // Handle form submission
-  
 
   return (
     <Box
@@ -60,7 +59,7 @@ const LoginFrom: React.FC = () => {
         <Link href="/#" variant="body2" sx={{ alignSelf: 'center' }}>
           Forgot Password?
         </Link>
-      </Typography> 
+      </Typography>
     </Box>
   );
 };
