@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardFooter,
   CardTitle
-} from '../ui/card'
+} from '../ui/card';
 
 export default function TestimonialCard({
   name,
