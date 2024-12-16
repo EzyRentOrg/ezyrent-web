@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { houseListing } from '@/config/houseListing';
 import HouseListingCard from './ui/house-listing-card';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
@@ -11,8 +11,8 @@ export default function BestDeal() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animationDirection, setAnimationDirection] = useState<
     'slideRight' | 'slideLeft'
-    >('slideRight');
-  
+  >('slideRight');
+
   const { isLargeScreen } = useWindowResizer();
 
   const itemsPerPage = isLargeScreen ? 6 : 3;
