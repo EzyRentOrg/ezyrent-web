@@ -9,12 +9,10 @@ const LoginFrom: React.FC = () => {
   const [password, setPassword] = useState<string>('');
 
   // State for error messages
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [errors] = useState<{ [key: string]: string }>({});
 
   // Handle form submission
-  const handleSubmit = () => {
-    const formValues = { email, password };
-  };
+  
 
   return (
     <Box
@@ -62,8 +60,7 @@ const LoginFrom: React.FC = () => {
         <Link href="/#" variant="body2" sx={{ alignSelf: 'center' }}>
           Forgot Password?
         </Link>
-      </Typography>
-      <SubmitButton onClick={handleSubmit} />
+      </Typography> 
     </Box>
   );
 };

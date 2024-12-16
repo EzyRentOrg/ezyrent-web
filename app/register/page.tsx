@@ -66,7 +66,8 @@ export default function Register() {
 
   const onSubmit = async (data: FormValues) => {
     await delay(2000);
-    // console.log(data);
+
+    console.log(data);
   };
 
   const handlePasswordVisibility = () => {
