@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 export const useWindowResizer = () => {
-  const [windowWidth, setWindowWidth] = useState(0); 
+  const [windowWidth, setWindowWidth] = useState(0);
   const [isLargeScreen, setIsLargeScreen] = useState(false);
   const [cardsPerView, setCardsPerView] = useState(3);
 
