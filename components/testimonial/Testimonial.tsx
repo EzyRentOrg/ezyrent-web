@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import TestimonialCard from './TestimonialCard';
 import { testimonials } from '@/config/testimonial';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils';
 import { useWindowResizer } from '@/hooks/useWindowResizer';
 
 export default function Testimonial() {

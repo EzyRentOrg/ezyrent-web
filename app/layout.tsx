@@ -2,7 +2,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import { dmSans } from '@/lib/font';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils';
 import Header from '@/components/nav/Header';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -22,10 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn(
-          dmSans.className,
-          'flex flex-col min-h-screen bg-white/40 pt-5 '
-        )}
+        className={cn(dmSans.className, 'flex flex-col min-h-screen bg-white ')}
       >
         <GoogleOAuthProvider clientId="214122998362-8gc20qq486bsnigkugj7fh09du0dm9hm.apps.googleusercontent.com">
           <Header />

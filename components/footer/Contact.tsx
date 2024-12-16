@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils';
 import { Mail, MapPin, Phone } from 'lucide-react';
 import React, { ElementType } from 'react';
 

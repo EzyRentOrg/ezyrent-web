@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils';
 import React from 'react';
 
 export default function MaxWidthWrapper({
@@ -11,7 +11,7 @@ export default function MaxWidthWrapper({
   return (
     <div
       className={cn(
-        'max-w-[1440px] w-[1240px] mx-auto px-2 md:px-10 flex-1',
+        'max-w-[1440px] mx-auto px-2 md:px-10 flex-1',
         className
       )}
     >
