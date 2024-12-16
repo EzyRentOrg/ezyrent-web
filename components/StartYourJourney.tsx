@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from 'react';
 import { Button } from './ui/button';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils';
 import { ArrowRight, PlayCircle, PauseCircle } from 'lucide-react';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
 

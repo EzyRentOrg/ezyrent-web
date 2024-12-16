@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import React from 'react';
 

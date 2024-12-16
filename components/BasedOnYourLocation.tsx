@@ -4,7 +4,7 @@ import HouseListingCard from './ui/house-listing-card';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import { Button } from './ui/button';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { cn } from '@/lib/utils/cn';
+import { cn } from '@/lib/utils';
 import { useWindowResizer } from '@/hooks/useWindowResizer';
 
 export default function BasedOnYourLocation() {

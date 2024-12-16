@@ -11,7 +11,6 @@ interface DropdownMenuProps {
 export default function DropdownMenu({ items, label }: DropdownMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-
   return (
     <div className="relative">
       <button

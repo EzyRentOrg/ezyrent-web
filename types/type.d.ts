@@ -1,0 +1,41 @@
+declare interface HouseListing {
+  id: string;
+  title: string;
+  address: string;
+  image: string;
+  bedrooms: number;
+  bathrooms: number;
+  sqrFt: string;
+  price: number;
+  popular?: string;
+}
+
+declare interface NavbarMenuItem {
+  label: string;
+  href: string;
+  dropdown?: {
+    label: string;
+    href: string;
+  }[];
+}
+
+declare interface socialIcon {
+  label: string;
+  href: string;
+  icon: string;
+}
+
+declare interface Testimonial {
+  image: string;
+  name: string;
+  jobTitle: string;
+  quote: string;
+  star: number;
+}
+
+declare interface lappedImageType {
+  src: string;
+  width: number;
+  height: number;
+  alt: string
+}
