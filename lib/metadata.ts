@@ -27,7 +27,7 @@ export function generateMetadata({
 
   return {
     title: fullTitle,
-    description: description,
+    description,
     keywords: [
       "Founder's Friday",
       'networking',
@@ -41,7 +41,7 @@ export function generateMetadata({
     authors: [{ name: "Founder's Friday Team" }],
     openGraph: {
       title: fullTitle,
-      description: description,
+      description,
       url: fullUrl,
       siteName: baseTitle,
       images: [
@@ -58,7 +58,7 @@ export function generateMetadata({
     twitter: {
       card: 'summary_large_image',
       title: fullTitle,
-      description: description,
+      description,
       images: [new URL('/og-image.png', baseUrl).toString()]
     },
     robots: {

@@ -23,7 +23,7 @@ export default function OAuth() {
 
   return (
     <div className="w-full">
-      <div className="my-10  relative flex items-center justify-center text-[#98A2B3] font-bold text-sm before:content-[''] after:content-[''] before:flex-grow after:flex-grow before:h-px after:h-px before:bg-[#98A2B3] after:bg-[#98A2B3] before:mx-2 after:mx-2">
+      <div className="my-5  relative flex items-center justify-center text-[#98A2B3] font-bold text-sm before:content-[''] after:content-[''] before:flex-grow after:flex-grow before:h-px after:h-px before:bg-[#98A2B3] after:bg-[#98A2B3] before:mx-2 after:mx-2">
         or
       </div>
 
@@ -39,7 +39,7 @@ export default function OAuth() {
             height={20}
             className="mr-[5px]"
           />
-          Sign up with Google
+          Login with Google
         </Button>
         <Button
           className="w-full h-[72px] bg-transparent shadow-none text-[1.1rem] text-[#1D2939] rounded-[80px] border-[1px] border-[#667085]"
@@ -52,7 +52,7 @@ export default function OAuth() {
             height={20}
             className="mr-[5px]"
           />
-          Sign up with Google
+          Login with Google
         </Button>
       </div>
     </div>
