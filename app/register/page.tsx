@@ -21,30 +21,11 @@ import { Separator } from '@/components/ui/separator';
 import OAuth from '@/components/OAuth';
 import Image from 'next/image';
 import Link from 'next/link';
+import { lappedImages } from '@/config';
 
 // Infer the type from the schema
 type FormValues = z.infer<typeof signUpSchema>;
 
-const lappedImages: lappedImageType[] = [
-  {
-    src: 'melanin-lady-on-afro-hair_480x480.jpg',
-    width: 480,
-    height: 480,
-    alt: 'A melanin lady on afro hair.'
-  },
-  {
-    src: 'a-light-skinned-lady_480x320.jpg',
-    width: 480,
-    height: 320,
-    alt: 'A light skinned lady.'
-  },
-  {
-    src: 'a-handsome-guy-on-cozy-cap_320x480.jpg',
-    width: 320,
-    height: 480,
-    alt: 'A handsome guy on a cozy cap.'
-  }
-];
 
 export default function Register() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -77,8 +58,8 @@ export default function Register() {
   return (
     <div className="w-[1400px] h-[984px] mx-auto mb-10 flex items-center space-x-10">
       {/* left side */}
-      <div className="h-full w-full ">
-        <div className="bg-[#F8F8F8] rounded-[20px] pt-[120px] mb-5">
+      <div className="h-full w-full flex flex-col">
+        <div className="bg-[#F8F8F8] rounded-[20px] pt-[140px]">
           <MaxWidthWrapper className="w-[80%] mx-auto pb-5">
             <div>
               <h2 className="capitalize text-[#7F56D9] text-[1.5rem] font-extrabold leading-[33.6px] -tracking-[2%]">
@@ -234,7 +215,7 @@ export default function Register() {
                 <p>Already have an account? </p>
                 <Link
                   href={'/login'}
-                  className="text-[#6941C6] hover:text-opacity-85 transition-colors duration-100"
+                  className="capitalize text-[#6941C6] hover:text-opacity-85 transition-colors duration-100"
                 >
                   Login
                 </Link>
@@ -242,7 +223,7 @@ export default function Register() {
             </Form>
           </MaxWidthWrapper>
         </div>
-        <div className="bg-[#F8F8F8] rounded-[20px]">
+        <div className="bg-[#F8F8F8] rounded-[20px] mt-auto">
           <MaxWidthWrapper className="h-[119px] grid place-items-center">
             <div className="flex items-center w-full ">
               <div className="flex items-center -space-x-4 ">
@@ -288,7 +269,7 @@ export default function Register() {
         <div className="bg-[url('/a-block-of-apartments_2000x1333.png')] bg-no-repeat bg-center rounded-[20px] h-full w-full relative ">
           <div className="absolute rounded-[20px] h-full w-full bg-black/40" />
           <MaxWidthWrapper className="w-[90%] mx-auto pb-5">
-            <div className=" max-w-[528px] mx-auto absolute bottom-[35%] glassmorphism  p-10 ">
+            <div className=" max-w-[528px] mx-auto absolute bottom-[38%] glassmorphism  p-10 ">
               <h3 className="text-xl font-bold text-[1.25rem] -tracking-[2%] leading-[26.04px] text-white">
                 Your Gateway to a Hassle-Free Home Search
               </h3>

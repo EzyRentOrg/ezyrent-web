@@ -18,3 +18,16 @@ export const signUpSchema = z
     path: ['confirmPassword'],
     message: 'Passwords must match.'
   });
+
+
+export const loginSchema = z
+  .object({
+    email: z
+      .string({
+        required_error: 'Please enter a valid email address.'
+      })
+      .email(),
+    password: z.string({
+      required_error: 'Please enter a password.'
+    }),
+  })
