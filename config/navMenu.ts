@@ -1,5 +1,3 @@
-
-
 export const navbarMenu: NavbarMenuItem[] = [
   { label: 'rent', href: '#' },
   { label: 'buy', href: '#' },
