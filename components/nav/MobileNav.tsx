@@ -21,7 +21,7 @@ export default function MobileNav() {
             />
           </Link>
         </div>
-        <Menu/>
+        <Menu />
       </div>
     </nav>
   );

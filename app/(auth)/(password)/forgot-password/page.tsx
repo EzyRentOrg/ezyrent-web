@@ -46,10 +46,10 @@ export default function ForgotPassword() {
   const onSubmit = async (data: FormValues) => {
     await delay(2000);
     console.log(data);
-    
+
     // TODO: implement forgot password logic here
 
-    router.push("/email-sent")
+    router.push('/email-sent');
   };
 
   return (
