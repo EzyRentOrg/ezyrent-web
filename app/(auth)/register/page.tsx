@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import MaxWidthWrapper from '../maxWidthWrapper';
+import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import {
   Form,
   FormControl,
@@ -22,13 +22,16 @@ import OAuth from '@/components/OAuth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { lappedImages } from '@/config';
+import RightHandAuthPage from '@/components/RightHandAuthPage';
+import { toast } from 'sonner';
 
 // Infer the type from the schema
 type FormValues = z.infer<typeof signUpSchema>;
 
-
 export default function Register() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
   const delay = useDelay();
   const form = useForm<FormValues>({
     resolver: zodResolver(signUpSchema),
@@ -47,7 +50,9 @@ export default function Register() {
 
   const onSubmit = async (data: FormValues) => {
     await delay(2000);
-
+    toast.success('Congratulations', {
+      description: 'You have successfully registered'
+    });
     console.log(data);
   };
 
@@ -55,12 +60,16 @@ export default function Register() {
     setIsPasswordVisible((prev) => !prev);
   };
 
+  const handleConfirmPasswordVisibility = () => {
+    setIsConfirmPasswordVisible((prev) => !prev);
+  };
+
   return (
-    <div className="w-[1400px] h-[984px] mx-auto mb-10 flex items-center space-x-10">
+    <section className="max-w-[1400px] min-h-[984px] mx-auto mb-10 flex items-center space-x-10">
       {/* left side */}
-      <div className="h-full w-full flex flex-col">
-        <div className="bg-[#F8F8F8] rounded-[20px] pt-[140px]">
-          <MaxWidthWrapper className="w-[80%] mx-auto pb-5">
+      <main className="h-full w-full flex flex-col">
+        <div className="bg-[#F8F8F8] h-full mb-10  rounded-[20px] pt-[120px]">
+          <MaxWidthWrapper className="md:w-[80%] mx-auto pb-5">
             <div>
               <h2 className="capitalize text-[#7F56D9] text-[1.5rem] font-extrabold leading-[33.6px] -tracking-[2%]">
                 <em>welcome to ezyRent</em>
@@ -77,7 +86,7 @@ export default function Register() {
             <Form {...form}>
               <form onSubmit={handleSubmit(onSubmit)} className=" mt-6">
                 <div className="grid gap-4">
-                  {/* full name */}
+                  {/* email */}
                   <FormField
                     control={form.control}
                     name="email"
@@ -165,7 +174,9 @@ export default function Register() {
                             </div>
                             {/* Input Field */}
                             <Input
-                              type={isPasswordVisible ? 'text' : 'password'}
+                              type={
+                                isConfirmPasswordVisible ? 'text' : 'password'
+                              }
                               className="bg-[#FFFFFF] h-[64px] pl-[70px] pr-[48px] border-[#EAECF0] rounded-full placeholder:text-[#D0D5DD] focus:ring-[#EAECF0] ring-[#EAECF0] focus:outline-[#EAECF0] outline-[#EAECF0] focus:border-[#EAECF0] leading-[22.4px] text-black !text-[1.1rem] "
                               placeholder="Re-enter password"
                               {...field}
@@ -175,10 +186,14 @@ export default function Register() {
                               tabIndex={0}
                               role="button"
                               aria-label="Toggle password visibility"
-                              onClick={handlePasswordVisibility}
+                              onClick={handleConfirmPasswordVisibility}
                               className="absolute right-5 top-1/2 transform -translate-y-1/2 cursor-pointer"
                             >
-                              {isPasswordVisible ? <EyeOffIcon /> : <Eye />}
+                              {isConfirmPasswordVisible ? (
+                                <EyeOffIcon />
+                              ) : (
+                                <Eye />
+                              )}
                             </div>
                           </div>
                         </FormControl>
@@ -230,7 +245,7 @@ export default function Register() {
                 {lappedImages.map((image, index) => (
                   <div
                     key={image.src + index}
-                    className="rounded-full size-[59px] border-[2px] border-white"
+                    className=" rounded-full size-[59px] border-[2px] border-white"
                   >
                     <Image
                       src={`/${image.src}`}
@@ -243,15 +258,15 @@ export default function Register() {
                 ))}
               </div>
               <div className="ml-4">
-                <p className="text-[#344054] text-[1.125rem] font-semibold leading-[25.2px] first-letter:capitalize">
+                <p className="text-[#344054] text-[0.75rem] md:text-[1.125rem] font-semibold leading-[25.2px] first-letter:capitalize">
                   Making your next home easy
                 </p>
-                <p className="text-[#0.875rem] text-[#98A2B3] leading-[19.6px]">
+                <p className="text-[0.6rem] md:text-[#0.875rem] text-[#98A2B3] leading-[19.6px]">
                   Join 200k people to find a Home
                 </p>
               </div>
 
-              <div className="size-[59px] ml-auto text-[#667085]">
+              <div className="hidden md:block size-[59px] ml-auto text-[#667085]">
                 <Image
                   src={'/icons/arrow-up-right_59x59.svg'}
                   width={59}
@@ -263,47 +278,9 @@ export default function Register() {
             </div>
           </MaxWidthWrapper>
         </div>
-      </div>
+      </main>
       {/* right side */}
-      <div className=" w-full h-full">
-        <div className="bg-[url('/a-block-of-apartments_2000x1333.png')] bg-no-repeat bg-center rounded-[20px] h-full w-full relative ">
-          <div className="absolute rounded-[20px] h-full w-full bg-black/40" />
-          <MaxWidthWrapper className="w-[90%] mx-auto pb-5">
-            <div className=" max-w-[528px] mx-auto absolute bottom-[38%] glassmorphism  p-10 ">
-              <h3 className="text-xl font-bold text-[1.25rem] -tracking-[2%] leading-[26.04px] text-white">
-                Your Gateway to a Hassle-Free Home Search
-              </h3>
-              <ul className="list-disc mt-5">
-                <li className="font-medium text-[1rem] -tracking-[2%] text-[#F9FAFB] ">
-                  Access 100% verified property listings.
-                </li>
-                <li className="font-medium text-[1rem] -tracking-[2%] text-[#F9FAFB] ">
-                  AI-driven recommendations tailored to your needs.
-                </li>
-                <li className="font-medium text-[1rem] -tracking-[2%] text-[#F9FAFB] ">
-                  Safe and transparent transactions every step of the way.
-                </li>
-              </ul>
-              <div className="mt-10 flex items-center space-x-8">
-                <p className="font-medium text-[0.8rem] w-[75%] -tracking-[2%] text-[#F9FAFB] italic">
-                  Start your journey today and join 10k users finding their
-                  dream spaces with EzyRent.
-                </p>
-                <div className="size-[80px] ml-auto ">
-                  <Image
-                    src={'/icons/arrow-up-right-white_59x59.svg'}
-                    width={59}
-                    height={59}
-                    alt="Circled right arrow."
-                    color="#ffffff"
-                    className="size-full object-cover  "
-                  />
-                </div>
-              </div>
-            </div>
-          </MaxWidthWrapper>
-        </div>
-      </div>
-    </div>
+      <RightHandAuthPage />
+    </section>
   );
 }

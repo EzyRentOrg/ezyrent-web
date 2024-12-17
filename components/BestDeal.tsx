@@ -41,7 +41,7 @@ export default function BestDeal() {
   return (
     <MaxWidthWrapper>
       <section
-        className="mt-40 px-10"
+        className="mt-40 "
         aria-labelledby="location-houses-heading"
       >
         <div className="flex items-center w-full mb-10">

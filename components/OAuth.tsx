@@ -27,9 +27,9 @@ export default function OAuth() {
         or
       </div>
 
-      <div className="flex items-center space-x-4">
+      <div className="flex flex-col space-y-4 md:flex-row md:space-y-0 items-center md:space-x-4">
         <Button
-          className="w-full h-[72px] bg-transparent shadow-none text-[1.1rem] text-[#1D2939] rounded-[80px] border-[1px] border-[#667085]"
+          className="w-full h-[72px] bg-transparent shadow-none text-[1.1rem] text-[#1D2939] rounded-[80px] border-[1px] border-[#667085] hover:text-opacity-85 transition-colors duration-100 ease-in-out"
           type="button"
         >
           <Image
@@ -37,12 +37,12 @@ export default function OAuth() {
             alt="Google logo"
             width={20}
             height={20}
-            className="mr-[5px]"
+            className="mr-[5px] size-5"
           />
           Login with Google
         </Button>
         <Button
-          className="w-full h-[72px] bg-transparent shadow-none text-[1.1rem] text-[#1D2939] rounded-[80px] border-[1px] border-[#667085]"
+          className="w-full h-[72px] bg-transparent shadow-none text-[1.1rem] text-[#1D2939] rounded-[80px] border-[1px] border-[#667085] hover:text-opacity-85 transition-colors duration-100 ease-in-out"
           type="button"
         >
           <Image
@@ -50,7 +50,7 @@ export default function OAuth() {
             alt="Apple Logo"
             width={20}
             height={20}
-            className="mr-[5px]"
+            className="mr-[5px] size-5"
           />
           Login with Google
         </Button>
