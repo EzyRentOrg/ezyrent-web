@@ -4,7 +4,7 @@ import MaxWidthWrapper from '@/app/maxWidthWrapper';
 
 export default function RightHandAuthPage() {
   return (
-    <main className="hidden lg:block w-full h-full">
+    <main className="hidden lg:block w-full h-[964px]">
       <div className="bg-[url('/a-block-of-apartments_2000x1333.png')] bg-no-repeat bg-center rounded-[20px] h-full w-full relative ">
         <div className="absolute rounded-[20px] h-full w-full bg-black/40" />
         <MaxWidthWrapper className="w-[90%] mx-auto pb-5">

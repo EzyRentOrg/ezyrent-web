@@ -50,7 +50,7 @@ export default function Login() {
 
   const onSubmit = async (data: FormValues) => {
     await delay(2000);
-  toast.success("Login successful")
+    toast.success('Login successful');
 
     console.log(data);
   };
