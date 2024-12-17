@@ -41,7 +41,7 @@ export default function BasedOnYourLocation() {
   return (
     <MaxWidthWrapper>
       <section
-        className="mt-10 px-10"
+        className="mt-10"
         aria-labelledby="location-houses-heading"
       >
         <div className="flex items-center w-full mb-10">

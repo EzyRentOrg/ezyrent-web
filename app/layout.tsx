@@ -1,13 +1,11 @@
-// layout.tsx
 import type { Metadata } from 'next';
-import './globals.css';
 import { dmSans } from '@/lib/font';
 import { cn } from '@/lib/utils';
 import Header from '@/components/nav/Header';
-
-import { GoogleOAuthProvider } from '@react-oauth/google';
-
 import Footer from '@/components/footer/Footer';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { Toaster } from 'sonner';
+import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -28,6 +26,7 @@ export default function RootLayout({
           <Header />
           <main className="flex-1 flex flex-col">{children}</main>
           <Footer />
+          <Toaster richColors position={'top-right'} />
         </GoogleOAuthProvider>
       </body>
     </html>
