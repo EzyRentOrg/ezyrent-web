@@ -29,7 +29,8 @@ type FormValues = z.infer<typeof resetPasswordSchema>;
 
 export default function ResetPassword() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
   const router = useRouter();
   const delay = useDelay();
   const form = useForm<FormValues>({
@@ -44,7 +45,7 @@ export default function ResetPassword() {
   const handlePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
   };
-  
+
   const handleConfirmPasswordVisibility = () => {
     setIsConfirmPasswordVisible((prev) => !prev);
   };
@@ -57,7 +58,6 @@ export default function ResetPassword() {
   const onSubmit = async (data: FormValues) => {
     await delay(2000);
     console.log(data);
-    
 
     router.push('/password-reset-successful');
   };
