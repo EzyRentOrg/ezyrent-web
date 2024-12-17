@@ -99,7 +99,7 @@ export default function Testimonial() {
   };
 
   return (
-    <div className="mt-40 mb-20 pl-10">
+    <div className="mt-40 mb-20">
       <MaxWidthWrapper>
         <div className="max-w-[699px] mx-auto text-center mb-8 px-4">
           <p className="font-semibold text-2xl md:text-[3rem] mb-2 text-[#7065F0]">
