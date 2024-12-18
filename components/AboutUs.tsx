@@ -14,12 +14,12 @@ export default function AboutUs() {
           </p>
         </div>
         <p className="text-[#000929] mt-5 md:mt-10 font-normal text-2xl max-w-[944px] text-[1rem] mx-auto leading-[20px]">
-          <strong className="">EzyRent </strong>is revolutionizing
-          property rentals across Nigeria and Africa. Making it seamless to
-          find, rent or sell homes from anywhere in the world. With user-first
-          approach, we eliminate the hassle of agent fees and bring transparency
-          , convenience, and security to the rental process - all from the
-          comfort of your home.
+          <strong className="">EzyRent </strong>is revolutionizing property
+          rentals across Nigeria and Africa. Making it seamless to find, rent or
+          sell homes from anywhere in the world. With user-first approach, we
+          eliminate the hassle of agent fees and bring transparency ,
+          convenience, and security to the rental process - all from the comfort
+          of your home.
         </p>
       </MaxWidthWrapper>
     </div>
