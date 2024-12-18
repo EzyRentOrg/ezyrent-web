@@ -38,12 +38,25 @@ const config: Config = {
             opacity: '1',
             transform: 'translateX(0)'
           }
+        },
+        pulldown: {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(-20px)',
+            visibility: 'hidden'
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
+            visibility: 'visible'
+          }
         }
       },
       animation: {
         shake: 'shake 0.5s ease-in-out infinite',
         slideRight: 'slideRight 0.5s ',
-        slideLeft: 'slideLeft 0.5s ease-in-out'
+        slideLeft: 'slideLeft 0.5s ease-in-out',
+        pulldown: 'pulldown 0.3s ease-out'
       }
     }
   },

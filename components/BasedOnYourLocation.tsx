@@ -40,11 +40,11 @@ export default function BasedOnYourLocation() {
 
   return (
     <MaxWidthWrapper>
-      <section className="mt-10" aria-labelledby="location-houses-heading">
-        <div className="flex items-center w-full mb-10">
+      <section className="" aria-labelledby="location-houses-heading">
+        <div className="flex items-center w-full py-10">
           <h3
             id="location-houses-heading"
-            className="first-letter:capitalize font-semibold text-[1.5rem] text-[#7065F0]"
+            className="first-letter:capitalize font-semibold md:text-[1.5rem] text-[#7065F0]"
           >
             Based on your location
           </h3>
