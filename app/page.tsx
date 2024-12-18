@@ -5,7 +5,7 @@ import BasedOnYourLocation from '@/components/BasedOnYourLocation';
 import Testimonial from '@/components/testimonial/Testimonial';
 import OfferSection from '@/components/OfferSection';
 import BestDeal from '@/components/BestDeal';
-import FAQ from '@/components/FAQ';
+import FAQs from '@/components/FAQs/FAQs';
 import HeroPage from '@/components/hero-page/HeroPage';
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
       <OfferSection />
       <BestDeal />
       <Testimonial />
-      <FAQ />
+      <FAQs />
       {/* <StartYourJourney /> */}
     </div>
   );

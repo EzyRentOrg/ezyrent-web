@@ -98,7 +98,7 @@ input[type='date']::-ms-clear {
   }
 
   .bg-mobile-backdrop {
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(1px);
   }
 
   .hero_banner {
@@ -159,6 +159,42 @@ input[type='date']::-ms-clear {
     background-color: transparent !important;
     box-shadow: 0 0 0px 1000px transparent inset !important;
   }
+
+  .glassmorphism {
+    background: linear-gradient(
+      180deg,
+      rgba(214, 214, 214, 0.5) 0%,
+      rgba(204, 204, 204, 0.2) 100%
+    );
+    border: 1px solid;
+    border-image-source: linear-gradient(
+      98.42deg,
+      rgba(255, 255, 255, 0.7) -8.71%,
+      rgba(255, 255, 255, 0.2) 93.15%
+    );
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+  }
+
+  .right-side-linear {
+    background: linear-gradient(0deg, #f8f8f8, #f8f8f8),
+      linear-gradient(
+        180deg,
+        rgba(242, 242, 242, 0) 2.44%,
+        rgba(46, 46, 46, 0.14) 40.45%,
+        rgba(47, 47, 47, 0.2) 77.34%
+      );
+  }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: inherit !important;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px #23232329;
 }
 
 /* CSS variables. phone input and country select*/
@@ -266,40 +302,4 @@ input[type='date']::-ms-clear {
   opacity: 1;
   outline: none;
   box-shadow: none;
-}
-
-.glassmorphism {
-  background: linear-gradient(
-    180deg,
-    rgba(214, 214, 214, 0.5) 0%,
-    rgba(204, 204, 204, 0.2) 100%
-  );
-  border: 1px solid;
-  border-image-source: linear-gradient(
-    98.42deg,
-    rgba(255, 255, 255, 0.7) -8.71%,
-    rgba(255, 255, 255, 0.2) 93.15%
-  );
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-}
-
-.right-side-linear {
-  background: linear-gradient(0deg, #f8f8f8, #f8f8f8),
-    linear-gradient(
-      180deg,
-      rgba(242, 242, 242, 0) 2.44%,
-      rgba(46, 46, 46, 0.14) 40.45%,
-      rgba(47, 47, 47, 0.2) 77.34%
-    );
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  -webkit-text-fill-color: inherit !important;
-  transition: background-color 5000s ease-in-out 0s;
-  box-shadow: inset 0 0 20px 20px #23232329;
 }

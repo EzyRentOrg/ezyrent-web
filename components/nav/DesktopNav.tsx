@@ -20,8 +20,8 @@ export default function DesktopNav() {
         {/* Preload the image */}
         <link rel="preload" href="/logo/LeftNav.png" as="image" />
       </Head>
-      <nav className="hidden lg:block w-[1240px] rounded-full mx-auto fixed top-0 right-0 left-0 bg-white/70 z-[50] backdrop-blur-md shadow-md transition-all duration-300 ease-in-out py-5">
-        <div className=" mx-auto px-2 md:px-8  w-full flex items-center justify-between">
+      <nav className="hidden lg:block">
+        <div className=" mx-auto px-2 md:px-8 w-full flex items-center justify-between">
           {/* Left Section: Logo and Navigation Links */}
           <div className="">
             {/* Logo */}
@@ -64,8 +64,8 @@ export default function DesktopNav() {
             <div className="md:hidden">
               <Menu />
             </div>
-
-            <div className="hidden  md:flex items-center space-x-12 ml-auto">
+            {/* nav auth */}
+            <div className="flex items-center space-x-12 ml-auto">
               {(navbarMenuAuth || []).map((navbarAuth, index) => (
                 <Link key={navbarAuth.label + index} href={navbarAuth.href}>
                   <Button
