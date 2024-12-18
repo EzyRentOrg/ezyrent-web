@@ -19,7 +19,7 @@ export default function OfferSection() {
             EXCLUSIVELY FOR PREMIUM SUBSCRIBERS
           </p>
           <p className="text-[1.5rem] font-[400] leading-[33.6px] first-letter:capitalize my-10">
-            This limited-time offer wont last!{" "}
+            This limited-time offer wont last!{' '}
             <span className="md:inline-block">
               Book now to secure your dream home.
             </span>
