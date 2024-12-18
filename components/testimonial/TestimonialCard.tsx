@@ -2,8 +2,6 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  ArrowLeft,
-  ArrowRight,
   ChevronLeft,
   ChevronRight,
   Star
@@ -35,7 +33,7 @@ export default function TestimonialCard({
       const interval = setInterval(handleNext, 5000);
       return () => clearInterval(interval);
     }
-  }, [autoplay]);
+  }, [autoplay, handleNext]);
 
   if (!testimonials.length) {
     return (
