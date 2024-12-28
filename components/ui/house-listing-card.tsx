@@ -15,6 +15,7 @@ export default function HouseListingCard({
   bedrooms,
   bathrooms,
   sqrFt,
+  description,
   price,
   popular
 }: HouseListing) {
@@ -25,21 +26,35 @@ export default function HouseListingCard({
     setIsFavorite(!isFavorite);
   };
 
+  const handleCardClick = () => {
+    const cardDetails = {
+      id,
+      title,
+      address,
+      image,
+      bedrooms,
+      bathrooms,
+      sqrFt,
+      price,
+      popular,
+      description
+    };
+    localStorage.setItem('selectedHouse', JSON.stringify(cardDetails));
+  };
+
   return (
     <Link
-      href={`/house-details/${id}`}
+      href={`/product-details/${id}`}
       passHref
       className="w-full rounded-lg shadow-md relative cursor-pointer group"
+      onClick={handleCardClick}
     >
-      {/* Popular Badge */}
       {popular && (
         <PopularLabel
           text={popular}
           className="-ml-3 absolute z-[3] top-[40%]"
         />
       )}
-
-      {/* Image Section */}
       <div className="h-48 w-full rounded-t-lg overflow-hidden">
         <Image
           src={image}
@@ -49,9 +64,7 @@ export default function HouseListingCard({
           className="w-full object-cover h-full transition duration-150 ease-in-out group-hover:scale-[1.05]"
         />
       </div>
-
-      {/* Card Content */}
-      <CardContent className="p-4 flex flex-col space-y-2">
+      <CardContent className="mt-5 p-4 flex flex-col space-y-2">
         <div className="flex items-center">
           <p className="text-2xl text-[#7065F0] font-[800] leading-9 -tracking-[1px]">
             ${price.toLocaleString()}
@@ -59,7 +72,6 @@ export default function HouseListingCard({
               / month
             </span>
           </p>
-          {/* Favorite Icon */}
           <div
             className="p-4 cursor-pointer ml-auto rounded-full border border-[#E8E6F9] flex justify-end"
             onClick={toggleFavorite}
@@ -76,10 +88,10 @@ export default function HouseListingCard({
         </CardTitle>
         <p className="text-gray-500 text-sm">{address}</p>
       </CardContent>
-
       <CardFooter className="flex flex-col space-y-4">
+        {/* separator */}
         <div className="bg-[#F0EFFB] h-[1.5px]"></div>
-        {/* Details Section */}
+        {/* beds, baths and sqr */}
         <div className="w-full flex justify-between items-center text-gray-700">
           <div className="flex items-center space-x-1">
             <BedDouble className="w-5 h-5 text-[#7065F0]" />

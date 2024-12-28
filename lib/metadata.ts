@@ -7,38 +7,39 @@ type PageMetadataProps = {
 };
 
 export function generateMetadata({
-  title = "Founder's Friday Movement",
-  description = "A platform fostering collaboration among founders, innovators, and tech enthusiasts in Abuja's vibrant startup ecosystem.",
+  title = 'EzyRent',
+  description = 'A platform that is solving the rental issues in Nigeria.',
   path = ''
 }: PageMetadataProps = {}): Metadata {
   // Normalize the path by removing leading and trailing slashes
   const normalizedPath = path.replace(/^\/|\/$/g, '');
 
   // Base URL with consistent trailing slash
-  const baseUrl = 'https://founders-friday-phi.vercel.app/';
+  const baseUrl = 'https://ezyrent-web.vercel.app/';
 
   // full URL
   const fullUrl = new URL(normalizedPath, baseUrl)
     .toString()
     .replace(/\/+$/, '/');
 
-  const baseTitle = "Founder's Friday";
+  const baseTitle = 'EzyRent';
   const fullTitle = title === baseTitle ? baseTitle : `${title} - ${baseTitle}`;
 
   return {
     title: fullTitle,
     description,
     keywords: [
-      "Founder's Friday",
-      'networking',
-      'collaboration',
-      'startups',
-      'innovators',
-      'tech enthusiasts',
-      'Abuja',
-      'community building'
+      'rent',
+      'ezyrent',
+      'EzyRent',
+      'Easy Rent',
+      'easy rent',
+      'house to rent',
+      'rent a house',
+      'easy',
+      'easyrent'
     ],
-    authors: [{ name: "Founder's Friday Team" }],
+    authors: [{ name: 'EzyRent Team' }],
     openGraph: {
       title: fullTitle,
       description,

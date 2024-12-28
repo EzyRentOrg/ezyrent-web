@@ -1,11 +1,7 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import {
-  ChevronLeft,
-  ChevronRight,
-  Star
-} from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Button } from '../ui/button';
