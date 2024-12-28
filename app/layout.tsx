@@ -1,4 +1,3 @@
-
 import { dmSans } from '@/lib/font';
 import { cn } from '@/lib/utils';
 import Header from '@/components/nav/Header';
@@ -9,9 +8,9 @@ import { generateMetadata } from '@/lib/metadata';
 import './globals.css';
 
 export const metadata = generateMetadata({
-  title: "Home",
-  description: "Welcome to EzyRent",
-  path: ""
+  title: 'Home',
+  description: 'Welcome to EzyRent',
+  path: ''
 });
 
 export default function RootLayout({

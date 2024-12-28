@@ -7,8 +7,8 @@ type PageMetadataProps = {
 };
 
 export function generateMetadata({
-  title = "EzyRent",
-  description = "A platform that is solving the rental issues in Nigeria.",
+  title = 'EzyRent',
+  description = 'A platform that is solving the rental issues in Nigeria.',
   path = ''
 }: PageMetadataProps = {}): Metadata {
   // Normalize the path by removing leading and trailing slashes
@@ -22,16 +22,24 @@ export function generateMetadata({
     .toString()
     .replace(/\/+$/, '/');
 
-  const baseTitle = "EzyRent";
+  const baseTitle = 'EzyRent';
   const fullTitle = title === baseTitle ? baseTitle : `${title} - ${baseTitle}`;
 
   return {
     title: fullTitle,
     description,
     keywords: [
-      'rent', 'ezyrent', 'EzyRent', 'Easy Rent', 'easy rent', 'house to rent', 'rent a house', 'easy', 'easyrent'
+      'rent',
+      'ezyrent',
+      'EzyRent',
+      'Easy Rent',
+      'easy rent',
+      'house to rent',
+      'rent a house',
+      'easy',
+      'easyrent'
     ],
-    authors: [{ name: "EzyRent Team" }],
+    authors: [{ name: 'EzyRent Team' }],
     openGraph: {
       title: fullTitle,
       description,

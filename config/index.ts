@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   Bath,
   Blinds,
@@ -38,7 +38,6 @@ export const lappedImages: lappedImageType[] = [
   }
 ];
 
-
 export const houseAmenities: HouseAmenity[] = [
   { item: '24/7 Electricity', icon: Plug2 },
   { item: 'Internet', icon: Zap },
@@ -58,7 +57,11 @@ export const houseAmenities: HouseAmenity[] = [
 ];
 
 export const securityTips: SecurityTip[] = [
-  {tip: "Do not make any inspection fee without seeing the property manager and property."},
-  {tip: "Only pay Rental fee, Sales fee or any upfront payment after you verify the Landlord."},
-  {tip: "Ensure you meet the Property manager in an open location."}
-]
+  {
+    tip: 'Do not make any inspection fee without seeing the property manager and property.'
+  },
+  {
+    tip: 'Only pay Rental fee, Sales fee or any upfront payment after you verify the Landlord.'
+  },
+  { tip: 'Ensure you meet the Property manager in an open location.' }
+];

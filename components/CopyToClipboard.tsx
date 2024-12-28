@@ -4,16 +4,27 @@ import { toast } from 'sonner';
 
 interface CopyToClipboardProps {
   textToCopy: string;
-  type?: string
+  type?: string;
 }
 
-export default function CopyToClipboard({ textToCopy, type }: CopyToClipboardProps) {
+export default function CopyToClipboard({
+  textToCopy,
+  type
+}: CopyToClipboardProps) {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(textToCopy);
-      toast.success(type === "phone"? " Phone number copied to clipboard!" : "Email address copied to clipboard!");
+      toast.success(
+        type === 'phone'
+          ? ' Phone number copied to clipboard!'
+          : 'Email address copied to clipboard!'
+      );
     } catch (error) {
-      toast.error(type === "phone" ? 'Failed to copy phone number.' : " Failed to copy email address.");
+      toast.error(
+        type === 'phone'
+          ? 'Failed to copy phone number.'
+          : ' Failed to copy email address.'
+      );
       console.error(error);
     }
   };

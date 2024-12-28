@@ -37,7 +37,7 @@ export default function RecommendedProperties() {
     currentIndex,
     currentIndex + itemsPerPage
   );
-//TODO: Save the page when next is clicked so as it wil not return to start
+  //TODO: Save the page when next is clicked so as it wil not return to start
   return (
     <MaxWidthWrapper>
       <section className="mt-40 " aria-labelledby="location-houses-heading">
@@ -108,7 +108,9 @@ export default function RecommendedProperties() {
         <div className="my-10 md:w-[299px] mx-auto rounded-[40px]">
           <Button
             aria-label="View more listings"
-            className={cn('h-[72px] text-xl bg-[#7065F0] capitalize w-full rounded-[40px]')}
+            className={cn(
+              'h-[72px] text-xl bg-[#7065F0] capitalize w-full rounded-[40px]'
+            )}
           >
             View more <ArrowRight size={32} className="h-8 w-8" />
           </Button>
