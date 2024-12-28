@@ -40,9 +40,7 @@ export default function HouseListingCard({
       description
     };
     localStorage.setItem('selectedHouse', JSON.stringify(cardDetails));
-    
   };
-
 
   return (
     <Link

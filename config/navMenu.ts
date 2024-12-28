@@ -1,5 +1,3 @@
-
-
 export const navbarMenu: NavbarMenuItem[] = [
   { label: 'rent', href: '#' },
   { label: 'buy', href: '#' },
@@ -27,5 +25,3 @@ export const navbarMenuAuth: NavbarMenuItem[] = [
   { label: 'login', href: '/login' },
   { label: 'sign up', href: '/register' }
 ];
-
-

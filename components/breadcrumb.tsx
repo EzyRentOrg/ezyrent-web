@@ -11,7 +11,7 @@ interface BreadcrumbItem {
 }
 
 export default function Breadcrumb() {
-  const pathname = usePathname(); 
+  const pathname = usePathname();
   const pathSegments = pathname
     .split('/')
     .filter((segment) => segment && isNaN(Number(segment)));
