@@ -25,7 +25,7 @@ export default function MobileNav() {
         <link rel="preload" href="/logo/LeftNav.png" as="image" />
       </Head>
       <nav className="lg:hidden relative">
-        <div className="mx-auto px-8 w-full flex items-center justify-between">
+        <div className="mx-auto px-4 md:px- w-full flex items-center justify-between">
           {/* Left Section: Logo */}
           <div>
             <Link href="/" className="flex-shrink-0">

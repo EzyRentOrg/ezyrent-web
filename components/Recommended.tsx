@@ -7,7 +7,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useWindowResizer } from '@/hooks/useWindowResizer';
 
-export default function BasedOnYourLocation() {
+export default function RecommendedProperties() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [animationDirection, setAnimationDirection] = useState<
     'slideRight' | 'slideLeft'
@@ -37,18 +37,18 @@ export default function BasedOnYourLocation() {
     currentIndex,
     currentIndex + itemsPerPage
   );
-
+//TODO: Save the page when next is clicked so as it wil not return to start
   return (
     <MaxWidthWrapper>
-      <section className="" aria-labelledby="location-houses-heading">
-        <div className="flex items-center w-full py-10">
+      <section className="mt-40 " aria-labelledby="location-houses-heading">
+        <div className="flex flex-col md:flex-row space-y-5 md:space-y-0 md:items-center w-full mb-10">
           <h3
             id="location-houses-heading"
-            className="first-letter:capitalize font-semibold md:text-[1.5rem] text-[#7065F0]"
+            className="first-letter:capitalize font-semibold text-base md:text-[1.5rem] text-[#7065F0]"
           >
-            Based on your location
+            Recommended Properties
           </h3>
-          <div className="flex items-center space-x-10 ml-auto">
+          <div className="flex items-center space-x-10 ml-auto w-full md:w-fit">
             <button
               onClick={handlePrev}
               disabled={isAtStart}
@@ -77,7 +77,7 @@ export default function BasedOnYourLocation() {
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-[repeat(auto-fill,_minmax(280px,_1fr))] gap-6 p-2">
+        <div className="grid md:grid-cols-[repeat(auto-fill,_minmax(280px,_1fr))] gap-6 ">
           {visibleHouses.map((house, index) => (
             <div
               key={house.id}
@@ -105,10 +105,10 @@ export default function BasedOnYourLocation() {
           ))}
         </div>
 
-        <div className="my-10 w-[299px] mx-auto rounded-[40px]">
+        <div className="my-10 md:w-[299px] mx-auto rounded-[40px]">
           <Button
             aria-label="View more listings"
-            className={cn('h-[72px] text-xl capitalize w-full rounded-[40px]')}
+            className={cn('h-[72px] text-xl bg-[#7065F0] capitalize w-full rounded-[40px]')}
           >
             View more <ArrowRight size={32} className="h-8 w-8" />
           </Button>
