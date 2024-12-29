@@ -38,19 +38,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var react_1 = require("react");
 var react_leaflet_1 = require("react-leaflet");
+require("leaflet-defaulticon-compatibility");
+require("leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css");
 require("leaflet/dist/leaflet.css");
-var leaflet_1 = require("leaflet");
-var marker_icon_2x_png_1 = require("leaflet/dist/images/marker-icon-2x.png");
-var marker_icon_png_1 = require("leaflet/dist/images/marker-icon.png");
-var marker_shadow_png_1 = require("leaflet/dist/images/marker-shadow.png");
-var lucide_react_1 = require("lucide-react");
-delete leaflet_1["default"].Icon.Default.prototype
-    ._getIconUrl;
-leaflet_1["default"].Icon.Default.mergeOptions({
-    iconUrl: marker_icon_png_1["default"].src,
-    iconRetinaUrl: marker_icon_2x_png_1["default"].src,
-    shadowUrl: marker_shadow_png_1["default"].src
-});
 function HouseMap(_a) {
     var _this = this;
     var address = _a.address;
@@ -67,7 +57,7 @@ function HouseMap(_a) {
                         _b.label = 1;
                     case 1:
                         _b.trys.push([1, 4, , 5]);
-                        apiKey = process.env.LOCATION_HQTRS_API_KEY;
+                        apiKey = process.env.NEXT_PUBLIC_LOCATION_HQTRS_API_KEY;
                         if (!apiKey) {
                             throw new Error('API key is not configured.');
                         }
@@ -80,7 +70,7 @@ function HouseMap(_a) {
                         return [4 /*yield*/, response.json()];
                     case 3:
                         data = _b.sent();
-                        if (data && data.length > 0) {
+                        if (Array.isArray(data) && data.length > 0) {
                             _a = data[0], lat = _a.lat, lon = _a.lon;
                             setCoordinates({ lat: parseFloat(lat), lng: parseFloat(lon) });
                         }
@@ -90,12 +80,7 @@ function HouseMap(_a) {
                         return [3 /*break*/, 5];
                     case 4:
                         err_1 = _b.sent();
-                        if (err_1 instanceof Error) {
-                            setError(err_1.message);
-                        }
-                        else {
-                            setError('An unknown error occurred.');
-                        }
+                        setError(err_1 instanceof Error ? err_1.message : 'An unknown error occurred.');
                         return [3 /*break*/, 5];
                     case 5: return [2 /*return*/];
                 }
@@ -109,14 +94,11 @@ function HouseMap(_a) {
             error);
     }
     if (!coordinates) {
-        return react_1["default"].createElement("p", { className: "text-gray-500" }, "Loading map...");
+        return;
     }
     return (react_1["default"].createElement(react_leaflet_1.MapContainer, { center: [coordinates.lat, coordinates.lng], zoom: 15, scrollWheelZoom: false, className: "w-full h-[500px] lg:h-[600px] relative" },
-        react_1["default"].createElement("div", { className: "absolute z-[999] top-5 right-0 h-fit text-sm font-semibold py-1 px-[10px] bg-[#f1f1f1] text-[#000929] flex items-center" },
-            react_1["default"].createElement(lucide_react_1.MapPin, { size: 20, className: "mr-2" }),
-            address),
         react_1["default"].createElement(react_leaflet_1.TileLayer, { attribution: '\u00A9 <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors', url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" }),
         react_1["default"].createElement(react_leaflet_1.Marker, { position: [coordinates.lat, coordinates.lng] },
-            react_1["default"].createElement(react_leaflet_1.Popup, null, address))));
+            react_1["default"].createElement(react_leaflet_1.Tooltip, { direction: "top", permanent: true }, address))));
 }
 exports["default"] = HouseMap;
