@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, Marker, Popup, TileLayer, Tooltip } from 'react-leaflet';
-import "leaflet-defaulticon-compatibility"
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css"
+import 'leaflet-defaulticon-compatibility';
+import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
 import 'leaflet/dist/leaflet.css';
 
 export default function HouseMap({ address }: { address?: string }) {
@@ -51,7 +51,7 @@ export default function HouseMap({ address }: { address?: string }) {
   }
 
   if (!coordinates) {
-    return ;
+    return;
   }
 
   return (
