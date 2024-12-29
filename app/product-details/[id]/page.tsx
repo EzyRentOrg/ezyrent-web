@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from 'react';
 import MaxWidthWrapper from '../../maxWidthWrapper';
 import Breadcrumb from '@/components/breadcrumb';
@@ -21,12 +22,16 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { plusJakartaSans } from '@/lib/font';
 import { houseAmenities } from '@/config';
-
 import SecurityTips from '@/components/SecurityTips';
 import RecommendedProperties from '@/components/Recommended';
-import HouseMap from '@/components/HouseMap';
+
 import { Button } from '@/components/ui/button';
 import CopyToClipboard from '@/components/CopyToClipboard';
+
+const DynamicHouseMap = dynamic(() => import('@/components/HouseMap'), {
+  loading: () => <p>Loading...</p>,
+  ssr: false
+});
 
 export default function ProductDetails() {
   const [houseDetails, setHouseDetails] = useState<HouseListing | null>(null);
@@ -50,6 +55,7 @@ export default function ProductDetails() {
     }
   }, []);
 
+  // tab
   const Tab = () => (
     <div className=" flex items-center justify-between lg:space-x-[150px] w-full lg:w-fit border-b-2 border-[#FAFAFA]">
       {['details', 'location', 'contact'].map((tab) => (
@@ -73,7 +79,7 @@ export default function ProductDetails() {
   const renderTabContent = () => {
     switch (activeTab) {
       case 'location':
-        return <HouseMap address={houseDetails?.address} />;
+        return <DynamicHouseMap address={houseDetails?.address} />;
       case 'contact':
         return (
           <div className="!mt-10 space-y-4">
