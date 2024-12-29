@@ -31,7 +31,7 @@ export default function Breadcrumb() {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="flex space-x-px text-sm text-gray-500"
+      className="w-full flex space-x-px text-sm text-gray-500"
     >
       {breadcrumbs.map((breadcrumb, index) => (
         <div key={breadcrumb.href} className="flex items-center capitalize">
