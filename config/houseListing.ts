@@ -2,7 +2,7 @@ export const houseListing: HouseListing[] = [
   {
     id: '1',
     title: 'Palm Habor',
-    address: '2699 Green Valley, Highland Lake, FL',
+    address: 'Jubril Martins, Surulere, Lagos',
     image: '/location/Mask-Group(1).webp',
     bedrooms: 3,
     bathrooms: 2,
@@ -28,7 +28,7 @@ export const houseListing: HouseListing[] = [
   {
     id: '3',
     title: 'Faulkner Ave',
-    address: '909 Woodland St. Michigan, IN',
+    address: 'Adebisi, Surulere',
     image: '/location/Mask-Group(3).webp',
     bedrooms: 4,
     bathrooms: 3,
