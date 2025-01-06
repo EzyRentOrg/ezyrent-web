@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Button } from '../ui/button';
 
 const randomRotateY = () => Math.floor(Math.random() * 21) - 10;
@@ -17,17 +17,23 @@ export default function TestimonialCard({
 }) {
   const [active, setActive] = useState<number>(0);
 
-  const handleNext = () =>
-    setActive((prev) => (prev + 1) % testimonials.length);
-  const handlePrev = () =>
-    setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length);
 
+  // Function to handle next testimonial
+  const handleNext = useCallback(()=>{
+setActive((prev) => (prev + 1) % testimonials.length)
+  },[testimonials.length]);
+
+  // Function to handle previous testimonial
+  const handlePrev = () => setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+
+  // Function to check if the testimonial is active
   const isActive = (index: number): boolean => index === active;
 
+  // Autoplay logic
   useEffect(() => {
     if (autoplay) {
-      const interval = setInterval(handleNext, 5000);
-      return () => clearInterval(interval);
+      const interval = setInterval(handleNext, 5000); // Move to next testimonial every 5 seconds
+      return () => clearInterval(interval); // Cleanup interval on unmount or autoplay change
     }
   }, [autoplay, handleNext]);
 
