@@ -66,4 +66,3 @@ type PrivacyPolicySubContent = {
   description?: string;
   items?: string[];
 };
-

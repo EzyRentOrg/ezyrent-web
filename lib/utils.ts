@@ -37,5 +37,3 @@ export const useGoogleAuthHandler = () => {
 
   return googleLogin;
 };
-
-

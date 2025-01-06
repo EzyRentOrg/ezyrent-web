@@ -1,4 +1,3 @@
-
 export const privacyPolicySections: PrivacyPolicySection[] = [
   {
     title: 'Information We Collect',

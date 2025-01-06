@@ -25,9 +25,9 @@ export default function Breadcrumb() {
       return {
         label: decodeURIComponent(segment.replace(/-/g, ' ')),
         href,
-        isActive: pathname.startsWith(href),
+        isActive: pathname.startsWith(href)
       };
-    }),
+    })
   ];
 
   return (
@@ -39,9 +39,7 @@ export default function Breadcrumb() {
         <div key={breadcrumb.href} className="flex items-center capitalize">
           {index !== 0 && <span className="mx-2 text-gray-400">/</span>}
           {breadcrumb.isActive ? (
-            <span className="text-[#000929] font-bold">
-              {breadcrumb.label}
-            </span>
+            <span className="text-[#000929] font-bold">{breadcrumb.label}</span>
           ) : (
             <Link
               href={breadcrumb.href}
