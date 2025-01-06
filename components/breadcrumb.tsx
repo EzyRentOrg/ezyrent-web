@@ -12,9 +12,11 @@ interface BreadcrumbItem {
 
 export default function Breadcrumb() {
   const pathname = usePathname();
+
+  // Split the path into segments, excluding empty and ID-like segments
   const pathSegments = pathname
     .split('/')
-    .filter((segment) => segment && isNaN(Number(segment)));
+    .filter((segment) => segment && !/^\d+(\[.+\])?$/.test(segment)); // Exclude numeric or [id]-like segments
 
   const breadcrumbs: BreadcrumbItem[] = [
     { label: 'Home', href: '/', isActive: pathname === '/' },
@@ -23,21 +25,21 @@ export default function Breadcrumb() {
       return {
         label: decodeURIComponent(segment.replace(/-/g, ' ')),
         href,
-        isActive: pathname === href
+        isActive: pathname.startsWith(href),
       };
-    })
+    }),
   ];
 
   return (
     <nav
       aria-label="Breadcrumb"
-      className="w-full flex space-x-px text-sm text-gray-500"
+      className="w-full flex space-x-px text-sm text-[#000929]"
     >
       {breadcrumbs.map((breadcrumb, index) => (
         <div key={breadcrumb.href} className="flex items-center capitalize">
           {index !== 0 && <span className="mx-2 text-gray-400">/</span>}
           {breadcrumb.isActive ? (
-            <span className="text-gray-700 font-medium">
+            <span className="text-[#000929] font-bold">
               {breadcrumb.label}
             </span>
           ) : (

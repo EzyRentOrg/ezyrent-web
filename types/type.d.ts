@@ -56,3 +56,14 @@ declare interface SecurityTip {
   tip: string;
   description?: string;
 }
+
+type PrivacyPolicySection = {
+  title: string;
+  content: (string | PrivacyPolicySubContent)[];
+};
+
+type PrivacyPolicySubContent = {
+  description?: string;
+  items?: string[];
+};
+
