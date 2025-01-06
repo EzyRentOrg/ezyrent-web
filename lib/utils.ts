@@ -21,7 +21,6 @@ export const handleSignInWithApple = () => {
 };
 
 // google
-
 export const useGoogleAuthHandler = () => {
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse: TokenResponse) => {
@@ -38,3 +37,5 @@ export const useGoogleAuthHandler = () => {
 
   return googleLogin;
 };
+
+

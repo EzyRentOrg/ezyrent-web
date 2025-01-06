@@ -34,7 +34,7 @@ export default function CopyToClipboard({
       onClick={handleCopy}
       className="cursor-pointer flex items-center space-x-2"
     >
-      <Copy size={16} stroke="#344054" />
+      <Copy size={16} stroke="#000929" />
       <span className="sr-only">Copy</span>
     </div>
   );
