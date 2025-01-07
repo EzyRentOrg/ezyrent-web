@@ -20,7 +20,6 @@ export default function MobileNav() {
 
   return (
     <>
-      
       <nav className="lg:hidden relative">
         <div className="mx-auto px-4 md:px- w-full flex items-center justify-between">
           {/* Left Section: Logo */}

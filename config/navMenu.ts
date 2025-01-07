@@ -11,7 +11,7 @@ export const navbarMenu: NavbarMenuItem[] = [
   },
   {
     label: 'about',
-    href: '/about',
+    href: '/about'
     // dropdown: [
     //   { label: 'Our Story', href: '/our-story' },
     //   { label: 'Team', href: '/team' },
