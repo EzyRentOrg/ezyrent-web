@@ -2,7 +2,6 @@
 
 import { navbarMenu, navbarMenuAuth } from '@/config/navMenu';
 import { Menu, X } from 'lucide-react';
-import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -21,9 +20,7 @@ export default function MobileNav() {
 
   return (
     <>
-      <Head>
-        <link rel="preload" href="/logo/LeftNav.png" as="image" />
-      </Head>
+      
       <nav className="lg:hidden relative">
         <div className="mx-auto px-4 md:px- w-full flex items-center justify-between">
           {/* Left Section: Logo */}
@@ -32,7 +29,7 @@ export default function MobileNav() {
               <Image
                 src={'/logo/LeftNav.png'}
                 alt="EzyRent logo"
-                priority={true}
+                priority
                 width={134}
                 height={40}
                 className="w-[134px] h-[40px]"

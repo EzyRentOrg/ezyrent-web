@@ -11,12 +11,12 @@ export const navbarMenu: NavbarMenuItem[] = [
   },
   {
     label: 'about',
-    href: '#',
-    dropdown: [
-      { label: 'Our Story', href: '/our-story' },
-      { label: 'Team', href: '/team' },
-      { label: 'Careers', href: '/careers' }
-    ]
+    href: '/about',
+    // dropdown: [
+    //   { label: 'Our Story', href: '/our-story' },
+    //   { label: 'Team', href: '/team' },
+    //   { label: 'Careers', href: '/careers' }
+    // ]
   },
   { label: 'blog', href: '#' }
 ];

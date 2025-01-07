@@ -57,12 +57,19 @@ declare interface SecurityTip {
   description?: string;
 }
 
-type PrivacyPolicySection = {
+declare interface PrivacyPolicySection {
   title: string;
   content: (string | PrivacyPolicySubContent)[];
 };
 
-type PrivacyPolicySubContent = {
+declare interface PrivacyPolicySubContent {
   description?: string;
   items?: string[];
 };
+
+declare interface TeamMember {
+  image: string;
+  name: string;
+  role: string;
+  description: string
+}
