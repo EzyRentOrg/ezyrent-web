@@ -9,17 +9,13 @@ import DropdownMenu from '../DropdownMenu';
 import { Button } from '../ui/button';
 import { cn } from '@/lib/utils';
 import { Menu } from 'lucide-react';
-import Head from 'next/head';
 
 export default function DesktopNav() {
   const pathname = usePathname();
 
   return (
     <>
-      <Head>
-        {/* Preload the image */}
-        <link rel="preload" href="/logo/LeftNav.png" as="image" />
-      </Head>
+      
       <nav className="hidden lg:block">
         <div className=" mx-auto px-2 md:px-8 w-full flex items-center justify-between">
           {/* Left Section: Logo and Navigation Links */}
@@ -29,7 +25,7 @@ export default function DesktopNav() {
               <Image
                 src={'/logo/LeftNav.png'}
                 alt="EzyRent logo"
-                priority={true}
+                priority
                 width={134}
                 height={40}
                 className="w-[134px] h-[40px]"
