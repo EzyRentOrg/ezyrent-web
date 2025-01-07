@@ -1,9 +1,9 @@
 import React from 'react';
 import DesktopFooter from './DesktopFooter';
 import MobileFooter from './MobileFooter';
-import NewsletterForm from './NewsletterForm';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import { Separator } from '../ui/separator';
+import NewsletterForm from './footer-components/NewsletterForm';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();

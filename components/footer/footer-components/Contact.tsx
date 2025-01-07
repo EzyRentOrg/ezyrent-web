@@ -28,7 +28,7 @@ const ContactItems: Contact[] = [
 
 export default function Contact() {
   return (
-    <div className="w-[331px] flex flex-col space-y-4">
+    <div className="max-w-[300px] flex flex-col space-y-4">
       <p className="capitalize text-xl font-[500]">contacts</p>
       <div className="flex flex-col space-y-4">
         {ContactItems.map((item, index) => {

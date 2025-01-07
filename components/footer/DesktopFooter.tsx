@@ -1,14 +1,14 @@
 import React from 'react';
-import FooterQuickLinks from './FooterQuickLinks';
-import Contact from './Contact';
-import Support from './Support';
-import DownloadApp from './DownloadApp';
+import FooterQuickLinks from './footer-components/FooterQuickLinks';
+import Contact from './footer-components/Contact';
+import Support from './footer-components/Support';
+import DownloadApp from './footer-components/DownloadApp';
 import Image from 'next/image';
 
 export default function DesktopFooter() {
   return (
-    <div className="hidden h-auto lg:flex items-start justify-between text-[#344054] leading-[22.4px] ">
-      <div className="w-[311px] h-[96px] ">
+    <div className="hidden h-auto lg:flex items-start space-x-5 text-[#344054] leading-[22.4px] ">
+      <div className="w-[320px] h-[96px] ">
         <Image
           src={'/logo/eazyRentBigLogo.png'}
           width={311}

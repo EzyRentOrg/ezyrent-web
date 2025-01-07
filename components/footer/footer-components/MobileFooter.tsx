@@ -1,8 +1,8 @@
 import React from 'react';
-import Contact from './footer-components/Contact';
-import FooterQuickLinks from './footer-components/FooterQuickLinks';
-import Support from './footer-components/Support';
-import DownloadApp from './footer-components/DownloadApp';
+import Contact from './Contact';
+import FooterQuickLinks from './FooterQuickLinks';
+import Support from './Support';
+import DownloadApp from './DownloadApp';
 import Image from 'next/image';
 
 export default function MobileFooter() {
