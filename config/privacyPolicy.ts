@@ -33,7 +33,7 @@ export const privacyPolicySections: PrivacyPolicySection[] = [
   {
     title: 'How We Use Your Information',
     content: [
-      {description: 'We use your information to:'},
+      { description: 'We use your information to:' },
       {
         items: [
           'Provide and maintain our services (e.g., enabling property listings, bookings).',
@@ -49,7 +49,10 @@ export const privacyPolicySections: PrivacyPolicySection[] = [
   {
     title: 'Sharing Your Information',
     content: [
-      {description: 'We do not sell or rent your personal information. However, we may share it with:'},
+      {
+        description:
+          'We do not sell or rent your personal information. However, we may share it with:'
+      },
       {
         items: [
           'Service Providers: Payment processors, verification services, and analytics providers who assist us in delivering services.',
