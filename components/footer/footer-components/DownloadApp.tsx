@@ -1,5 +1,5 @@
 import React from 'react';
-import SocialIcon from '../SocialIcon';
+import SocialIcon from '../../SocialIcon';
 import AppLogo from './AppLogo';
 
 export default function DownloadApp() {

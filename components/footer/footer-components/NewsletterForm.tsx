@@ -10,9 +10,9 @@ import {
   FormItem,
   FormMessage
 } from '@/components/ui/form';
-import { Input } from '../ui/input';
+import { Input } from '@/components/ui/input';
 import { User } from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button } from '@/components/ui/button';
 
 const formSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address.' })

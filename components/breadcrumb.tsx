@@ -3,6 +3,7 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 interface BreadcrumbItem {
   label: string;
@@ -36,14 +37,14 @@ export default function Breadcrumb() {
       className="w-full flex space-x-px text-sm text-[#000929]"
     >
       {breadcrumbs.map((breadcrumb, index) => (
-        <div key={breadcrumb.href} className="flex items-center capitalize">
+        <div key={breadcrumb.href} className={cn("flex items-center capitalize", breadcrumb.label === "faq" && "uppercase")}>
           {index !== 0 && <span className="mx-2 text-gray-400">/</span>}
           {breadcrumb.isActive ? (
             <span className="text-[#000929] font-bold">{breadcrumb.label}</span>
           ) : (
             <Link
               href={breadcrumb.href}
-              className="hover:text-gray-700 transition-colors"
+                className="hover:text-[#000929] transition-colors"
             >
               {breadcrumb.label}
             </Link>
