@@ -15,7 +15,6 @@ export default function DesktopNav() {
 
   return (
     <>
-      
       <nav className="hidden lg:block">
         <div className=" mx-auto px-2 md:px-8 w-full flex items-center justify-between">
           {/* Left Section: Logo and Navigation Links */}

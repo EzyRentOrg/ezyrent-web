@@ -60,10 +60,10 @@
 
 /* image */
 @layer base {
-    img {
-        width: 100%;
-        height: auto;
-    }
+  img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 /* stops shadcn overflow */
