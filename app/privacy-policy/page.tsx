@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { privacyPolicySections } from '@/config/privacyPolicy';
 import MaxWidthWrapper from '../maxWidthWrapper';
 
-
 export default function PrivacyPolicy() {
   const renderContent = (content: string) => {
     // Handle privacy policy links

@@ -17,14 +17,14 @@ export default function TestimonialCard({
 }) {
   const [active, setActive] = useState<number>(0);
 
-
   // Function to handle next testimonial
-  const handleNext = useCallback(()=>{
-setActive((prev) => (prev + 1) % testimonials.length)
-  },[testimonials.length]);
+  const handleNext = useCallback(() => {
+    setActive((prev) => (prev + 1) % testimonials.length);
+  }, [testimonials.length]);
 
   // Function to handle previous testimonial
-  const handlePrev = () => setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  const handlePrev = () =>
+    setActive((prev) => (prev - 1 + testimonials.length) % testimonials.length);
 
   // Function to check if the testimonial is active
   const isActive = (index: number): boolean => index === active;

@@ -8,8 +8,9 @@ interface SupportItem extends NavbarMenuItem {
 
 const supportItems: SupportItem[] = [
   { label: 'Careers', href: '/' },
-  { label: "FAQ's", href: '/FAQ' },
-  { label: 'Privacy Policy', href: '#' }
+  { label: "FAQ's", href: '/faq' },
+  { label: 'Privacy Policy', href: '/privacy-policy' },
+  { label: 'Terms of Use', href: '/terms-and-conditions' }
 ];
 
 export default function Support() {
