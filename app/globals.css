@@ -58,6 +58,14 @@
   }
 }
 
+/* image */
+@layer base {
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+
 /* stops shadcn overflow */
 html {
   overflow-x: hidden;
