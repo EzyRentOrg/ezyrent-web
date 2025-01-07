@@ -6,7 +6,7 @@ export const metadata = generateMetadata({
   description: 'Get to know who we are and what we stand for',
   path: 'about'
 });
-export default function PrivacyProlicyLayout({
+export default function AboutLayout({
   children
 }: {
   children: React.ReactNode;

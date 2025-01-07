@@ -60,16 +60,16 @@ declare interface SecurityTip {
 declare interface PrivacyPolicySection {
   title: string;
   content: (string | PrivacyPolicySubContent)[];
-};
+}
 
 declare interface PrivacyPolicySubContent {
   description?: string;
   items?: string[];
-};
+}
 
 declare interface TeamMember {
   image: string;
   name: string;
   role: string;
-  description: string
+  description: string;
 }
