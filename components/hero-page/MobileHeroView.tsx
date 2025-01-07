@@ -16,6 +16,7 @@ export default function MobileHeroView() {
           lifestyle and needs
         </p>
 
+        {/* search */}
         <div className="relative mt-auto">
           <Input
             type="text"
