@@ -18,9 +18,8 @@ export default function MobileFooter() {
         />
       </div>
       <div className="pt-16 pb-14 flex items-start justify-between flex-wrap gap-8">
-        <Contact />
-
         <FooterQuickLinks />
+        <Contact />
         <Support />
         <DownloadApp />
       </div>
