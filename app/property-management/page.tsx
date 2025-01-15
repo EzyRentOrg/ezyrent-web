@@ -5,7 +5,7 @@ import Breadcrumb from '@/components/breadcrumb';
 
 export default function PropertyManagement() {
   return (
-    <section className="pb-10 py-28">
+    <section>
       <MaxWidthWrapper>
         <Breadcrumb />
         <main className="mt-10 flex flex-col items-center justify-center space-y-8 text-center">

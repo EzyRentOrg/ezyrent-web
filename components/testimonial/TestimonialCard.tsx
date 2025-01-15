@@ -17,7 +17,7 @@ export default function TestimonialCard({
   // nex
   const handleNext = useCallback(() => {
     setActive((prev) => (prev + 1) % testimonials.length);
-  }, [testimonials.length]); 
+  }, [testimonials.length]);
 
   // previous
   const handlePrev = () => {
@@ -27,7 +27,6 @@ export default function TestimonialCard({
   const isActive = (index: number) => {
     return index === active;
   };
-  
 
   useEffect(() => {
     if (autoplay) {
