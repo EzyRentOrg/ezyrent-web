@@ -6,7 +6,7 @@ import MaxWidthWrapper from '../maxWidthWrapper';
 
 export default function PrivacyPolicy() {
   const renderContent = (content: string) => {
-    // Handle privacy policy links
+    // Handle Privacy Policy links
     if (content.includes('Privacy Policy')) {
       const parts = content.split('Privacy Policy');
       return (
@@ -37,16 +37,28 @@ export default function PrivacyPolicy() {
       );
     }
 
+    // Ensure "of" is always lowercase
+    if (/\bof\b/.test(content)) {
+      const parts = content.split(/\bof\b/);
+      return (
+        <>
+          {parts[0]}
+          <span className="lowercase">of</span>
+          {parts[1]}
+        </>
+      );
+    }
+
     return content;
   };
 
   return (
-    <section className="max-w-[1050px]">
+    <section className="max-w-[1050px] mx-auto px-4">
       <MaxWidthWrapper>
         <Breadcrumb />
         <main>
           <section className="mt-10">
-            <h1 className="text-[1.1rem] md:text-[1.5rem] lg:text-[2rem] font-semibold text-[#000929] mb-2 leading-[50.4px]">
+            <h1 className="text-[1.1rem] md:text-[1.5rem] lg:text-[2rem] font-semibold text-[#000929] mb-4 leading-[50.4px]">
               EzyRent Privacy Notice
             </h1>
             <p className="leading-[33.6px] text-sm md:text-base">
@@ -60,15 +72,17 @@ export default function PrivacyPolicy() {
             </p>
           </section>
 
-          <section className="flex flex-col space-y-5">
+          <section className="flex flex-col space-y-5 mt-8">
             {privacyPolicySections.map((section, sectionIndex) => (
               <div key={sectionIndex} className="privacy-policy__section">
-                <h2 className="text-[#000929] font-semibold text-[1.1rem] md:text-[1.5rem] lg:text-[2rem] mt-5">
-                  {section.title}
-                </h2>
+                {section.title && (
+                  <h2 className="text-[#000929] font-semibold text-[1.1rem] md:text-[1.5rem] lg:text-[2rem] mt-5">
+                    {renderContent(section.title)}
+                  </h2>
+                )}
                 {section.content.map((content, contentIndex) =>
                   typeof content === 'string' ? (
-                    <p key={contentIndex} className="mt-5 text-sm md:text-base">
+                    <p key={contentIndex} className="mt-4 text-sm md:text-base">
                       {renderContent(content)}
                     </p>
                   ) : (
@@ -79,7 +93,7 @@ export default function PrivacyPolicy() {
                         </p>
                       )}
                       {content.items && (
-                        <ul className="list-disc flex flex-col space-y-3 my-4 px-5">
+                        <ul className="list-disc flex flex-col space-y-3 my-4 pl-5">
                           {content.items.map((item, itemIdx) => (
                             <li key={itemIdx}>{renderContent(item)}</li>
                           ))}

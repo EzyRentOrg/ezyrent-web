@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FAQWrapper from './faq';
 import { FAQsContent } from '@/config/FAQs';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
 
 export default function FAQs() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(index === openIndex ? null : index); 
+  }
+
   return (
     <section className="my-40">
       <MaxWidthWrapper>
@@ -16,9 +22,12 @@ export default function FAQs() {
         <div className="flex flex-col space-y-8">
           {FAQsContent.map((FAQ, index) => (
             <FAQWrapper
+              index={FAQ.index}
               key={FAQ.question + index}
               question={FAQ.question}
               answer={FAQ.answer}
+              isOpen={FAQ.index === openIndex}
+          onClick={() => toggleFAQ(FAQ.index)}
             />
           ))}
         </div>

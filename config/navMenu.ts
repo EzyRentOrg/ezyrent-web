@@ -1,12 +1,12 @@
 export const navbarMenu: NavbarMenuItem[] = [
-  { label: 'rent', href: '#' },
-  { label: 'buy', href: '#' },
+  { label: 'rent', href: '/property-listing' },
+  { label: 'buy', href: '/buy' },
   {
     label: 'manage property',
-    href: '#',
+    href: "#",
     dropdown: [
       { label: 'Property Management', href: '/property-management' },
-      { label: 'Landlord Resources', href: '/landlord-resources' }
+      { label: 'Landlord Resources', href: '/landlord' }
     ]
   },
   {
@@ -18,7 +18,7 @@ export const navbarMenu: NavbarMenuItem[] = [
     //   { label: 'Careers', href: '/careers' }
     // ]
   },
-  { label: 'blog', href: '#' }
+  // { label: 'blog', href: '#' }
 ];
 
 export const navbarMenuAuth: NavbarMenuItem[] = [

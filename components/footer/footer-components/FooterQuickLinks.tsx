@@ -8,8 +8,8 @@ interface QuickLinkItem extends NavbarMenuItem {
 
 const quickLinks: QuickLinkItem[] = [
   { label: 'Home', href: '/' },
-  { label: 'Rent', href: '#' },
-  { label: 'about', href: '#' }
+  { label: 'Rent', href: '/property-listing' },
+  { label: 'about', href: '/about' }
 ];
 
 export default function FooterQuickLinks() {
