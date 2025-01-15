@@ -6,7 +6,7 @@ import { Briefcase, Clock } from 'lucide-react';
 
 export default function Careers() {
   return (
-    <section className="my-28">
+    <section>
       <MaxWidthWrapper>
         <Breadcrumb />
 

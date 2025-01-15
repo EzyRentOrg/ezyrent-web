@@ -5,7 +5,7 @@ import Breadcrumb from '@/components/breadcrumb';
 
 export default function LandlordResources() {
   return (
-    <section className="my-28">
+    <section>
       <MaxWidthWrapper>
         <Breadcrumb />
         <main className="mt-10 flex flex-col items-center justify-center space-y-12 text-center">

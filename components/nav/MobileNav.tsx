@@ -42,7 +42,7 @@ export default function MobileNav() {
 
       <div
         className={cn(
-          'absolute top-full left-0 w-full z-50 bg-white backdrop-blur-lg shadow-md transition-all duration-300 ease-in-out',
+          'absolute top-full mt-4 left-0 w-full z-50 bg-white backdrop-blur-lg shadow-md transition-all duration-300 ease-in-out',
           toggleMobileMenu
             ? 'animate-pulldown opacity-100 visible'
             : 'opacity-0 invisible'
@@ -68,21 +68,21 @@ export default function MobileNav() {
                         <ChevronDown size={16} />
                       )}
                     </div>
-
                     <ul
                       className={cn(
-                        'mt-2 space-y-2',
+                        'mt-2 flex flex-col items-center space-y-2',
                         openDropdown === item.label ? 'block' : 'hidden'
                       )}
                     >
                       {item.dropdown.map((subItem, subIndex) => (
-                        <li key={subItem.label + subIndex}>
+                        <li key={subItem.label + subIndex} onClick={() => setToggleMobileMenu(false)}  className={cn(
+                              'block hover:text-[#7065F0] transition-colors mt-2',
+                              pathname === subItem.href && 'text-[#7065F0]'
+                            )}>
                           <Link
                             href={subItem.href}
-                            className={cn(
-                              'block hover:text-[#7065F0] transition-colors',
-                              pathname === subItem.href && 'text-[#7065F0]'
-                            )}
+                           
+                            
                           >
                             {subItem.label}
                           </Link>
@@ -93,6 +93,7 @@ export default function MobileNav() {
                 ) : (
                   <Link
                     href={item.href}
+                      onClick={() => setToggleMobileMenu(false)}
                     className={cn(
                       'hover:text-[#7065F0] transition-colors',
                       pathname === item.href && 'text-[#7065F0]'
