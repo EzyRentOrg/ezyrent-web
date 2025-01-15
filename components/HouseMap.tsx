@@ -10,10 +10,16 @@ export default function HouseMap({ address }: { address?: string }) {
     lng: number;
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+ 
 
   useEffect(() => {
     const fetchCoordinates = async () => {
-      if (!address) return;
+      if (!address) {
+        setError('No address provided.');
+        setLoading(false);
+        return;
+      }
 
       try {
         const apiKey = process.env.NEXT_PUBLIC_LOCATION_HQTRS_API_KEY;
@@ -40,18 +46,34 @@ export default function HouseMap({ address }: { address?: string }) {
         setError(
           err instanceof Error ? err.message : 'An unknown error occurred.'
         );
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchCoordinates();
   }, [address]);
 
+  if (loading) {
+    return <p>Loading map...</p>;
+  }
+
   if (error) {
-    return <p className="text-red-500">Error: {error}</p>;
+    return (
+      <div className="text-red-500">
+        <p>Error: {error}</p>
+        <button
+          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+          onClick={() => window.location.reload()}
+        >
+          Retry
+        </button>
+      </div>
+    );
   }
 
   if (!coordinates) {
-    return;
+    return <p>No coordinates available.</p>;
   }
 
   return (
@@ -66,7 +88,7 @@ export default function HouseMap({ address }: { address?: string }) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       <Marker position={[coordinates.lat, coordinates.lng]}>
-        <Tooltip direction="top" permanent={true}>
+        <Tooltip direction="top" permanent>
           {address}
         </Tooltip>
       </Marker>

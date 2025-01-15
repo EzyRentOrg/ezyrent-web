@@ -273,7 +273,7 @@ export default function ProductDetails() {
                   </button>
                 </div>
                 {/* other house images */}
-                {/* TODO: Change the houses to the er pictures of houses and when clicked, the picture clicked should replace the big image while big image becomes other image*/}
+                {/* TODO: Change the houses to the  pictures of houses and when clicked, the picture clicked should replace the big image while big image becomes other image*/}
                 <div className="absolute bottom-5 md:right-5 bg-white rounded-[90px] max-w-[429px] w-full h-20 px-3 py-[10px] flex justify-between items-center">
                   <Image
                     src={houseDetails.image}
@@ -334,7 +334,7 @@ export default function ProductDetails() {
                           alt="Naira symbol"
                           className="size-7"
                         />{' '}
-                        {houseDetails.price.toLocaleString()} / month
+                        {houseDetails.price.toLocaleString()} / year
                       </p>
                     </div>
                     {/* address */}

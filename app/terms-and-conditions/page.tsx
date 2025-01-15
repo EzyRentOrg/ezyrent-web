@@ -37,6 +37,18 @@ export default function TermsAndConditions() {
       );
     }
 
+    // Ensure "of" is always lowercase
+    if (/\bof\b/.test(content)) {
+      const parts = content.split(/\bof\b/);
+      return (
+        <>
+          {parts[0]}
+          <span className="lowercase">of</span>
+          {parts[1]}
+        </>
+      );
+    }
+
     return content;
   };
 
@@ -47,7 +59,7 @@ export default function TermsAndConditions() {
         <main>
           <section className="mt-10">
             <h1 className="text-[1.1rem] md:text-[1.5rem] lg:text-[2rem] font-semibold text-[#000929] mb-2 leading-[50.4px]">
-              EzyRent Terms Of Use
+              EzyRent Terms of Use
             </h1>
             <p className="leading-[33.6px] text-sm md:text-base">
               Welcome to EzyRent! These Terms and Conditions govern your use of
@@ -59,9 +71,11 @@ export default function TermsAndConditions() {
           <section className="flex flex-col space-y-5">
             {termsOfUseSections.map((section, sectionIndex) => (
               <div key={sectionIndex} className="terms-of-use__section">
-                <h2 className="text-[#000929] font-semibold text-[1.1rem] md:text-[1.5rem] lg:text-[2rem] mt-5">
-                  {section.title}
-                </h2>
+                {section.title && (
+                  <h2 className="text-[#000929] font-semibold text-[1.1rem] md:text-[1.5rem] lg:text-[2rem] mt-5">
+                    {renderContent(section.title)}
+                  </h2>
+                )}
                 {section.content.map((content, contentIndex) =>
                   typeof content === 'string' ? (
                     <p key={contentIndex} className="mt-5 text-sm md:text-base">

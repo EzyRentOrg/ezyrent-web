@@ -12,8 +12,8 @@ export default function About() {
         <main>
           {/* Hero Section */}
           <header className="mt-5 relative max-w-[1240px] h-[400px] md:h-[500px] rounded-[40px] bg-[url('/about/about-image2479x1653.jpeg')] bg-no-repeat bg-center bg-cover overflow-hidden">
-            <div className="absolute inset-0 bg-[#000929] bg-opacity-55 flex flex-col justify-center items-center text-white text-center h-full">
-              <div className="max-w-[900px] mx-auto flex flex-col items-center justify-center h-full">
+            <div className="absolute inset-0 bg-[#000929] bg-opacity-75 flex flex-col justify-center items-center text-white text-center h-full">
+              <div className="max-w-[900px] mx-auto flex flex-col items-center justify-center h-full px-4">
                 <h1 className="mb-10 sm:text-[1.2rem] text-[1.5rem] md:text-[3rem] lg:text-[3.5rem] font-semibold !leading-[1.4]">
                   Transforming Rentals, <br />
                   One Listing at a Time
