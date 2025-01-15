@@ -73,3 +73,14 @@ declare interface TeamMember {
   role: string;
   description: string;
 }
+
+declare interface FAQType {
+  index: number;
+  question: string;
+  answer: string;
+}
+
+declare interface FAQWrapper extends FAQType {
+  isOpen: boolean;
+  onClick: () => void;
+}

@@ -11,6 +11,12 @@ import { Separator } from '@/components/ui/separator';
 
 export default function FAQ() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+    const toggleFAQ = (index: number) => {
+    setOpenIndex(index === openIndex ? null : index); 
+  };
+
 
   // Filter FAQ based on the search query
   const filteredFAQs = FAQFullData.filter(
@@ -57,8 +63,11 @@ export default function FAQ() {
               filteredFAQs.map((FAQ, index) => (
                 <FAQWrapper
                   key={FAQ.question + index}
+                  index={FAQ.index}
                   question={FAQ.question}
                   answer={FAQ.answer}
+                  isOpen={FAQ.index === openIndex}
+          onClick={() => toggleFAQ(FAQ.index)}
                 />
               ))
             ) : (
