@@ -3,7 +3,7 @@ export const navbarMenu: NavbarMenuItem[] = [
   { label: 'buy', href: '/buy' },
   {
     label: 'manage property',
-    href: "#",
+    href: '#',
     dropdown: [
       { label: 'Property Management', href: '/property-management' },
       { label: 'Landlord Resources', href: '/landlord' }
@@ -17,7 +17,7 @@ export const navbarMenu: NavbarMenuItem[] = [
     //   { label: 'Team', href: '/team' },
     //   { label: 'Careers', href: '/careers' }
     // ]
-  },
+  }
   // { label: 'blog', href: '#' }
 ];
 

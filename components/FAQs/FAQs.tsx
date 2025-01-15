@@ -7,8 +7,8 @@ export default function FAQs() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
-    setOpenIndex(index === openIndex ? null : index); 
-  }
+    setOpenIndex(index === openIndex ? null : index);
+  };
 
   return (
     <section className="my-40">
@@ -27,7 +27,7 @@ export default function FAQs() {
               question={FAQ.question}
               answer={FAQ.answer}
               isOpen={FAQ.index === openIndex}
-          onClick={() => toggleFAQ(FAQ.index)}
+              onClick={() => toggleFAQ(FAQ.index)}
             />
           ))}
         </div>

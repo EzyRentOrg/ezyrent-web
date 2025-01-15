@@ -1,9 +1,13 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react'; 
+import { ChevronDown } from 'lucide-react';
 
-
-export default function FAQWrapper({ question, answer, isOpen, onClick }: FAQWrapper) {
+export default function FAQWrapper({
+  question,
+  answer,
+  isOpen,
+  onClick
+}: FAQWrapper) {
   return (
     <section>
       <div className="mx-auto space-y-6">

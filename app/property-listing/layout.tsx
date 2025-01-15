@@ -11,5 +11,9 @@ export default function ProductListingLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <section className="my-28"><div>{children}</div></section>;
+  return (
+    <section className="my-28">
+      <div>{children}</div>
+    </section>
+  );
 }
