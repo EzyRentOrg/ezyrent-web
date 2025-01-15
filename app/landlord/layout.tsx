@@ -2,11 +2,11 @@ import { generateMetadata } from '@/lib/metadata';
 import React from 'react';
 
 export const metadata = generateMetadata({
-  title: 'Product Listing',
-  description: 'List a property',
-  path: 'property-listing'
+  title: 'Property Owners',
+  description: 'Learn from experienced property owners',
+  path: 'landlord'
 });
-export default function PropertyListingLayout({
+export default function LandlordLayout({
   children
 }: {
   children: React.ReactNode;

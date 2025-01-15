@@ -31,7 +31,7 @@ export default function PropertyListing() {
           <section className="flex item-center space-x-5">
             <div className="relative w-full">
               <Search className="absolute left-2 top-[30%] " />
-              <Input placeholder="Search by address" className="pl-10 h-12" />
+              <Input placeholder="Search by address" className="pl-10" />
             </div>
             {/* type */}
             <div>
