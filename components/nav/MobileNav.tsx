@@ -75,17 +75,15 @@ export default function MobileNav() {
                       )}
                     >
                       {item.dropdown.map((subItem, subIndex) => (
-                        <li key={subItem.label + subIndex} onClick={() => setToggleMobileMenu(false)}  className={cn(
-                              'block hover:text-[#7065F0] transition-colors mt-2',
-                              pathname === subItem.href && 'text-[#7065F0]'
-                            )}>
-                          <Link
-                            href={subItem.href}
-                           
-                            
-                          >
-                            {subItem.label}
-                          </Link>
+                        <li
+                          key={subItem.label + subIndex}
+                          onClick={() => setToggleMobileMenu(false)}
+                          className={cn(
+                            'block hover:text-[#7065F0] transition-colors mt-2',
+                            pathname === subItem.href && 'text-[#7065F0]'
+                          )}
+                        >
+                          <Link href={subItem.href}>{subItem.label}</Link>
                         </li>
                       ))}
                     </ul>
@@ -93,7 +91,7 @@ export default function MobileNav() {
                 ) : (
                   <Link
                     href={item.href}
-                      onClick={() => setToggleMobileMenu(false)}
+                    onClick={() => setToggleMobileMenu(false)}
                     className={cn(
                       'hover:text-[#7065F0] transition-colors',
                       pathname === item.href && 'text-[#7065F0]'
