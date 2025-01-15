@@ -13,10 +13,9 @@ export default function FAQ() {
   const [searchQuery, setSearchQuery] = useState('');
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-    const toggleFAQ = (index: number) => {
-    setOpenIndex(index === openIndex ? null : index); 
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(index === openIndex ? null : index);
   };
-
 
   // Filter FAQ based on the search query
   const filteredFAQs = FAQFullData.filter(
@@ -67,7 +66,7 @@ export default function FAQ() {
                   question={FAQ.question}
                   answer={FAQ.answer}
                   isOpen={FAQ.index === openIndex}
-          onClick={() => toggleFAQ(FAQ.index)}
+                  onClick={() => toggleFAQ(FAQ.index)}
                 />
               ))
             ) : (
