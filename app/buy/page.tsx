@@ -23,7 +23,8 @@ export default function Buy() {
                 Properties for Sale Coming Soon
               </h1>
               <p className="mx-auto max-w-2xl text-lg text-gray-600">
-                While we&apos;re preparing our sales listings, you can explore our extensive collection of rental properties.
+                While we&apos;re preparing our sales listings, you can explore
+                our extensive collection of rental properties.
               </p>
             </div>
 
@@ -31,11 +32,17 @@ export default function Buy() {
             <div className="grid w-full grid-cols-1 gap-6 md:grid-cols-2">
               {/* Rentals Card */}
               <div className="rounded-xl bg-white p-8 shadow-lg transition-transform hover:scale-105">
-                <h3 className="mb-3 text-2xl font-semibold text-gray-900">Browse Rentals</h3>
+                <h3 className="mb-3 text-2xl font-semibold text-gray-900">
+                  Browse Rentals
+                </h3>
                 <p className="mb-6 text-gray-600">
-                  Explore our current selection of properties available for rent.
+                  Explore our current selection of properties available for
+                  rent.
                 </p>
-                <Link href={"/property-listing"} className=" w-fit flex items-center justify-center gap-2 rounded-lg bg-[#7065F0] px-6 py-3 text-white transition-colors hover:bg-opacity-90 transition-colors duration-100 ease-in-out">
+                <Link
+                  href={'/property-listing'}
+                  className=" w-fit flex items-center justify-center gap-2 rounded-lg bg-[#7065F0] px-6 py-3 text-white transition-colors hover:bg-opacity-90 transition-colors duration-100 ease-in-out"
+                >
                   View Rental Listings
                   <ArrowRight className="h-5 w-5" />
                 </Link>

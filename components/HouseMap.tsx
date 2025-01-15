@@ -11,7 +11,6 @@ export default function HouseMap({ address }: { address?: string }) {
   } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
- 
 
   useEffect(() => {
     const fetchCoordinates = async () => {

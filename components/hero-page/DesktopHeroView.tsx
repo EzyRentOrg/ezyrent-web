@@ -52,7 +52,6 @@ export default function DesktopHeroView() {
           </div>
           {/* left side */}
           <div className="rounded-tr-3xl rounded-br-3xl md:hidden lg:block bg-[url('/hero/desktopHeroImage_1102x617.webp')] bg-cover w-[1540px] h-[817px] -mt-[104px]  ml-28 lg:ml-[456px] bg-no-repeat" />
-
         </div>
         {/* banner */}
         <div className=" -mt-20 lg:-mt-20 xl:-mt-14 hero_banner hero_banner-border bg-opacity-60 shadow-md backdrop-blur-md h-28 max-w-[1116px] mx-auto z-5 flex items-center justify-between px-8 rounded-full">

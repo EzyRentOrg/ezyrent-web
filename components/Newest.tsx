@@ -46,7 +46,9 @@ export default function Newest() {
             className="first-letter:capitalize flex items-center"
           >
             sort by:
-            <span className="ml-2 font-semibold capitalize flex items-center">newest <ChevronDown /></span>
+            <span className="ml-2 font-semibold capitalize flex items-center">
+              newest <ChevronDown />
+            </span>
           </h3>
           <div className="flex items-center space-x-10 ml-auto">
             <button

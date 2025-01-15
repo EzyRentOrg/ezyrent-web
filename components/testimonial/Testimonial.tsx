@@ -25,7 +25,7 @@ export default function Testimonial() {
 
         <div>
           <div className="flex items-start gap-6">
-            <TestimonialCard testimonials={testimonials} autoplay={true}/>
+            <TestimonialCard testimonials={testimonials} autoplay={true} />
           </div>
         </div>
       </MaxWidthWrapper>

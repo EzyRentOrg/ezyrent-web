@@ -21,8 +21,9 @@ export default function LandlordResources() {
               Landlord Resources Hub
             </h1>
             <p className="mx-auto max-w-2xl text-lg text-gray-600">
-              We&apos;re building a comprehensive resource center to help landlords manage their properties
-              more effectively. Get access to tools, guides, and expert advice.
+              We&apos;re building a comprehensive resource center to help
+              landlords manage their properties more effectively. Get access to
+              tools, guides, and expert advice.
             </p>
           </div>
 
@@ -31,17 +32,23 @@ export default function LandlordResources() {
             <div className="rounded-xl bg-white p-6 shadow-lg transition-transform hover:scale-105">
               <FileText className="mb-4 h-8 w-8 text-[#7065F0]" />
               <h3 className="mb-2 text-xl font-semibold">Document Templates</h3>
-              <p className="text-gray-600">Access legal templates, lease agreements, and essential forms</p>
+              <p className="text-gray-600">
+                Access legal templates, lease agreements, and essential forms
+              </p>
             </div>
             <div className="rounded-xl bg-white p-6 shadow-lg transition-transform hover:scale-105">
               <Calculator className="mb-4 h-8 w-8 text-[#7065F0]" />
               <h3 className="mb-2 text-xl font-semibold">ROI Calculator</h3>
-              <p className="text-gray-600">Tools to calculate property returns and analyze investments</p>
+              <p className="text-gray-600">
+                Tools to calculate property returns and analyze investments
+              </p>
             </div>
             <div className="rounded-xl bg-white p-6 shadow-lg transition-transform hover:scale-105">
               <Users className="mb-4 h-8 w-8 text-[#7065F0]" />
               <h3 className="mb-2 text-xl font-semibold">Expert Network</h3>
-              <p className="text-gray-600">Connect with property management experts and fellow landlords</p>
+              <p className="text-gray-600">
+                Connect with property management experts and fellow landlords
+              </p>
             </div>
           </div>
         </main>

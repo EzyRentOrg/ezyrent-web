@@ -1,7 +1,7 @@
 'use client';
 
 import { navbarMenu, navbarMenuAuth } from '@/config/navMenu';
-import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react'; 
+import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -19,7 +19,7 @@ export default function MobileNav() {
   };
 
   const handleDropdownToggle = (label: string) => {
-    setOpenDropdown((prev) => (prev === label ? null : label)); 
+    setOpenDropdown((prev) => (prev === label ? null : label));
   };
 
   return (
@@ -43,7 +43,9 @@ export default function MobileNav() {
       <div
         className={cn(
           'absolute top-full left-0 w-full z-50 bg-white backdrop-blur-lg shadow-md transition-all duration-300 ease-in-out',
-          toggleMobileMenu ? 'animate-pulldown opacity-100 visible' : 'opacity-0 invisible'
+          toggleMobileMenu
+            ? 'animate-pulldown opacity-100 visible'
+            : 'opacity-0 invisible'
         )}
       >
         <div className="px-4 py-6">
@@ -52,14 +54,16 @@ export default function MobileNav() {
               <div
                 key={item.label + index}
                 className="relative capitalize"
-                onClick={() => item.dropdown && handleDropdownToggle(item.label)} 
+                onClick={() =>
+                  item.dropdown && handleDropdownToggle(item.label)
+                }
               >
                 {item.dropdown ? (
                   <>
                     <div className="flex items-center space-x-2">
                       <span>{item.label}</span>
                       {openDropdown === item.label ? (
-                        <ChevronUp size={16} /> 
+                        <ChevronUp size={16} />
                       ) : (
                         <ChevronDown size={16} />
                       )}
@@ -68,7 +72,7 @@ export default function MobileNav() {
                     <ul
                       className={cn(
                         'mt-2 space-y-2',
-                        openDropdown === item.label ? 'block' : 'hidden' 
+                        openDropdown === item.label ? 'block' : 'hidden'
                       )}
                     >
                       {item.dropdown.map((subItem, subIndex) => (
