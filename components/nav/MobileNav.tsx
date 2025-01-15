@@ -1,101 +1,124 @@
 'use client';
 
 import { navbarMenu, navbarMenuAuth } from '@/config/navMenu';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react'; 
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import DropdownMenu from '../DropdownMenu';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
 import { Button } from '../ui/button';
 
 export default function MobileNav() {
   const [toggleMobileMenu, setToggleMobileMenu] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const pathname = usePathname();
 
   const handleToggleMobileMenu = () => {
     setToggleMobileMenu((prev) => !prev);
   };
 
-  return (
-    <>
-      <nav className="lg:hidden relative">
-        <div className="mx-auto px-4 md:px- w-full flex items-center justify-between">
-          {/* Left Section: Logo */}
-          <div>
-            <Link href="/" className="flex-shrink-0">
-              <Image
-                src={'/logo/LeftNav.png'}
-                alt="EzyRent logo"
-                priority
-                width={134}
-                height={40}
-                className="w-[134px] h-[40px]"
-              />
-            </Link>
-          </div>
-          {/* toggle menu Icon */}
-          <div onClick={handleToggleMobileMenu}>
-            {toggleMobileMenu ? <X /> : <Menu />}
-          </div>
-        </div>
+  const handleDropdownToggle = (label: string) => {
+    setOpenDropdown((prev) => (prev === label ? null : label)); 
+  };
 
-        {/* Dropdown Menu */}
-        <div
-          className={cn(
-            'absolute top-full left-0 w-full z-50 bg-white/70 backdrop-blur-lg shadow-md transition-all duration-300 ease-in-out',
-            toggleMobileMenu
-              ? 'animate-pulldown opacity-100 visible'
-              : 'opacity-0 invisible'
-          )}
-        >
-          <div className="px-4 py-6">
-            <ul className="flex flex-col items-center space-y-12">
-              {(navbarMenu || []).map((item, index) => (
-                <div key={item.label + index} className="relative">
-                  {item.dropdown ? (
-                    <DropdownMenu items={item.dropdown} label={item.label} />
-                  ) : (
-                    <Link
-                      href={item.href}
+  return (
+    <nav className="lg:hidden relative">
+      <div className="mx-auto px-4 w-full flex items-center justify-between">
+        <Link href="/" className="flex-shrink-0">
+          <Image
+            src="/logo/LeftNav.png"
+            alt="EzyRent logo"
+            priority
+            width={134}
+            height={40}
+            className="w-[134px] h-[40px]"
+          />
+        </Link>
+        <div onClick={handleToggleMobileMenu}>
+          {toggleMobileMenu ? <X /> : <Menu />}
+        </div>
+      </div>
+
+      <div
+        className={cn(
+          'absolute top-full left-0 w-full z-50 bg-white backdrop-blur-lg shadow-md transition-all duration-300 ease-in-out',
+          toggleMobileMenu ? 'animate-pulldown opacity-100 visible' : 'opacity-0 invisible'
+        )}
+      >
+        <div className="px-4 py-6">
+          <ul className="flex flex-col items-center space-y-12">
+            {navbarMenu.map((item, index) => (
+              <div
+                key={item.label + index}
+                className="relative capitalize"
+                onClick={() => item.dropdown && handleDropdownToggle(item.label)} 
+              >
+                {item.dropdown ? (
+                  <>
+                    <div className="flex items-center space-x-2">
+                      <span>{item.label}</span>
+                      {openDropdown === item.label ? (
+                        <ChevronUp size={16} /> 
+                      ) : (
+                        <ChevronDown size={16} />
+                      )}
+                    </div>
+
+                    <ul
                       className={cn(
-                        'hover:text-[#7065F0] transition-colors',
-                        pathname === item.href && 'text-[#7065F0]'
+                        'mt-2 space-y-2',
+                        openDropdown === item.label ? 'block' : 'hidden' 
                       )}
                     >
-                      {item.label}
-                    </Link>
-                  )}
-                </div>
-              ))}
-            </ul>
-            <div className="flex justify-center space-x-4 mt-6">
-              {(navbarMenuAuth || []).map((navbarAuth, index) => (
-                <Link
-                  key={navbarAuth.label + index}
-                  href={navbarAuth.href}
-                  className="w-full max-w-xs"
-                >
-                  <Button
-                    variant={
-                      navbarAuth.label === 'sign up' ? 'default' : 'ghost'
-                    }
+                      {item.dropdown.map((subItem, subIndex) => (
+                        <li key={subItem.label + subIndex}>
+                          <Link
+                            href={subItem.href}
+                            className={cn(
+                              'block hover:text-[#7065F0] transition-colors',
+                              pathname === subItem.href && 'text-[#7065F0]'
+                            )}
+                          >
+                            {subItem.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <Link
+                    href={item.href}
                     className={cn(
-                      'w-full capitalize h-10 transition-colors',
-                      navbarAuth.label === 'sign up'
-                        ? 'rounded-full bg-[#7065F0]'
-                        : 'hover:text-[#7065F0] transition-colors'
+                      'hover:text-[#7065F0] transition-colors',
+                      pathname === item.href && 'text-[#7065F0]'
                     )}
                   >
-                    {navbarAuth.label}
-                  </Button>
-                </Link>
-              ))}
-            </div>
+                    {item.label}
+                  </Link>
+                )}
+              </div>
+            ))}
+          </ul>
+          <div className="flex justify-center space-x-4 mt-12">
+            {navbarMenuAuth.map((authItem, index) => (
+              <Link key={authItem.label + index} href={authItem.href}>
+                <Button
+                  variant={authItem.label === 'sign up' ? 'default' : 'ghost'}
+                  className={cn(
+                    'w-full capitalize h-10 transition-colors',
+                    authItem.label === 'sign up'
+                      ? 'rounded-full bg-[#7065F0]'
+                      : 'hover:text-[#7065F0]'
+                  )}
+                >
+                  {authItem.label}
+                </Button>
+              </Link>
+            ))}
           </div>
         </div>
-      </nav>
-    </>
+      </div>
+    </nav>
   );
 }

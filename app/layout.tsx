@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn(dmSans.className, 'flex flex-col min-h-screen bg-white ')}
+        className={cn(dmSans.className, 'flex flex-col min-h-screen bg-white w-full')}
       >
         <GoogleOAuthProvider clientId="214122998362-8gc20qq486bsnigkugj7fh09du0dm9hm.apps.googleusercontent.com">
           <Header />

@@ -15,7 +15,7 @@ export default function DesktopNav() {
 
   return (
     <>
-      <nav className="hidden lg:block">
+      <nav className="hidden lg:block ">
         <div className=" mx-auto px-2 md:px-8 w-full flex items-center justify-between">
           {/* Left Section: Logo and Navigation Links */}
           <div className="">
@@ -34,7 +34,7 @@ export default function DesktopNav() {
           <div className="capitalize font-[500] leading-6 text-[#000929]">
             {/* Menu Links */}
             <div className="flex items-center space-x-12">
-              {(navbarMenu || []).map((item, index) => (
+              {(navbarMenu).map((item, index) => (
                 <div key={item.label + index} className="relative">
                   {item.dropdown ? (
                     <DropdownMenu items={item.dropdown} label={item.label} />
@@ -61,7 +61,7 @@ export default function DesktopNav() {
             </div>
             {/* nav auth */}
             <div className="flex items-center space-x-12 ml-auto">
-              {(navbarMenuAuth || []).map((navbarAuth, index) => (
+              {(navbarMenuAuth).map((navbarAuth, index) => (
                 <Link key={navbarAuth.label + index} href={navbarAuth.href}>
                   <Button
                     variant={
