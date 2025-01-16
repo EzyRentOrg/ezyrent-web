@@ -10,8 +10,8 @@ export default function GetStarted() {
     <section className="my-10">
       <MaxWidthWrapper className="">
         <div className="max-w-[699px] mx-auto text-center mb-8 px-4">
-          <p className="capitalize text-[#7065F0] font-semibold text-[2rem] md:text-4xl md:leading-[67.2px]">
-            Ready to Buy or rent your dream property
+          <p className=" text-[#7065F0] font-semibold text-[2rem] md:text-4xl md:leading-[67.2px]">
+            Ready to buy or rent your dream property
           </p>
           <p className=" text-[1rem] md:text-2xl text-[#000929] first-letter:capitalize">
             Download the app on google Play Store or Apple Store to get amazing
@@ -19,7 +19,7 @@ export default function GetStarted() {
           </p>
         </div>
         <div className="my-10 w-[299px] mx-auto rounded-[40px]">
-          <Link href={'/'}>
+          <Link href={'/download'}>
             <Button
               aria-label="Get Started with App"
               className={cn(

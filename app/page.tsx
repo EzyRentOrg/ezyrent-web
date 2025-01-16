@@ -9,7 +9,6 @@ import FAQs from '@/components/FAQs/FAQs';
 import HeroPage from '@/components/hero-page/HeroPage';
 import GetStarted from '@/components/GetStarted';
 
-
 export default function Home() {
   return (
     <div>
