@@ -11,7 +11,7 @@ export default function FAQs() {
   };
 
   return (
-    <section className="my-40">
+    <section className="mt-40 mb-20">
       <MaxWidthWrapper>
         <h2 className="capitalize text-[#7065F0] font-semibold text-[2.1rem] md:text-5xl md:leading-[67.2px]">
           Frequently Asked Questions
