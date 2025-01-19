@@ -7,11 +7,14 @@ import Link from 'next/link';
 
 export default function GetStarted() {
   return (
-    <section className="my-10">
+    <section className="my-5 min-h-screen">
       <MaxWidthWrapper className="">
-        <div className="max-w-[699px] mx-auto text-center mb-8 px-4">
-          <p className=" text-[#7065F0] font-semibold text-[2rem] md:text-4xl md:leading-[67.2px]">
-            Ready to buy or rent your dream property
+        <div className="max-w-[699px] mx-auto text-center flex flex-col justify-between mb-8 px-4">
+          <p className=" text-[#7065F0] font-semibold text-[1.5rem] md:text-4xl mb-10 md:leading-[60px]">
+            Ready to buy or rent your dream property?
+          </p>
+          <p className="text-[#7065F0] font-semibold text-[2rem] md:text-4xl mb-10 md:leading-[60px]">
+            Easy!
           </p>
           <p className=" text-[1rem] md:text-2xl text-[#000929] first-letter:capitalize">
             Download the app on google Play Store or Apple Store to get amazing
