@@ -8,6 +8,7 @@ import BestDeal from '@/components/BestDeal';
 import FAQs from '@/components/FAQs/FAQs';
 import HeroPage from '@/components/hero-page/HeroPage';
 import GetStarted from '@/components/GetStarted';
+import AboutUsCarousel from '@/components/carousel/about-us-carousel';
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       <BestDeal />
       <Testimonial />
       <FAQs />
+      <AboutUsCarousel />
       <GetStarted />
       {/* <StartYourJourney /> */}
     </div>
