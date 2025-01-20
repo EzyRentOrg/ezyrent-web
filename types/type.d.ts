@@ -84,3 +84,9 @@ declare interface FAQWrapper extends FAQType {
   isOpen: boolean;
   onClick: () => void;
 }
+
+
+declare interface CarouselContent {
+  title: string;
+  content: string;
+}

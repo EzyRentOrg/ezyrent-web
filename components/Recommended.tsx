@@ -6,6 +6,7 @@ import { Button } from './ui/button';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useWindowResizer } from '@/hooks/useWindowResizer';
+import Link from 'next/link';
 
 export default function RecommendedProperties() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -106,14 +107,16 @@ export default function RecommendedProperties() {
         </div>
 
         <div className="my-10 md:w-[299px] mx-auto rounded-[40px]">
-          <Button
-            aria-label="View more listings"
-            className={cn(
-              'h-[72px] text-xl bg-[#7065F0] capitalize w-full rounded-[40px]'
-            )}
-          >
-            View more <ArrowRight size={32} className="h-8 w-8" />
-          </Button>
+          <Link href={`/download`}>
+            <Button
+              aria-label="View more listings"
+              className={cn(
+                'h-[72px] text-xl bg-[#7065F0] capitalize w-full rounded-[40px]'
+              )}
+            >
+              View more <ArrowRight size={32} className="h-8 w-8" />
+            </Button>
+          </Link>
         </div>
       </section>
     </MaxWidthWrapper>
