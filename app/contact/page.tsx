@@ -48,7 +48,6 @@ export default function Contatct() {
     console.log(data);
   };
 
-
   return (
     <section className="max-w-[1400px] min-h-screen mx-auto mb-10 flex items-center space-x-10">
       <main className="h-full w-full flex flex-col ">
