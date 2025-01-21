@@ -68,12 +68,12 @@
 
 /* stops shadcn overflow */
 html {
-    @apply overflow-x-hidden;
-  }
+  @apply overflow-x-hidden;
+}
 
- body {
-    @apply  !min-w-full;
-  }
+body {
+  @apply !min-w-full;
+}
 
 /* Hide scrollbar */
 @layer utilities {
@@ -84,8 +84,8 @@ html {
 
   /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 
   /* Custom thin scrollbar */
@@ -103,11 +103,10 @@ html {
   }
 
   .custom-scrollbar {
-    scrollbar-width: none;  /* Firefox */
-    scrollbar-color: #d4d4d4 transparent;  /* Firefox */
+    scrollbar-width: none; /* Firefox */
+    scrollbar-color: #d4d4d4 transparent; /* Firefox */
   }
 }
-
 
 /* Remove date icon for Chrome, Safari, Edge, Opera */
 input[type='date']::-webkit-calendar-picker-indicator {
@@ -246,7 +245,7 @@ input[type='date']::-ms-clear {
   }
 
   .image-box-shadow {
-    box-shadow: 4px 4px 30px 0px #0000000A
+    box-shadow: 4px 4px 30px 0px #0000000a;
   }
 }
 

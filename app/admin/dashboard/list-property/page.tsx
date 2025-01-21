@@ -1,7 +1,5 @@
-import React from 'react'
+import React from 'react';
 
 export default function ListAProperty() {
-  return (
-    <div>ListAProperty</div>
-  )
+  return <div>ListAProperty</div>;
 }

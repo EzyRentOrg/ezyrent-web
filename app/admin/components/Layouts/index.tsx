@@ -1,9 +1,9 @@
-import React from 'react'
-import Sidebar from '../Sidebar'
-import AdminHeader from '../AdminHeader'
+import React from 'react';
+import Sidebar from '../Sidebar';
+import AdminHeader from '../AdminHeader';
 
 export default function DashboardLayout({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {
@@ -11,7 +11,7 @@ export default function DashboardLayout({
     <main className="flex min-h-screen">
       {/* Sidebar */}
       <div>
-       <Sidebar/>
+        <Sidebar />
       </div>
       {/* Contents */}
       <section className="flex-1 flex flex-col">

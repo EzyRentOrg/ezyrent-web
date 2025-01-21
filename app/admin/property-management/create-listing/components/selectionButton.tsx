@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 
 interface SelectionButtonProps {
   label: string;
@@ -11,7 +11,7 @@ export default function SelectionButton({
   label,
   selected,
   onClick,
-  className = ""
+  className = ''
 }: SelectionButtonProps) {
   return (
     <Button
@@ -28,7 +28,7 @@ export default function SelectionButton({
         w-24
         transition-all 
         duration-200 
-        ${selected ? "bg-[#7065f0] text-white" : "hover:bg-[#7065f0]/10"}
+        ${selected ? 'bg-[#7065f0] text-white' : 'hover:bg-[#7065f0]/10'}
         ${className}
       `}
     >

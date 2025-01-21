@@ -1,24 +1,27 @@
-import React from 'react'
-import Image from 'next/image'
-import { Button } from '@/components/ui/button'
-import { CircleChevronLeft, CircleChevronRight, X } from 'lucide-react'
+import React from 'react';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { CircleChevronLeft, CircleChevronRight, X } from 'lucide-react';
 
 interface ImageModalPropType {
-  setExpandedImage: (img: string | null) => void; expandedImage: string; images: string[]
+  setExpandedImage: (img: string | null) => void;
+  expandedImage: string;
+  images: string[];
 }
 
-export default function ImageModal({ setExpandedImage, expandedImage, images }: ImageModalPropType) {
+export default function ImageModal({
+  setExpandedImage,
+  expandedImage,
+  images
+}: ImageModalPropType) {
+  const navigateImage = (direction: number) => {
+    const currentIndex = images.indexOf(expandedImage);
+    const newIndex = currentIndex + direction;
 
-
-const navigateImage = (direction: number) => {
-  const currentIndex = images.indexOf(expandedImage);
-  const newIndex = currentIndex + direction;
-
-  if (newIndex >= 0 && newIndex < images.length) {
-    setExpandedImage(images[newIndex]);
-  }
-};
-
+    if (newIndex >= 0 && newIndex < images.length) {
+      setExpandedImage(images[newIndex]);
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-[#000000]/90 flex items-center justify-center z-50">
@@ -39,8 +42,8 @@ const navigateImage = (direction: number) => {
             src={expandedImage}
             alt="Expanded view"
             className="object-contain"
-            width={800} 
-            height={600} 
+            width={800}
+            height={600}
           />
         </div>
         {/* navigations */}
@@ -52,7 +55,7 @@ const navigateImage = (direction: number) => {
             onClick={() => navigateImage(-1)}
             disabled={images.indexOf(expandedImage) === 0}
           >
-            <CircleChevronLeft  className="!size-8 text-black"/>
+            <CircleChevronLeft className="!size-8 text-black" />
           </Button>
           {/* Next Button */}
           <Button
@@ -61,10 +64,10 @@ const navigateImage = (direction: number) => {
             onClick={() => navigateImage(1)}
             disabled={images.indexOf(expandedImage) === images.length - 1}
           >
-            <CircleChevronRight size={24} className="!size-8 !text-black "/>
+            <CircleChevronRight size={24} className="!size-8 !text-black " />
           </Button>
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,14 +1,25 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { FileUp, Save, CloudUpload } from 'lucide-react';
-import NumberLabel from "./label";
-import { Control, UseFormWatch, FieldErrors, Controller } from "react-hook-form";
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
-import SelectionButton from "./selectionButton";
-import { amenityOptions, bathOptions, bedOptions, buildingTypes, durations } from "@/app/admin/constants/property-form";
-import { useState } from "react";
+import NumberLabel from './label';
+import {
+  Control,
+  UseFormWatch,
+  FieldErrors,
+  Controller
+} from 'react-hook-form';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import SelectionButton from './selectionButton';
+import {
+  amenityOptions,
+  bathOptions,
+  bedOptions,
+  buildingTypes,
+  durations
+} from '@/app/admin/constants/property-form';
+import { useState } from 'react';
 
 interface ListingFormProps {
   control: Control<PropertyFormData>;
@@ -32,9 +43,9 @@ export default function ListingForm({
   onSubmit,
   onSaveDraft
 }: ListingFormProps) {
-  const [selectedBuildingType, setSelectedBuildingType] = useState<string>("");
+  const [selectedBuildingType, setSelectedBuildingType] = useState<string>('');
 
-console.log("errors: ", errors)
+  console.log('errors: ', errors);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,14 +54,19 @@ console.log("errors: ", errors)
 
   return (
     <aside className="w-full max-w-[740px] flex flex-col space-y-8 lg:pl-10 bg-gradient-to-b from-neutral-50 to-white/70 rounded-lg">
-      <h2 className="text-[#000929] text-[1.25rem] font-medium mb-3 capitalize">property listing</h2>
+      <h2 className="text-[#000929] text-[1.25rem] font-medium mb-3 capitalize">
+        property listing
+      </h2>
 
       <form onSubmit={handleSubmit} className="space-y-8">
         <section aria-label="Image Upload">
           <h2 className="text-[#000929] text-xl font-medium mb-3">Add Image</h2>
           <div className="bg-white h-40 w-full max-w-[416px] rounded-lg flex items-center justify-center shadow-sm">
             <div className="w-[90%] h-[85%] border border-dashed border-[#CACACA] rounded-lg flex flex-col items-center justify-center">
-              <label htmlFor="image" className="w-full h-full flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors">
+              <label
+                htmlFor="image"
+                className="w-full h-full flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
+              >
                 <input
                   id="image"
                   type="file"
@@ -65,11 +81,17 @@ console.log("errors: ", errors)
                 </span>
                 <div className="flex flex-col items-center">
                   <p className="text-center text-sm">
-                    <span className="text-[#7065F0] font-medium hover:underline">Click to upload</span>
-                    {" "}or{" "}
-                    <span className="text-[#7065F0] font-medium hover:underline">Drag and drop</span>
+                    <span className="text-[#7065F0] font-medium hover:underline">
+                      Click to upload
+                    </span>{' '}
+                    or{' '}
+                    <span className="text-[#7065F0] font-medium hover:underline">
+                      Drag and drop
+                    </span>
                   </p>
-                  <small className="text-[#707070] mt-1">(Max. file size: 25 MB)</small>
+                  <small className="text-[#707070] mt-1">
+                    (Max. file size: 25 MB)
+                  </small>
                 </div>
               </label>
             </div>
@@ -110,19 +132,25 @@ console.log("errors: ", errors)
                 aria-label="Select duration"
               >
                 {durations.map((duration) => (
-                  <option key={duration} value={duration}>{duration}</option>
+                  <option key={duration} value={duration}>
+                    {duration}
+                  </option>
                 ))}
               </select>
             )}
           />
           {errors.duration && (
-            <p className="mt-2 text-red-500 text-sm">{errors.duration.message}</p>
+            <p className="mt-2 text-red-500 text-sm">
+              {errors.duration.message}
+            </p>
           )}
         </div>
 
         {/* building type */}
         <div className="w-fit mt-10">
-          <h2 className="text-[#000929] text-xl font-medium mb-3">Building Type</h2>
+          <h2 className="text-[#000929] text-xl font-medium mb-3">
+            Building Type
+          </h2>
           <Controller
             name="buildingType"
             control={control}
@@ -144,14 +172,24 @@ console.log("errors: ", errors)
             )}
           />
           {errors.buildingType && (
-            <p className="mt-2 text-red-500 text-sm">{errors.buildingType.message}</p>
+            <p className="mt-2 text-red-500 text-sm">
+              {errors.buildingType.message}
+            </p>
           )}
         </div>
 
         {/* Beds and Baths */}
         {[
-          { label: "No. of Beds", options: bedOptions, fieldName: "beds" as const },
-          { label: "No. of Baths", options: bathOptions, fieldName: "baths" as const },
+          {
+            label: 'No. of Beds',
+            options: bedOptions,
+            fieldName: 'beds' as const
+          },
+          {
+            label: 'No. of Baths',
+            options: bathOptions,
+            fieldName: 'baths' as const
+          }
         ].map(({ label, options, fieldName }) => (
           <div key={fieldName} className="w-fit mt-10">
             <h2 className="text-[#000929] text-xl font-medium mb-3">{label}</h2>
@@ -172,7 +210,9 @@ console.log("errors: ", errors)
                     ))}
                   </div>
                   {fieldState.error && (
-                    <p className="mt-2 text-red-500 text-sm">{fieldState.error.message}</p>
+                    <p className="mt-2 text-red-500 text-sm">
+                      {fieldState.error.message}
+                    </p>
                   )}
                 </>
               )}
@@ -197,7 +237,9 @@ console.log("errors: ", errors)
                       onCheckedChange={(checked) => {
                         const newValue = checked
                           ? [...(field.value || []), amenity]
-                          : (field.value || []).filter((item) => item !== amenity);
+                          : (field.value || []).filter(
+                              (item) => item !== amenity
+                            );
                         field.onChange(newValue);
                       }}
                     />
@@ -209,7 +251,9 @@ console.log("errors: ", errors)
           />
 
           {errors.amenities && (
-            <p className="mt-2 text-red-500 text-sm">{errors.amenities.message}</p>
+            <p className="mt-2 text-red-500 text-sm">
+              {errors.amenities.message}
+            </p>
           )}
         </div>
 
@@ -248,7 +292,9 @@ console.log("errors: ", errors)
 
         {/* Description */}
         <section>
-          <h2 className="text-[#000929] text-xl font-medium mb-3">Description</h2>
+          <h2 className="text-[#000929] text-xl font-medium mb-3">
+            Description
+          </h2>
           <div className="relative">
             <Controller
               name="description"
@@ -273,7 +319,9 @@ console.log("errors: ", errors)
                 className="bg-[#F7F7F7] text-xs w-fit"
               />
               {errors.description && (
-                <p className="text-red-500 text-sm">{errors.description.message}</p>
+                <p className="text-red-500 text-sm">
+                  {errors.description.message}
+                </p>
               )}
             </div>
           </div>

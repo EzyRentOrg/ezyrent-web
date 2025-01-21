@@ -1,10 +1,10 @@
-"use client"
+'use client';
 
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search, Plus } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Search, Plus } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 type AdminHeaderPropType = {
   title: string;
@@ -15,10 +15,10 @@ type AdminHeaderPropType = {
 export default function AdminHeader({
   title,
   handleClick,
-  btnTitle,
+  btnTitle
 }: AdminHeaderPropType) {
   const handleProfileClick = () => {
-    alert("Profile clicked!");
+    alert('Profile clicked!');
   };
 
   return (
@@ -51,7 +51,7 @@ export default function AdminHeader({
 
       {/* Action Button */}
       <div className="flex items-center justify-between">
-        {handleClick && 
+        {handleClick && (
           <Button
             variant="default"
             className="bg-[#7065F0] first-letter:capitalize h-12 rounded-[30px] capitalize mr-10"
@@ -61,7 +61,7 @@ export default function AdminHeader({
             <span>{btnTitle}</span>
             <Plus aria-hidden="true" />
           </Button>
-        }
+        )}
         {/* Profile */}
         <Avatar
           className="size-12 cursor-pointer"
@@ -70,7 +70,7 @@ export default function AdminHeader({
           tabIndex={0}
           onClick={handleProfileClick}
           onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
+            if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
               handleProfileClick();
             }

@@ -97,5 +97,3 @@ export const propertyFormSchema = z.object({
   ),
   error: z.string().nullable()
 });
-
-

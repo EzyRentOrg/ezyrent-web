@@ -84,5 +84,3 @@ declare interface FAQWrapper extends FAQType {
   isOpen: boolean;
   onClick: () => void;
 }
-
-

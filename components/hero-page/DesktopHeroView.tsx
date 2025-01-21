@@ -80,7 +80,7 @@ export default function DesktopHeroView() {
             />
           </div> */}
         </div>
-        </div>
+      </div>
     </header>
   );
 }
