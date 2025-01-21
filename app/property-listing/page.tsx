@@ -44,7 +44,11 @@ export default function PropertyListing() {
 
                   <SelectContent className="bg-white">
                     {propertyType.map((type: string) => (
-                      <SelectItem key={type} value={type} className="capitalize">
+                      <SelectItem
+                        key={type}
+                        value={type}
+                        className="capitalize"
+                      >
                         {type}
                       </SelectItem>
                     ))}

@@ -1,12 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
-import MaxWidthWrapper from './maxWidthWrapper';
 import { Home } from 'lucide-react';
 
 export default function NotFound() {
   return (
-    <div className="pt-28 pb-10">
-      <MaxWidthWrapper>
+    <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 flex-1 grid place-items-center h-screen">
+      
         <main className="flex flex-col items-center justify-center space-y-8 text-center">
           {/* 404 Text */}
           <h1 className="text-8xl font-bold text-[#7065F0]">404</h1>
@@ -42,7 +41,6 @@ export default function NotFound() {
             <Search className="relative h-24 w-24 text-blue-600/40" />
           </div> */}
         </main>
-      </MaxWidthWrapper>
     </div>
   );
 }

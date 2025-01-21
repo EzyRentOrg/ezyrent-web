@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import FAQWrapper from './faq';
 import { FAQsContent } from '@/config/FAQs';
-import MaxWidthWrapper from '@/app/maxWidthWrapper';
 
 export default function FAQs() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -11,8 +10,7 @@ export default function FAQs() {
   };
 
   return (
-    <section className="my-40">
-      <MaxWidthWrapper>
+    <section className="my-20 lg:my-40 max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 ">
         <h2 className="capitalize text-[#7065F0] font-semibold text-[2.1rem] md:text-5xl md:leading-[67.2px]">
           Frequently Asked Questions
         </h2>
@@ -31,7 +29,6 @@ export default function FAQs() {
             />
           ))}
         </div>
-      </MaxWidthWrapper>
     </section>
   );
 }

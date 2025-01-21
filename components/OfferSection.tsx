@@ -1,4 +1,4 @@
-import MaxWidthWrapper from '@/app/maxWidthWrapper';
+
 import React from 'react';
 import { Button } from './ui/button';
 import Image from 'next/image';
@@ -6,7 +6,7 @@ import Image from 'next/image';
 export default function OfferSection() {
   return (
     <section className=" w-full bg-[#7065F0] pb-10 pt-10 mt-40 max-h-[701px] overflow-hidden">
-      <MaxWidthWrapper className="relative h-auto">
+      <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20  overflow-hidden relative h-auto">
         {/* right section */}
         <div className="text-[#f1f1f1] w-full max-w-[905px] mr-20">
           <p className="text-[2rem] md:text-[3rem] font-[500] md:leading-[67.2px] uppercase">
@@ -39,7 +39,7 @@ export default function OfferSection() {
           alt="Image of a beautiful"
           className=" top-[50px] left-[500px] absolute"
         />
-      </MaxWidthWrapper>
+      </div>
     </section>
   );
 }

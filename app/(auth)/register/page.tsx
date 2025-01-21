@@ -25,6 +25,7 @@ import Link from 'next/link';
 import { lappedImages } from '@/config';
 import RightHandAuthPage from '@/components/RightHandAuthPage';
 import { toast } from 'sonner';
+import LappedImages from '@/components/LappedImages';
 
 // Infer the type from the schema
 type FormValues = z.infer<typeof signUpSchema>;
@@ -66,11 +67,13 @@ export default function Register() {
   };
 
   return (
-    <section className="max-w-[1400px] min-h-[984px] mx-auto mb-10 flex items-center space-x-10">
+    <MaxWidthWrapper>
+    <section className="min-h-[984px] mx-auto mb-10 flex items-center space-x-10">
       {/* left side */}
-      <main className="h-full w-full flex flex-col">
+
+      <main className="h-[964px] w-full flex flex-col ">
         <div className="bg-[#F8F8F8] h-full mb-10  rounded-[20px] pt-[120px]">
-          <MaxWidthWrapper className="md:w-[80%] mx-auto pb-5">
+          <div className="md:w-[80%] mx-auto pb-5">
             <div>
               <h2 className="capitalize text-[#7F56D9] text-[1.5rem] font-extrabold leading-[33.6px] -tracking-[2%]">
                 <em>welcome to ezyRent</em>
@@ -237,51 +240,14 @@ export default function Register() {
                 </Link>
               </div>
             </Form>
-          </MaxWidthWrapper>
+          </div>
         </div>
-        <div className="bg-[#F8F8F8] rounded-[20px] mt-auto">
-          <MaxWidthWrapper className="h-[119px] grid place-items-center">
-            <div className="flex items-center w-full ">
-              <div className="flex items-center -space-x-4 ">
-                {lappedImages.map((image, index) => (
-                  <div
-                    key={image.src + index}
-                    className=" rounded-full size-[59px] border-[2px] border-white"
-                  >
-                    <Image
-                      src={`/${image.src}`}
-                      width={image.width}
-                      height={image.height}
-                      alt={image.alt}
-                      className="size-full rounded-full object-cover border-[2px] border-white"
-                    />
-                  </div>
-                ))}
-              </div>
-              <div className="ml-4">
-                <p className="text-[#344054] text-[0.75rem] md:text-[1.125rem] font-semibold leading-[25.2px] first-letter:capitalize">
-                  Making your next home easy
-                </p>
-                <p className="text-[0.6rem] md:text-[#0.875rem] text-[#98A2B3] leading-[19.6px]">
-                  Join 200k people to find a Home
-                </p>
-              </div>
-
-              <div className="hidden md:block size-[59px] ml-auto text-[#667085]">
-                <Image
-                  src={'/icons/arrow-up-right_59x59.svg'}
-                  width={59}
-                  height={59}
-                  alt="Circled right arrow."
-                  className="size-full object-cover "
-                />
-              </div>
-            </div>
-          </MaxWidthWrapper>
-        </div>
+        {/* lapped images */}
+        <LappedImages/>
       </main>
       {/* right side */}
       <RightHandAuthPage />
     </section>
+    </MaxWidthWrapper>
   );
 }

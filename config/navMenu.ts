@@ -23,5 +23,5 @@ export const navbarMenu: NavbarMenuItem[] = [
 
 export const navbarMenuAuth: NavbarMenuItem[] = [
   { label: 'login', href: '/login' },
-  { label: 'sign up', href: '/register' }
+  { label: 'sign up', href: '/login' }
 ];
