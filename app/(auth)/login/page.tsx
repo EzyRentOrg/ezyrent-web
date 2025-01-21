@@ -22,7 +22,7 @@ import { useForm } from 'react-hook-form';
 import { Separator } from '@/components/ui/separator';
 import OAuth from '@/components/OAuth';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import RightHandAuthPage from '@/components/RightHandAuthPage';
 import { toast } from 'sonner';
 import LappedImages from '@/components/LappedImages';
@@ -32,7 +32,7 @@ type FormValues = z.infer<typeof loginSchema>;
 
 export default function Login() {
   const delay = useDelay();
-  const router = useRouter()
+  const router = useRouter();
   const form = useForm<FormValues>({
     resolver: zodResolver(loginSchema),
     mode: 'all',
@@ -48,10 +48,9 @@ export default function Login() {
 
   const onSubmit = async (data: FormValues) => {
     await delay(2000);
-    router.push("/verify-email")
+    router.push('/verify-email');
     console.log(data);
   };
-
 
   return (
     <MaxWidthWrapper>
@@ -69,9 +68,9 @@ export default function Login() {
                   Find, Rent, and Manage Properties Seamlessly
                 </p>
                 <p className="text-[0.975rem] italic leading-[24px] font-normal text-[#667085]">
-                  EzyRent simplifies property transactions with verified listings,
-                  AI-powered insights, & secure processes, making renting or
-                  buying homes stress-free.
+                  EzyRent simplifies property transactions with verified
+                  listings, AI-powered insights, & secure processes, making
+                  renting or buying homes stress-free.
                 </p>
               </div>
               <Form {...form}>

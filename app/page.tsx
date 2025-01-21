@@ -13,7 +13,7 @@ import Footer from '@/components/footer/Footer';
 export default function Home() {
   return (
     <div>
-      <Header/>
+      <Header />
       <div>
         <HeroPage />
       </div>
@@ -24,7 +24,7 @@ export default function Home() {
       <Testimonial />
       <FAQs />
       {/* <StartYourJourney /> */}
-      <Footer/>
+      <Footer />
     </div>
   );
 }

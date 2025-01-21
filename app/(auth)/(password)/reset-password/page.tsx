@@ -64,7 +64,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <MaxWidthWrapper >
+    <MaxWidthWrapper>
       <section className="min-h-[984px] mx-auto mb-10 flex items-center space-x-10">
         {/* left side */}
 

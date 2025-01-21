@@ -8,7 +8,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   return (
     <footer className="w-full mt-auto flex-1 py-14 bg-[#FAFAFAFA]">
-    <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20">
+      <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20">
         <NewsletterForm />
         <Separator className="bg-[#98A2B3] w-full my-10" />
         <DesktopFooter />
@@ -21,7 +21,7 @@ export default function Footer() {
             {currentYear !== 2024 && ` -  ${currentYear}`}. All right reserved
           </small>
         </div>
-        </div>
+      </div>
     </footer>
   );
 }

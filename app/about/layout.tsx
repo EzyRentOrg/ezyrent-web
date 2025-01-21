@@ -11,9 +11,5 @@ export default function AboutLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <section className="mt-28">
-    {children}
-  </section>
-  );
+  return <section className="mt-28">{children}</section>;
 }

@@ -16,7 +16,7 @@ import RightHandAuthPage from '@/components/RightHandAuthPage';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import { useRouter } from 'next/navigation';
 import LappedImages from '@/components/LappedImages';
-import {toast} from 'sonner'
+import { toast } from 'sonner';
 
 interface VerificationFormProps {
   onSuccess: () => void;
@@ -37,7 +37,7 @@ export default function VerifyEmail({
   // const [allowDigits, setAllowDigits] = useState<boolean>(true);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const searchParams = useSearchParams();
-  const router = useRouter()
+  const router = useRouter();
   const delay = useDelay();
 
   const setInputRef = (index: number) => (el: HTMLInputElement | null) => {
@@ -168,8 +168,8 @@ export default function VerifyEmail({
   // for test.
   const handleVerification = async () => {
     setError('');
-    setIsError(false)
-    setIsSuccess(false)
+    setIsError(false);
+    setIsSuccess(false);
     const enteredCode = code.join('');
     if (!enteredCode || enteredCode.length !== 6) {
       setError('Please enter all 6 digits');
@@ -177,29 +177,25 @@ export default function VerifyEmail({
     }
 
     setIsVerifying(true);
-    
 
     try {
-      
       if (enteredCode === '123456') {
-        setIsSuccess(true)
+        setIsSuccess(true);
         await delay(1000);
-        router.replace("/admin/dashboard")
-
+        router.replace('/admin/dashboard');
       } else {
         toast.error('Invalid verification code. Please try again.');
-   
-    setIsError(true)
-    setIsSuccess(false)
+
+        setIsError(true);
+        setIsSuccess(false);
       }
     } catch (err) {
       // console.log(err);
       setError(`${err}Verification failed. Please try again.`);
-toast.error(`${err}Verification failed. Please try again.`)
-    
-    setIsError(true)
-    setIsSuccess(false)
-      
+      toast.error(`${err}Verification failed. Please try again.`);
+
+      setIsError(true);
+      setIsSuccess(false);
     } finally {
       setIsVerifying(false);
     }
@@ -220,7 +216,7 @@ toast.error(`${err}Verification failed. Please try again.`)
     }
   };
   return (
-    <MaxWidthWrapper >
+    <MaxWidthWrapper>
       <section className="min-h-[984px] mx-auto mb-10 flex items-center space-x-10">
         {/* left side */}
 
@@ -237,8 +233,10 @@ toast.error(`${err}Verification failed. Please try again.`)
                   </h2>
                   <p className="my-1px text-[#475467] text-[0.875rem] leading-[28px] font-medium -tracking-[2%] w-[80%]">
                     Enter the
-                    <span className="text-[#4036af] font-medium mx-2">6-digit</span>code
-                    sent to your email to complete registration
+                    <span className="text-[#4036af] font-medium mx-2">
+                      6-digit
+                    </span>
+                    code sent to your email to complete registration
                   </p>
                 </div>
 
@@ -260,7 +258,7 @@ toast.error(`${err}Verification failed. Please try again.`)
 
                 <div className="space-y-4">
                   <Button
-                  onClick={handleVerification}
+                    onClick={handleVerification}
                     disabled={isVerifying || code.some((digit) => !digit)}
                     type="submit"
                     className={cn(
@@ -299,5 +297,5 @@ toast.error(`${err}Verification failed. Please try again.`)
         <RightHandAuthPage />
       </section>
     </MaxWidthWrapper>
-  )
+  );
 }

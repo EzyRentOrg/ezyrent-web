@@ -1,8 +1,5 @@
-
-import Image from "next/image";
-import {Trash2} from 'lucide-react'
-
-
+import Image from 'next/image';
+import { Trash2 } from 'lucide-react';
 
 interface ImagePreviewProps {
   src: string;
@@ -17,12 +14,12 @@ export const ImagePreview = ({ src, onClick, onDelete }: ImagePreviewProps) => (
   >
     {src ? (
       <>
-      <Image
-        src={src}
-        alt="Property"
-        height={150}
-        width={150}
-        className="object-cover h-[150px] w-[150px] transition-transform duration-300 group-hover:scale-110"
+        <Image
+          src={src}
+          alt="Property"
+          height={150}
+          width={150}
+          className="object-cover h-[150px] w-[150px] transition-transform duration-300 group-hover:scale-110"
         />
         <button
           type="button"
@@ -34,7 +31,7 @@ export const ImagePreview = ({ src, onClick, onDelete }: ImagePreviewProps) => (
         >
           <Trash2 size={20} />
         </button>
-        </>
+      </>
     ) : (
       <div className="w-full h-full bg-gray-200 flex items-center justify-center">
         <p className="text-gray-500">No image available</p>

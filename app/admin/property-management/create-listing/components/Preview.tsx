@@ -1,12 +1,12 @@
-import { useState } from "react";
-import Image from "next/image";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import NumberLabel from "./label";
-import { ImagePreview } from "./imagePreview";
-import ImageModal from "./imageModal";
-import { Control, Controller, UseFormWatch } from "react-hook-form";
-import { useNumberWithCommas } from "@/hooks/useNumberWithComa";
+import { useState } from 'react';
+import Image from 'next/image';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import NumberLabel from './label';
+import { ImagePreview } from './imagePreview';
+import ImageModal from './imageModal';
+import { Control, Controller, UseFormWatch } from 'react-hook-form';
+import { useNumberWithCommas } from '@/hooks/useNumberWithComa';
 
 interface PreviewProps {
   control: Control<PropertyFormData>;
@@ -25,7 +25,7 @@ export default function Preview({
 
   const formValues = watch();
 
-   return (
+  return (
     <aside className="w-full max-w-[520px]">
       {/* Images Display */}
       <div>
@@ -99,13 +99,15 @@ export default function Preview({
         <h3 className="capitalize">price</h3>
         <span className="flex items-center">
           <Image
-            src={"/icons/naira-currency.svg"}
+            src={'/icons/naira-currency.svg'}
             width={28}
             height={28}
             alt="Naira symbol"
             className="mr-1 text-black w-4"
           />
-          <span>{useNumberWithCommas(formValues.price?.toString() || "0")}</span>
+          <span>
+            {useNumberWithCommas(formValues.price?.toString() || '0')}
+          </span>
         </span>
       </div>
 
@@ -145,7 +147,12 @@ export default function Preview({
         <h3 className="capitalize">amenities</h3>
         <div className="grid grid-cols-4 gap-5">
           {formValues.amenities.map((amenity) => (
-            <span key={amenity} className="mt-1 block w-fit rounded-md border border-gray-300 bg-[#F7F7F7] py-2 px-3">{amenity}</span>
+            <span
+              key={amenity}
+              className="mt-1 block w-fit rounded-md border border-gray-300 bg-[#F7F7F7] py-2 px-3"
+            >
+              {amenity}
+            </span>
           ))}
         </div>
       </div>

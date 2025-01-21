@@ -22,6 +22,6 @@ export default function MaxWidthWrapper({
         {children}
       </div>
       <Footer />
-   </main>
+    </main>
   );
 }

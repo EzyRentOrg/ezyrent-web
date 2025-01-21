@@ -29,9 +29,9 @@ const VerificationInput = forwardRef<HTMLInputElement, VerificationInputProps>(
       onKeyDown={onKeyDown}
       onPaste={onPaste}
       className={cn(
-        'w-12 h-12 text-center text-lg font-semibold border-2 focus:ring-2 border-[#98A2B3] rounded-[10px] focus:border-[#7065F0] focus:ring-[#7065F0]/20', 
-        isError && "animate-errorPulse",
-        isSuccess && "animate-successPulse"
+        'w-12 h-12 text-center text-lg font-semibold border-2 focus:ring-2 border-[#98A2B3] rounded-[10px] focus:border-[#7065F0] focus:ring-[#7065F0]/20',
+        isError && 'animate-errorPulse',
+        isSuccess && 'animate-successPulse'
       )}
       aria-label={`Digit of verification code`}
       aria-invalid={isError || undefined}

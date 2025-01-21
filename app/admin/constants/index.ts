@@ -17,5 +17,5 @@ export const siderbarItems: SidebarItemType[] = [
   { title: 'finance', href: '/admin/finance', icon: Banknote },
   { title: 'analytics', href: '/admin/analytics', icon: TrendingUpDownIcon },
   { title: 'blogs', href: '/admin/blogs', icon: Book },
-  { title: 'reviews', href: '/admin/reviews', icon: Star },
+  { title: 'reviews', href: '/admin/reviews', icon: Star }
 ];
