@@ -6,12 +6,13 @@ import Image from 'next/image';
 
 export default function About() {
   return (
-    <section>
       <MaxWidthWrapper>
+      <main>
+        <div className="lg:pl-20">
         <Breadcrumb />
-        <main>
+        </div>
           {/* Hero Section */}
-          <header className="mt-5 relative max-w-[1240px] h-[400px] md:h-[500px] rounded-[40px] bg-[url('/about/about-image2479x1653.jpeg')] bg-no-repeat bg-center bg-cover overflow-hidden">
+          <header className="mt-5 relative w-full max-w-[1240px] mx-auto h-[400px] md:h-[500px] rounded-[40px] bg-[url('/about/about-image2479x1653.jpeg')] bg-no-repeat bg-center bg-cover overflow-hidden">
             <div className="absolute inset-0 bg-[#000929] bg-opacity-75 flex flex-col justify-center items-center text-white text-center h-full">
               <div className="max-w-[900px] mx-auto flex flex-col items-center justify-center h-full px-4">
                 <h1 className="mb-10 sm:text-[1.2rem] text-[1.5rem] md:text-[3rem] lg:text-[3.5rem] font-semibold !leading-[1.4]">
@@ -19,7 +20,7 @@ export default function About() {
                   One Listing at a Time
                 </h1>
                 <em className="text-xs md:text-xl lg:text-[1.5rem] mt-2 !leading-[1.5]">
-                  <span className="bg-white rounded-[40px] font-extrabold py-1 px-2 lg:py-2 lg:px-4 text-[#000929]">
+                  <span className=" rounded-[40px] font-extrabold text-white">
                     EzyRent
                   </span>{' '}
                   is revolutionizing property rentals across Nigeria and Africa.
@@ -119,6 +120,6 @@ export default function About() {
           </section>
         </main>
       </MaxWidthWrapper>
-    </section>
+   
   );
 }

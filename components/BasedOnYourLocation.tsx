@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { houseListing } from '@/config/houseListing';
 import HouseListingCard from './ui/house-listing-card';
-import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import { Button } from './ui/button';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -39,8 +38,7 @@ export default function BasedOnYourLocation() {
   );
 
   return (
-    <MaxWidthWrapper>
-      <section className="" aria-labelledby="location-houses-heading">
+    <section className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 " aria-labelledby="location-houses-heading">
         <div className="flex items-center w-full py-10">
           <h3
             id="location-houses-heading"
@@ -114,6 +112,5 @@ export default function BasedOnYourLocation() {
           </Button>
         </div>
       </section>
-    </MaxWidthWrapper>
   );
 }

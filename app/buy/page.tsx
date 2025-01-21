@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 export default function Buy() {
   return (
-    <section className="my-28">
+    <section className="mt-28">
       <MaxWidthWrapper>
         <div className="py-8">
           <Breadcrumb />

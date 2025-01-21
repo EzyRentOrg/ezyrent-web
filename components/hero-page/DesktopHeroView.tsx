@@ -1,6 +1,5 @@
 import { House, MapPin, Wallet } from 'lucide-react';
 import HeroBanner from '@/components/HeroBanner';
-import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import { ReactNode } from 'react';
 
 interface HeroBannerContentType {
@@ -31,7 +30,7 @@ const heroBannerContents: HeroBannerContentType[] = [
 export default function DesktopHeroView() {
   return (
     <header className="hidden md:block ipad-height-adjust ">
-      <MaxWidthWrapper className="">
+      <div className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20">
         {/* right side */}
         <div className="relative flex rounded-[40px] h-[574px] bg-[#7065F0] overflow-hidden mt-28">
           <div className="pl-10 absolute mt-24 flex flex-col space-y-5">
@@ -81,7 +80,7 @@ export default function DesktopHeroView() {
             />
           </div> */}
         </div>
-      </MaxWidthWrapper>
+        </div>
     </header>
   );
 }

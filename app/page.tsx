@@ -7,10 +7,13 @@ import OfferSection from '@/components/OfferSection';
 import BestDeal from '@/components/BestDeal';
 import FAQs from '@/components/FAQs/FAQs';
 import HeroPage from '@/components/hero-page/HeroPage';
+import Header from '@/components/nav/Header';
+import Footer from '@/components/footer/Footer';
 
 export default function Home() {
   return (
     <div>
+      <Header/>
       <div>
         <HeroPage />
       </div>
@@ -21,6 +24,7 @@ export default function Home() {
       <Testimonial />
       <FAQs />
       {/* <StartYourJourney /> */}
+      <Footer/>
     </div>
   );
 }

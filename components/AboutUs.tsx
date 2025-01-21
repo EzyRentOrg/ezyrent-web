@@ -1,10 +1,9 @@
-import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import React from 'react';
 
 export default function AboutUs() {
   return (
-    <div className="my-10 md:mt-20 lg:my-40">
-      <MaxWidthWrapper className="">
+    <div className="my-10 md:mt-20 lg:my-40 max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 ">
+     
         <div className="max-w-[42em] text-center mx-auto">
           <h2 className="capitalize text-[#7065F0] font-semibold text-[2.5rem] md:text-5xl md:leading-[67.2px] ">
             about us
@@ -21,7 +20,6 @@ export default function AboutUs() {
           convenience, and security to the rental process - all from the comfort
           of your home.
         </p>
-      </MaxWidthWrapper>
     </div>
   );
 }
