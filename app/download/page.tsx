@@ -15,7 +15,7 @@ export default function DownloadPage() {
             <p>
               <AnimatedText
                 text={'will be available soon'}
-                className="text-[#000929] uppercase font-bold md:text-2xl"
+                className="text-[#7065F0] uppercase font-bold md:text-2xl"
               />
             </p>
           </div>
@@ -30,19 +30,13 @@ export default function DownloadPage() {
             </div>
 
             <div className="space-y-4 md:px-20 px-2">
-              <DownloadButton
-                href="https://play.google.com/store/apps/details?id=your.app.id"
-                icon={FaGooglePlay}
-              >
+              <DownloadButton href="/" icon={FaGooglePlay}>
                 <div className=" flex flex-col md:flex-row md:gap-2 items-center">
                   <p>Download on</p>
                   <p className="font-bold">Play Store</p>
                 </div>
               </DownloadButton>
-              <DownloadButton
-                href="https://apps.apple.com/us/app/your-app-name/idYOUR_APP_ID"
-                icon={FaApple}
-              >
+              <DownloadButton href="/" icon={FaApple}>
                 <div className=" flex flex-col md:flex-row md:gap-2 items-center">
                   <p>Download on</p>
                   <p className="font-bold">Apple Store</p>

@@ -1,6 +1,4 @@
 'use client';
-
-import React, { useState } from 'react';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import {
   Form,
@@ -16,10 +14,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useDelay from '@/hooks/useDelay';
 import { contactSchema } from '@/lib/validations';
 import { cn } from '@/lib/utils';
-import { Loader, Mail } from 'lucide-react';
+import { Loader, Mail, User } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
+import { AnimatedText } from '@/components/animatedText';
 
 // Infer the type from the schema
 type FormValues = z.infer<typeof contactSchema>;
@@ -49,8 +48,14 @@ export default function Contatct() {
   };
 
   return (
-    <section className="max-w-[1400px] min-h-screen mx-auto mb-10 flex items-center space-x-10">
-      <main className="h-full w-full flex flex-col ">
+    <section className="max-w-[1400px] mx-auto md:mb-10 flex items-center space-x-10">
+      <main className="h-full w-full flex flex-col pt-3">
+        <h1 className="text-[#7065F0] mb-3 text-center uppercase font-bold md:text-2xl">
+          <AnimatedText
+            text={'Fell free to tell us what you think'}
+            className="text-[#7065F0] uppercase font-bold md:text-2xl"
+          />
+        </h1>
         <div className="bg-[#F8F8F8] h-full mb-10 rounded-[20px] md:px-[16rem]">
           <MaxWidthWrapper className="md:w-[80%] mx-auto pb-10 ">
             <Form {...form}>
@@ -64,6 +69,13 @@ export default function Contatct() {
                       <FormItem>
                         <FormControl>
                           <div className="relative flex items-center ">
+                            <div className="absolute left-5 flex items-center space-x-4">
+                              <User size={20} stroke="#9E77ED" />
+                              <Separator
+                                orientation="vertical"
+                                className="bg-[#9E77ED] h-6 w-[1px]"
+                              />
+                            </div>
                             {/* Input Field */}
                             <Input
                               type="text"

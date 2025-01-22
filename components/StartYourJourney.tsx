@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import { ArrowRight, PlayCircle, PauseCircle } from 'lucide-react';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
+import Link from 'next/link';
 
 const StartYourJourney: React.FC = () => {
   // Initialize refs for each video
@@ -114,9 +115,11 @@ const StartYourJourney: React.FC = () => {
             Let’s Start Your Real Estate Journey Today
           </p>
           <div className="flex items-center justify-center w-full my-10">
-            <Button className={cn('h-[72px] text-xl capitalize')}>
-              discover now <ArrowRight size={32} className="h-8 w-8" />
+            <Link href={'/contact'}>
+            <Button className={cn('h-[72px] text-xl ')}>
+              Send us a Message <ArrowRight size={32} className="h-8 w-8" />
             </Button>
+            </Link>
           </div>
         </div>
       </MaxWidthWrapper>
