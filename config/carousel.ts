@@ -1,12 +1,12 @@
 // Content for the carousel
-import { RiSecurePaymentLine } from "react-icons/ri";
-import { FaRegRectangleList } from "react-icons/fa6";
-import { FaComments } from "react-icons/fa";
-import { BsFillHouseCheckFill } from "react-icons/bs";
-import { MdManageHistory } from "react-icons/md";
-import { FaListCheck } from "react-icons/fa6";
-import { SiSimpleanalytics } from "react-icons/si";
-import { MdNotificationsActive } from "react-icons/md";
+import { RiSecurePaymentLine } from 'react-icons/ri';
+import { FaRegRectangleList } from 'react-icons/fa6';
+import { FaComments } from 'react-icons/fa';
+import { BsFillHouseCheckFill } from 'react-icons/bs';
+import { MdManageHistory } from 'react-icons/md';
+import { FaListCheck } from 'react-icons/fa6';
+import { SiSimpleanalytics } from 'react-icons/si';
+import { MdNotificationsActive } from 'react-icons/md';
 
 export const carouselContent: CarouselContent[] = [
   {
