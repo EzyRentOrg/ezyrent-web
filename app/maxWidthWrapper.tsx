@@ -11,11 +11,11 @@ export default function MaxWidthWrapper({
   className?: string;
 }) {
   return (
-    <main className="flex-1 flex flex-col h-auto">
+    <main className="flex-1 flex flex-col justify-center h-auto w-full">
       <Header />
       <div
         className={cn(
-          'w-full max-w-[1440px] mx-auto px-5 md:px-20 py-10 lg:py-20 flex-1',
+          'max-w-[1440px] mx-auto px-5 md:px-20 py-10 lg:py-5 ',
           className
         )}
       >
