@@ -1,16 +1,9 @@
-//  manages the linting for your changes after insatlling husky
-
 module.exports = {
-  // Type check TypeScript files
-  '**/*.(ts|tsx)': () => 'yarn tsc --noEmit',
-
-  // Lint & Prettify TS and JS files
   '**/*.(ts|tsx|js)': (filenames) => [
-    `yarn eslint ${filenames.join(' ')}`,
-    `yarn prettier --write ${filenames.join(' ')}`
+    `yarn prettier --write ${filenames.join(' ')}`, // Format with Prettier first
+    `yarn eslint --fix ${filenames.join(' ')}` // Then fix with ESLint
   ],
-
-  // Prettify only Markdown and JSON files
   '**/*.(md|json)': (filenames) =>
-    `yarn prettier --write ${filenames.join(' ')}`
+    `yarn prettier --write ${filenames.join(' ')}`,
+  '**/*.(ts|tsx)': () => 'yarn tsc --noEmit'
 };

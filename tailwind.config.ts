@@ -50,9 +50,19 @@ const config: Config = {
             transform: 'translateY(0)',
             visibility: 'visible'
           }
+        },
+        errorPulse: {
+          '0%': { borderColor: '#ff0000', transform: 'scale(1)' },
+          '50%, 100%': { borderColor: '#ff8080', transform: 'scale(1.05)' }
+        },
+        successPulse: {
+          '0%, 100%': { borderColor: '#00ff00', transform: 'scale(1)' },
+          '50%': { borderColor: '#80ff80', transform: 'scale(1.05)' }
         }
       },
       animation: {
+        errorPulse: 'errorPulse 0.5s ease-in-out forwards',
+        successPulse: 'successPulse 0.5s ease-in-out forwards',
         shake: 'shake 0.5s ease-in-out infinite',
         slideRight: 'slideRight 0.5s ',
         slideLeft: 'slideLeft 0.5s ease-in-out',

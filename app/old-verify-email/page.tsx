@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 import MaxWidthWrapper from '../maxWidthWrapper';
 import MultiStepForm from './MultiStepForm';
 
-export default function VerifyEmail() {
+export default function OldVerifyEmail() {
   return (
     <div className="py-16 mt-4">
       <MaxWidthWrapper className="flex justify-center items-center">

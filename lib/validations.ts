@@ -24,11 +24,7 @@ export const loginSchema = z.object({
     .string({
       required_error: 'Please enter a valid email address.'
     })
-    .email(),
-  password: z.string({
-    required_error: 'Please enter a password.'
-  }),
-  rememberMe: z.boolean().default(false)
+    .email()
 });
 
 export const forgotPasswordSchema = z.object({
@@ -63,4 +59,53 @@ export const contactSchema = z.object({
     })
     .email(),
   message: z.string({ required_error: 'Please enter a message' })
+});
+
+//  property form validation
+export const propertyFormSchema = z.object({
+  address: z
+    .string()
+    .min(1, 'Address is required')
+    .max(150, 'Address must be less than 150 characters'),
+  description: z
+    .string()
+    .min(1, 'Description is required')
+    .max(1500, 'Description must be less than 1500 characters'),
+  price: z
+    .string()
+    .min(1, 'Price is required')
+    .refine((val) => !isNaN(Number(val)), 'Price must be a valid number'),
+  duration: z.enum(['1 year', '2 years', '3 years'], {
+    required_error: 'Please select a duration'
+  }),
+  images: z
+    .array(z.string())
+    .min(1, 'At least one image is required')
+    .max(7, 'Maximum 7 images allowed'),
+  buildingType: z.enum(['apartment', 'shortlet', 'flat', 'hotel', 'condo'], {
+    required_error: 'Please select a building type'
+  }),
+  beds: z.enum(['1 bed', '2 beds', '3 beds', '4 beds', '5+ beds'], {
+    required_error: 'Please select number of beds'
+  }),
+  baths: z.enum(['1 bath', '2 baths', '3 baths', '4 baths', '5+ baths'], {
+    required_error: 'Please select number of baths'
+  }),
+  amenities: z.array(
+    z.enum([
+      'Gym',
+      'POP Ceiling',
+      'Water Treatment',
+      'Security',
+      'Parking Space',
+      'Spacious Compound',
+      '24/7 Electricity',
+      'Supermarket Nearby',
+      'Swimming Pool',
+      'Fast Internet',
+      'Restaurants Nearby',
+      'Free WiFi'
+    ])
+  ),
+  error: z.string().nullable()
 });
