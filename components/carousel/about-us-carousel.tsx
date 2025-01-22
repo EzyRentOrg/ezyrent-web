@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Carousel,
+  CarouselApi,
   CarouselContent,
   CarouselItem,
   CarouselNext,
@@ -14,7 +15,7 @@ import { PauseIcon, PlayIcon } from 'lucide-react';
 import { carouselContent } from '@/config/carousel';
 
 export default function AboutUsCarousel() {
-  const [api, setApi] = useState<any>();
+  const [api, setApi] = useState<CarouselApi | null>(null);
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -52,7 +53,7 @@ export default function AboutUsCarousel() {
 
   return (
     <section className="py-12 bg-gray-100">
-      <div className="container min-w-min mx-auto px-4">
+      <div className="max-w-[1440px] mx-auto px-5 md:px-20  flex-1">
         <h1 className="text-center mb-4 text-[#7065F0] font-semibold text-[2.1rem] md:text-5xl md:leading-[67.2px] ">
           App Only Features
         </h1>

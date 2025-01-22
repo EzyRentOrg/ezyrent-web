@@ -53,8 +53,8 @@ export default function TermsAndConditions() {
   };
 
   return (
-    <section className="max-w-[1050px]">
-      <MaxWidthWrapper>
+    <MaxWidthWrapper>
+      <div className="px-20 max-w-[1050px]">
         <Breadcrumb />
         <main>
           <section className="mt-10">
@@ -102,7 +102,7 @@ export default function TermsAndConditions() {
             ))}
           </section>
         </main>
-      </MaxWidthWrapper>
-    </section>
+      </div>
+    </MaxWidthWrapper>
   );
 }

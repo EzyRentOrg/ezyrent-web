@@ -12,7 +12,7 @@ export default function PropertyListingLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="my-28">
+    <section className="mt-28">
       <div>{children}</div>
     </section>
   );

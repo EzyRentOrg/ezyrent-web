@@ -11,5 +11,5 @@ export default function ProductDetailsLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <section className="my-28">{children}</section>;
+  return <section className="mt-28">{children}</section>;
 }
