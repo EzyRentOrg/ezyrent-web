@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
 import Image from 'next/image';
 import { CardContent, CardFooter, CardTitle } from './card';
-import { BedDouble, Bath, Diamond, Heart } from 'lucide-react';
+import { BedDouble, Bath, Diamond } from 'lucide-react';
 import PopularLabel from '../PopularLabel';
 import Link from 'next/link';
 
@@ -19,12 +18,10 @@ export default function HouseListingCard({
   price,
   popular
 }: HouseListing) {
-  const [isFavorite, setIsFavorite] = useState(false);
-
-  const toggleFavorite = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsFavorite(!isFavorite);
-  };
+  // const toggleFavorite = (e: React.MouseEvent) => {
+  //   e.stopPropagation();
+  //   setIsFavorite(!isFavorite);
+  // };
 
   const handleCardClick = () => {
     const cardDetails = {
@@ -72,7 +69,8 @@ export default function HouseListingCard({
               / month
             </span>
           </p>
-          <div
+          {/* favorite */}
+          {/* <div
             className="p-4 cursor-pointer ml-auto rounded-full border border-[#E8E6F9] flex justify-end"
             onClick={toggleFavorite}
           >
@@ -81,7 +79,7 @@ export default function HouseListingCard({
                 isFavorite && 'fill-[#7065F0]'
               }`}
             />
-          </div>
+          </div> */}
         </div>
         <CardTitle className="text-2xl font-[700] -tracking-[1px] leading-9">
           {title}
