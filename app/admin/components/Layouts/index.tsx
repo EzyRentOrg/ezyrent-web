@@ -1,6 +1,5 @@
 import React from 'react';
 import Sidebar from '../Sidebar';
-import AdminHeader from '../AdminHeader';
 
 export default function DashboardLayout({
   children

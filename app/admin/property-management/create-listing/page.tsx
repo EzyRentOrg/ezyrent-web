@@ -11,11 +11,11 @@ import AdminHeader from '../../components/AdminHeader';
 import Preview from './components/Preview';
 import ListingForm from './components/ListingForm';
 import { propertyFormSchema } from '@/lib/validations';
+import { toast } from 'sonner';
+import { MAX_IMAGES } from '../../constants/propertyForm';
+import { processImage } from '@/lib/pocessImage';
 
 const STORAGE_KEY = 'property_listing_draft';
-const MAX_ADDRESS_LENGTH = 150;
-const MAX_DESCRIPTION_LENGTH = 1500;
-const MAX_IMAGES = 7;
 
 const initialFormData: PropertyFormData = {
   address: '',
@@ -37,6 +37,7 @@ export default function CreateListing() {
     field: string;
     message: string;
   } | null>(null);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
 
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(propertyFormSchema),
@@ -67,12 +68,12 @@ export default function CreateListing() {
           message: 'Failed to save draft. The images might be too large.'
         });
       }
-    }, 1000); // Debounce save for 1 second
+    }, 1000);
 
     return () => clearTimeout(saveTimeout);
   }, [formValues]);
 
-  // Load saved form data once on mount
+  // Load saved form data, including images, once on mount
   useEffect(() => {
     try {
       const savedForm = localStorage.getItem(STORAGE_KEY);
@@ -89,6 +90,8 @@ export default function CreateListing() {
     }
   }, [reset]);
 
+  // handle upload image
+
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files?.length) return;
 
@@ -103,25 +106,12 @@ export default function CreateListing() {
 
     try {
       const newImages = await Promise.all(
-        Array.from(e.target.files).map(
-          (file) =>
-            new Promise<string>((resolve, reject) => {
-              // Add file size check
-              if (file.size > 5 * 1024 * 1024) {
-                // 5MB limit
-                reject(new Error('File size too large'));
-                return;
-              }
-
-              const reader = new FileReader();
-              reader.onload = () => resolve(reader.result as string);
-              reader.onerror = reject;
-              reader.readAsDataURL(file);
-            })
-        )
+        Array.from(e.target.files).map((file) => processImage(file))
       );
 
-      setValue('images', [...currentImages, ...newImages]);
+      const updatedImages = [...currentImages, ...newImages];
+      setValue('images', updatedImages);
+      localStorage.setItem('images', JSON.stringify(updatedImages));
       setFormError(null);
     } catch (error) {
       console.error('Error processing images:', error);
@@ -133,34 +123,68 @@ export default function CreateListing() {
     }
   };
 
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const files = Array.from(e.dataTransfer.files).filter((file) =>
+      file.type.startsWith('image/')
+    );
+
+    if (!files.length) {
+      toast.error('Please drop only image files');
+      return;
+    }
+
+    const currentImages = watch('images');
+    if (currentImages.length + files.length > MAX_IMAGES) {
+      toast.error(`You cannot upload more than ${MAX_IMAGES} images`);
+      return;
+    }
+
+    try {
+      const newImages = await Promise.all(
+        files.map((file) => processImage(file))
+      );
+
+      const updatedImages = [...currentImages, ...newImages];
+      setValue('images', updatedImages);
+      localStorage.setItem('images', JSON.stringify(updatedImages));
+      setFormError(null);
+      toast.success('Images uploaded successfully');
+    } catch (error) {
+      console.error('Error processing images:', error);
+      toast.error(
+        'Error uploading images. Please ensure each image is under 5MB.'
+      );
+    }
+  };
+
   const handleImageDelete = (index: number) => {
     const currentImages = watch('images');
-    setValue(
-      'images',
-      currentImages.filter((_, i) => i !== index)
-    );
+    const updatedImages = currentImages.filter((_, i) => i !== index);
+    setValue('images', updatedImages);
+    localStorage.setItem('images', JSON.stringify(updatedImages));
     setFormError(null);
-  };
-
-  const handleInputChange = (field: keyof PropertyFormData, value: string) => {
-    if (field === 'address' && value.length > MAX_ADDRESS_LENGTH) return;
-    if (field === 'description' && value.length > MAX_DESCRIPTION_LENGTH)
-      return;
-    setValue(field, value);
-    setFormError(null);
-  };
-
-  const handleSaveDraft = () => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(formValues));
-      alert('Draft saved successfully!');
-    } catch (error) {
-      console.error('Error saving draft:', error);
-      setFormError({
-        field: 'save',
-        message: 'Failed to save draft. The images might be too large.'
-      });
-    }
   };
 
   const onSubmit = async (data: PropertyFormData) => {
@@ -209,9 +233,13 @@ export default function CreateListing() {
             errors={errors}
             watch={watch}
             onImageUpload={handleImageUpload}
-            onInputChange={handleInputChange}
+            onInputChange={setValue}
             onSubmit={handleSubmit(onSubmit)}
-            onSaveDraft={handleSaveDraft}
+            onDragOver={handleDragOver}
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            isDragging={isDragging}
+            onDrop={handleDrop}
           />
         </section>
       </main>

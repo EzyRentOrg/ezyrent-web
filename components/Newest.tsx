@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { houseListing } from '@/config/houseListing';
 import HouseListingCard from './ui/house-listing-card';
-import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import { ChevronDown, ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useWindowResizer } from '@/hooks/useWindowResizer';
@@ -38,74 +37,72 @@ export default function Newest() {
   );
 
   return (
-    <MaxWidthWrapper>
-      <section aria-labelledby="location-houses-heading">
-        <div className="flex items-center w-full mb-5 mt-10">
-          <h3
-            id="location-houses-heading"
-            className="first-letter:capitalize flex items-center"
+    <section aria-labelledby="location-houses-heading">
+      <div className="flex items-center w-full mb-5 mt-10">
+        <h3
+          id="location-houses-heading"
+          className="first-letter:capitalize flex items-center"
+        >
+          sort by:
+          <span className="ml-2 font-semibold capitalize flex items-center">
+            newest <ChevronDown />
+          </span>
+        </h3>
+        <div className="flex items-center space-x-10 ml-auto">
+          <button
+            onClick={handlePrev}
+            disabled={isAtStart}
+            aria-label="Previous houses"
+            className={cn(
+              'rounded-full bg-[#ffffff] shadow-md shadow-black/40 p-2 flex items-center justify-center cursor-pointer transition-transform duration-300',
+              !isAtStart && 'hover:shadow-sm',
+              isAtStart && 'opacity-50 cursor-not-allowed'
+            )}
           >
-            sort by:
-            <span className="ml-2 font-semibold capitalize flex items-center">
-              newest <ChevronDown />
-            </span>
-          </h3>
-          <div className="flex items-center space-x-10 ml-auto">
-            <button
-              onClick={handlePrev}
-              disabled={isAtStart}
-              aria-label="Previous houses"
-              className={cn(
-                'rounded-full bg-[#ffffff] shadow-md shadow-black/40 p-2 flex items-center justify-center cursor-pointer transition-transform duration-300',
-                !isAtStart && 'hover:shadow-sm',
-                isAtStart && 'opacity-50 cursor-not-allowed'
-              )}
-            >
-              <ChevronLeft />
-            </button>
+            <ChevronLeft />
+          </button>
 
-            <button
-              onClick={handleNext}
-              disabled={isAtEnd}
-              aria-label="Next houses"
-              className={cn(
-                'rounded-full bg-[#ffffff] shadow-md shadow-black/40 p-2 flex items-center justify-center cursor-pointer transition-transform duration-300',
-                !isAtEnd && ' hover:shadow-sm',
-                isAtEnd && 'opacity-50 cursor-not-allowed'
-              )}
-            >
-              <ChevronRight />
-            </button>
+          <button
+            onClick={handleNext}
+            disabled={isAtEnd}
+            aria-label="Next houses"
+            className={cn(
+              'rounded-full bg-[#ffffff] shadow-md shadow-black/40 p-2 flex items-center justify-center cursor-pointer transition-transform duration-300',
+              !isAtEnd && ' hover:shadow-sm',
+              isAtEnd && 'opacity-50 cursor-not-allowed'
+            )}
+          >
+            <ChevronRight />
+          </button>
+        </div>
+      </div>
+
+      <div className="grid sm:grid-cols-[repeat(auto-fill,_minmax(280px,_1fr))] gap-6 p-2">
+        {visibleHouses.map((house, index) => (
+          <div
+            key={house.id}
+            className={cn(
+              'transition-transform duration-500 ease-in-out transform hover:scale-[1.01] border border-[#00092926] rounded-lg shadow-md',
+              `animate-${animationDirection}`
+            )}
+            style={{
+              animationDelay: `${index * 0.1}s`
+            }}
+          >
+            <HouseListingCard
+              id={house.id}
+              title={house.title}
+              address={house.address}
+              image={house.image}
+              bedrooms={house.bedrooms}
+              bathrooms={house.bathrooms}
+              sqrFt={house.sqrFt}
+              price={house.price}
+              popular={house.popular}
+            />
           </div>
-        </div>
-
-        <div className="grid sm:grid-cols-[repeat(auto-fill,_minmax(280px,_1fr))] gap-6 p-2">
-          {visibleHouses.map((house, index) => (
-            <div
-              key={house.id}
-              className={cn(
-                'transition-transform duration-500 ease-in-out transform hover:scale-[1.01] border border-[#00092926] rounded-lg shadow-md',
-                `animate-${animationDirection}`
-              )}
-              style={{
-                animationDelay: `${index * 0.1}s`
-              }}
-            >
-              <HouseListingCard
-                id={house.id}
-                title={house.title}
-                address={house.address}
-                image={house.image}
-                bedrooms={house.bedrooms}
-                bathrooms={house.bathrooms}
-                sqrFt={house.sqrFt}
-                price={house.price}
-                popular={house.popular}
-              />
-            </div>
-          ))}
-        </div>
-      </section>
-    </MaxWidthWrapper>
+        ))}
+      </div>
+    </section>
   );
 }

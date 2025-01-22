@@ -18,8 +18,6 @@ import { cn } from '@/lib/utils';
 import { ArrowLeft, Loader, Mail } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { Separator } from '@/components/ui/separator';
-import Image from 'next/image';
-import { lappedImages } from '@/config';
 import RightHandAuthPage from '@/components/RightHandAuthPage';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import { useRouter } from 'next/navigation';

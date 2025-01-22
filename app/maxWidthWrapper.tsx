@@ -15,7 +15,7 @@ export default function MaxWidthWrapper({
       <Header />
       <div
         className={cn(
-          'w-full max-w-[1440px] mx-auto px-5 md:px-10  flex-1',
+          'w-full max-w-[1440px] mx-auto px-5 md:px-20 py-10 lg:py-20 flex-1',
           className
         )}
       >

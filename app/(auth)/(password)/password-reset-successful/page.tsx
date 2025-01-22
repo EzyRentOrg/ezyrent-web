@@ -4,8 +4,6 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Check } from 'lucide-react';
-import Image from 'next/image';
-import { lappedImages } from '@/config';
 import RightHandAuthPage from '@/components/RightHandAuthPage';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import { useRouter } from 'next/navigation';
