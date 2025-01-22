@@ -85,8 +85,8 @@ declare interface FAQWrapper extends FAQType {
   onClick: () => void;
 }
 
-
 declare interface CarouselContent {
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   title: string;
   content: string;
 }

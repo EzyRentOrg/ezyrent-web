@@ -9,6 +9,8 @@ import FAQs from '@/components/FAQs/FAQs';
 import HeroPage from '@/components/hero-page/HeroPage';
 import GetStarted from '@/components/GetStarted';
 import AboutUsCarousel from '@/components/carousel/about-us-carousel';
+import StartYourJourney from '@/components/StartYourJourney';
+import AboutUsVideo from '@/components/AboutUsVideo';
 
 export default function Home() {
   return (
@@ -17,6 +19,7 @@ export default function Home() {
         <HeroPage />
       </div>
       <AboutUs />
+      <AboutUsVideo />
       <BasedOnYourLocation />
       <OfferSection />
       <BestDeal />
@@ -24,7 +27,7 @@ export default function Home() {
       <FAQs />
       <AboutUsCarousel />
       <GetStarted />
-      {/* <StartYourJourney /> */}
+      <StartYourJourney />
     </div>
   );
 }

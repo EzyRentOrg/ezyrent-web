@@ -107,7 +107,7 @@ export default function BasedOnYourLocation() {
         </div>
 
         <div className="my-10 w-[299px] mx-auto rounded-[40px]">
-          <Link href={`/download`}>
+          <Link href={`/`}>
             <Button
               aria-label="View more listings"
               className={cn(

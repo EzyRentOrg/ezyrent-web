@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function AboutUs() {
   return (
-    <div className="my-10 md:mt-20 lg:my-40">
+    <section className="my-10 md:mt-20 md:mb-0 lg:my-40">
       <MaxWidthWrapper className="">
         <div className="max-w-[42em] text-center mx-auto">
           <h2 className="capitalize text-[#7065F0] font-semibold text-[2.5rem] md:text-5xl md:leading-[67.2px] ">
@@ -22,6 +22,6 @@ export default function AboutUs() {
           of your home.
         </p>
       </MaxWidthWrapper>
-    </div>
+    </section>
   );
 }

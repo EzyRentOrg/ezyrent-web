@@ -14,6 +14,7 @@ import { PauseIcon, PlayIcon } from 'lucide-react';
 import { carouselContent } from '@/config/carousel';
 
 export default function AboutUsCarousel() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [api, setApi] = useState<any>();
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
@@ -58,40 +59,45 @@ export default function AboutUsCarousel() {
         </h1>
         <Carousel
           setApi={setApi}
-          className="w-full max-w-xs mx-auto sm:max-w-sm md:max-w-md lg:max-w-lg"
+          className="w-full max-w-xs mx-auto sm:max-w-sm md:max-w-[30rem] lg:max-w-lg"
         >
           <CarouselContent>
             {carouselContent.map((item, index) => (
               <CarouselItem className="" key={index}>
-                <Card className="border-[#7065F0]">
-                  <CardContent className="flex flex-col items-center  text-[#000929]   justify-center p-6 h-[200px]">
-                    <h3 className="text-xl md:text-2xl font-semibold mb-2">
+                <Card className="border-[#7065F0] py-12 px-6 md:py-4 bg-white">
+                  <CardContent className="flex flex-col items-center    justify-center p-6 h-[200px]">
+                    <div className="border rounded-full shadow-sm p-3 bg-[#e9e8f0]">
+                      <item.icon className="w-12 h-12 text-[#7065F0]" />
+                    </div>
+                    <h3 className="text-lg md:text-2xl text-[#7065F0] font-semibold mb-2">
                       {item.title}
                     </h3>
-                    <p className="text-center">{item.content}</p>
+                    <p className="md:text-center text-justify text-[#000929] font-semibold">
+                      {item.content}
+                    </p>
                   </CardContent>
                 </Card>
               </CarouselItem>
             ))}
           </CarouselContent>
           <div className="flex items-center justify-center mt-4 gap-0 md:gap-4">
-            <CarouselPrevious className=" border-[#7065F0]" />
+            <CarouselPrevious className=" border-0 hidden md:block" />
             <Button
               variant="outline"
               size="icon"
-              className=" w-6 h-6 md:h-8 md:w-8 border-[#7065F0]"
+              className="  w-6 h-6 md:h-8 md:w-8 border bg-[#ffffff] border-[#7065F0]"
               onClick={togglePlayPause}
               aria-label={isPlaying ? 'Pause' : 'Play'}
             >
               {isPlaying ? (
-                <PauseIcon className="h-4 w-4" />
+                <PauseIcon className="h-4 w-4 text-[#7065F0]" />
               ) : (
-                <PlayIcon className="h-4 w-4" />
+                <PlayIcon className="h-4 w-4 text-[#7065F0] font-bold" />
               )}
             </Button>
-            <CarouselNext className=" border-[#7065F0]" />
+            <CarouselNext className=" border-0 hidden md:block " />
           </div>
-          <div className="py-2 text-center text-sm text-muted-foreground">
+          <div className="py-2 text-center text-[#000929]  text-sm text-muted-foreground">
             Slide {current} of {count}
           </div>
         </Carousel>
