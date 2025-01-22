@@ -41,7 +41,7 @@ function VerificationOTP() {
   const delay = useDelay();
 
   const updateState = (updates: Partial<VerificationState>) => {
-    setState(prev => ({ ...prev, ...updates }));
+    setState((prev) => ({ ...prev, ...updates }));
   };
 
   useEffect(() => {
@@ -64,7 +64,7 @@ function VerificationOTP() {
   }, [state.timeLeft, state.isResendDisabled]);
 
   const areAllDigitsFilled = (codeArray: string[]): boolean => {
-    return codeArray.every(digit => digit !== '');
+    return codeArray.every((digit) => digit !== '');
   };
 
   const handleChange = (value: string, index: number): void => {
@@ -75,7 +75,12 @@ function VerificationOTP() {
 
     updateState({
       code: newCode,
-      error: value && index === 5 ? '' : !areAllDigitsFilled(newCode) ? 'Please enter all 6 digits' : ''
+      error:
+        value && index === 5
+          ? ''
+          : !areAllDigitsFilled(newCode)
+            ? 'Please enter all 6 digits'
+            : ''
     });
 
     if (value && index < 5) {
@@ -87,7 +92,10 @@ function VerificationOTP() {
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number): void => {
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    index: number
+  ): void => {
     const { key } = e;
     const newCode = [...state.code];
 
@@ -121,7 +129,10 @@ function VerificationOTP() {
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>): void => {
     e.preventDefault();
-    const pastedData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+    const pastedData = e.clipboardData
+      .getData('text')
+      .replace(/\D/g, '')
+      .slice(0, 6);
 
     if (pastedData.length === 6) {
       updateState({
@@ -161,7 +172,10 @@ function VerificationOTP() {
         });
       }
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Verification failed. Please try again.';
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : 'Verification failed. Please try again.';
       toast.error(errorMessage);
       updateState({
         error: errorMessage,
@@ -185,7 +199,10 @@ function VerificationOTP() {
       });
       inputRefs.current[0]?.focus();
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to resend code. Please try again.';
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : 'Failed to resend code. Please try again.';
       updateState({ error: errorMessage });
     }
   };
@@ -230,12 +247,13 @@ function VerificationOTP() {
         <div className="space-y-4">
           <Button
             onClick={handleVerification}
-            disabled={state.isVerifying || state.code.some(digit => !digit)}
+            disabled={state.isVerifying || state.code.some((digit) => !digit)}
             type="submit"
             className={cn(
               'bg-[#000929] h-[72px] !mt-10 w-full capitalize text-[1.25rem] font-medium leading-[28px] mx-auto rounded-[80px] hover:bg-opacity-85 transition-colors duration-150',
               {
-                'bg-opacity-75 transition-colors duration-150 ease-in-out': state.isVerifying
+                'bg-opacity-75 transition-colors duration-150 ease-in-out':
+                  state.isVerifying
               }
             )}
           >
@@ -265,13 +283,17 @@ function VerificationOTP() {
 // Main component
 export default function VerifyEmail() {
   return (
-    <MaxWidthWrapper>
+    <MaxWidthWrapper className="w-full">
       <section className="min-h-[984px] mx-auto mb-10 flex items-center space-x-10">
         <main className="h-[964px] w-full flex flex-col">
           <div className="bg-[#F8F8F8] h-full mb-10 rounded-[20px] pt-[140px]">
-            <Suspense fallback={<div className="flex justify-center items-center h-full">
-              <Loader2 className="h-8 w-8 animate-spin" />
-            </div>}>
+            <Suspense
+              fallback={
+                <div className="flex justify-center items-center h-full">
+                  <Loader2 className="h-8 w-8 animate-spin" />
+                </div>
+              }
+            >
               <VerificationOTP />
             </Suspense>
           </div>
