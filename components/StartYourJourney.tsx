@@ -116,9 +116,9 @@ const StartYourJourney: React.FC = () => {
           </p>
           <div className="flex items-center justify-center w-full my-10">
             <Link href={'/contact'}>
-            <Button className={cn('h-[72px] text-xl ')}>
-              Send us a Message <ArrowRight size={32} className="h-8 w-8" />
-            </Button>
+              <Button className={cn('h-[72px] text-xl ')}>
+                Send us a Message <ArrowRight size={32} className="h-8 w-8" />
+              </Button>
             </Link>
           </div>
         </div>

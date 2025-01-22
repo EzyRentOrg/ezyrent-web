@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef} from 'react';
+import { useState, useRef } from 'react';
 import { Play, Pause, Volume2, VolumeX, SkipForward } from 'lucide-react';
 
 interface Video {
