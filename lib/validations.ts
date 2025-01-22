@@ -49,6 +49,18 @@ export const resetPasswordSchema = z
     message: 'Passwords must match.'
   });
 
+export const contactSchema = z.object({
+  name: z.string({
+    required_error: 'Please enter your full name'
+  }),
+  email: z
+    .string({
+      required_error: 'Please enter a valid email address.'
+    })
+    .email(),
+  message: z.string({ required_error: 'Please enter a message' })
+});
+
 //  property form validation
 export const propertyFormSchema = z.object({
   address: z

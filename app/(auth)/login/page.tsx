@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -17,14 +16,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import useDelay from '@/hooks/useDelay';
 import { loginSchema } from '@/lib/validations';
 import { cn } from '@/lib/utils';
-import { Eye, EyeOffIcon, Loader, Lock, Mail } from 'lucide-react';
+import { Loader, Mail } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { Separator } from '@/components/ui/separator';
 import OAuth from '@/components/OAuth';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import RightHandAuthPage from '@/components/RightHandAuthPage';
-import { toast } from 'sonner';
 import LappedImages from '@/components/LappedImages';
 
 // Infer the type from the schema

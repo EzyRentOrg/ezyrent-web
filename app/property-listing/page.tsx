@@ -145,9 +145,9 @@ export default function PropertyListing() {
             </div>
           </section>
         </main>
+        {/* new houses */}
+        <Newest />
       </MaxWidthWrapper>
-      {/* new houses */}
-      <Newest />
     </section>
   );
 }

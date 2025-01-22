@@ -10,7 +10,7 @@ import { Settings, LogOut } from 'lucide-react';
 export default function Sidebar() {
   const pathname = usePathname();
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
-  const menuRefs = useRef<Array<HTMLAnchorElement | null>>([]);
+  const menuRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
   const handleKeyDown = (
     event: React.KeyboardEvent<HTMLAnchorElement | HTMLButtonElement>,
@@ -49,7 +49,7 @@ export default function Sidebar() {
 
   const getItemStyles = (isActive: boolean, isHovered: boolean) => {
     return `
-      ${isActive ? 'bg-[#7065F0] text-white' : 'text-[#000929] hover:text-[#7065F0]'} my-5
+      ${isActive || isHovered ? 'bg-[#7065F0] text-white' : 'text-[#000929] hover:text-[#7065F0]'}  my-5
       flex items-center space-x-2 font-medium text-[1.125rem] px-4 py-3 rounded-[8px] w-fit
       transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#7065F0] focus:ring-offset-2
     `;

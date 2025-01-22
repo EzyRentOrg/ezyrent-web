@@ -1,10 +1,8 @@
 import { useMemo } from 'react';
 
-export function useNumberWithCommas(number: number | string) {
+export function useNumberWithCommas(input: number | string) {
   return useMemo(() => {
-    if (typeof number === 'number') {
-      number = number.toString();
-    }
-    return number.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  }, [number]);
+    const numberAsString = typeof input === 'number' ? input.toString() : input;
+    return numberAsString.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }, [input]);
 }

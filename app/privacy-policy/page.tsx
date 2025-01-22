@@ -53,10 +53,10 @@ export default function PrivacyPolicy() {
   };
 
   return (
-    <section className="max-w-[1050px] mx-auto px-4">
-      <MaxWidthWrapper>
+    <MaxWidthWrapper>
+      <div className="px-20 max-w-[1050px]">
         <Breadcrumb />
-        <main>
+        <main className="">
           <section className="mt-10">
             <h1 className="text-[1.1rem] md:text-[1.5rem] lg:text-[2rem] font-semibold text-[#000929] mb-4 leading-[50.4px]">
               EzyRent Privacy Notice
@@ -106,7 +106,7 @@ export default function PrivacyPolicy() {
             ))}
           </section>
         </main>
-      </MaxWidthWrapper>
-    </section>
+      </div>
+    </MaxWidthWrapper>
   );
 }

@@ -19,7 +19,11 @@ import {
   buildingTypes,
   durations
 } from '@/app/admin/constants/property-form';
-import { useState } from 'react';
+import {
+  MAX_ADDRESS_LENGTH,
+  MAX_DESCRIPTION_LENGTH
+} from '@/app/admin/constants/propertyForm';
+import { toast } from 'sonner';
 
 interface ListingFormProps {
   control: Control<PropertyFormData>;
@@ -28,11 +32,12 @@ interface ListingFormProps {
   onImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onInputChange: (field: keyof PropertyFormData, value: string) => void;
   onSubmit: (e: React.FormEvent) => void;
-  onSaveDraft: () => void;
+  onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
+  onDragEnter: (e: React.DragEvent<HTMLDivElement>) => void;
+  onDragLeave: (e: React.DragEvent<HTMLDivElement>) => void;
+  onDrop: (e: React.DragEvent<HTMLDivElement>) => void;
+  isDragging: boolean;
 }
-
-const MAX_ADDRESS_LENGTH = 150;
-const MAX_DESCRIPTION_LENGTH = 1500;
 
 export default function ListingForm({
   control,
@@ -41,12 +46,12 @@ export default function ListingForm({
   onImageUpload,
   onInputChange,
   onSubmit,
-  onSaveDraft
+  onDrop,
+  onDragOver,
+  onDragEnter,
+  onDragLeave,
+  isDragging
 }: ListingFormProps) {
-  const [selectedBuildingType, setSelectedBuildingType] = useState<string>('');
-
-  console.log('errors: ', errors);
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(e);
@@ -62,7 +67,13 @@ export default function ListingForm({
         <section aria-label="Image Upload">
           <h2 className="text-[#000929] text-xl font-medium mb-3">Add Image</h2>
           <div className="bg-white h-40 w-full max-w-[416px] rounded-lg flex items-center justify-center shadow-sm">
-            <div className="w-[90%] h-[85%] border border-dashed border-[#CACACA] rounded-lg flex flex-col items-center justify-center">
+            <div
+              className={`${isDragging && 'border-solid border-[#7065F0]'} w-[90%] h-[85%] border border-dashed border-[#CACACA] rounded-lg flex flex-col items-center justify-center `}
+              onDragOver={onDragOver}
+              onDragEnter={onDragEnter}
+              onDragLeave={onDragLeave}
+              onDrop={onDrop}
+            >
               <label
                 htmlFor="image"
                 className="w-full h-full flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
@@ -163,7 +174,6 @@ export default function ListingForm({
                     label={type}
                     selected={field.value === type}
                     onClick={() => {
-                      setSelectedBuildingType(type);
                       field.onChange(type);
                     }}
                   />
@@ -330,7 +340,9 @@ export default function ListingForm({
         <section className="flex items-center justify-center gap-6 pt-4">
           <Button
             type="button"
-            onClick={onSaveDraft}
+            onClick={() => {
+              toast.success('Draft Saved');
+            }}
             className="flex items-center gap-2 h-12 lg:text-[1.1rem] bg-white text-[#037F4A] shadow-sm hover:bg-[#F5FFF9] border border-[#037F4A] transition-colors"
             aria-label="Save draft"
           >
