@@ -50,7 +50,7 @@ export default function Login() {
   };
 
   return (
-    <MaxWidthWrapper>
+    <MaxWidthWrapper className="w-full">
       <section className="min-h-[984px] mx-auto mb-10 flex items-center space-x-10">
         {/* left side */}
 
