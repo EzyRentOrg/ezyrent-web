@@ -78,10 +78,11 @@ export const propertyFormSchema = z.object({
   duration: z.enum(['1 year', '2 years', '3 years'], {
     required_error: 'Please select a duration'
   }),
-  images: z
+  primaryFile: z.string().min(1, 'Main image is required'),
+  otherFiles: z
     .array(z.string())
-    .min(1, 'At least one image is required')
-    .max(7, 'Maximum 7 images allowed'),
+    .min(1, 'At least one image is required for other images')
+    .max(7, 'Maximum 6 images allowed'),
   buildingType: z.enum(['apartment', 'shortlet', 'flat', 'hotel', 'condo'], {
     required_error: 'Please select a building type'
   }),
