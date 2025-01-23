@@ -7,13 +7,11 @@ import { useRouter } from 'next/navigation';
 import { MoveLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import DashboardLayout from '../../components/Layouts';
-import AdminHeader from '../../components/AdminHeader';
-import Preview from './components/Preview';
-import ListingForm from './components/ListingForm';
 import { propertyFormSchema } from '@/lib/validations';
 import { toast } from 'sonner';
-import { MAX_IMAGES } from '../../constants/propertyForm';
-import { processImage } from '@/lib/pocessImage';
+import { handleFileUploadOrDrop } from '@/lib/handleFileUploadOrDrop';
+import Preview from './components/Preview';
+import ListingForm from './components/ListingForm';
 
 const STORAGE_KEY = 'property_listing_draft';
 
@@ -22,7 +20,8 @@ const initialFormData: PropertyFormData = {
   description: '',
   price: '',
   duration: '1 year',
-  images: [],
+  primaryFile: { name: '', data: '' },
+  otherFiles: [],
   buildingType: 'flat',
   beds: '2 beds',
   baths: '3 baths',
@@ -41,170 +40,132 @@ export default function CreateListing() {
 
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(propertyFormSchema),
-    defaultValues: initialFormData
+    defaultValues: initialFormData,
+    mode: 'onChange'
   });
 
   const {
     handleSubmit,
     watch,
     setValue,
-    reset,
     control,
     formState: { errors }
   } = form;
 
-  // Watch form values for auto-saving
   const formValues = watch();
 
-  // Auto-save form data to localStorage whenever values change
+  // save to storage
   useEffect(() => {
     const saveTimeout = setTimeout(() => {
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(formValues));
+        // Deep clone to handle base64 data
+        const saveData = JSON.parse(JSON.stringify(formValues));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
       } catch (error) {
-        console.error('Error saving form:', error);
-        setFormError({
-          field: 'save',
-          message: 'Failed to save draft. The images might be too large.'
-        });
+        console.error('Error saving draft:', error);
       }
     }, 1000);
 
     return () => clearTimeout(saveTimeout);
   }, [formValues]);
 
-  // Load saved form data, including images, once on mount
+  // get from storage
   useEffect(() => {
-    try {
-      const savedForm = localStorage.getItem(STORAGE_KEY);
-      if (savedForm) {
-        const parsedForm = JSON.parse(savedForm);
-        reset(parsedForm);
+    const saveTimeout = setTimeout(() => {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(formValues));
+      } catch (error) {
+        console.error('Error saving draft:', error);
       }
-    } catch (error) {
-      console.error('Error loading saved form:', error);
-      setFormError({
-        field: 'load',
-        message: 'Failed to load draft. Please try again.'
-      });
-    }
-  }, [reset]);
+    }, 1000);
 
-  // handle upload image
+    return () => clearTimeout(saveTimeout);
+  }, [formValues]);
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files?.length) return;
-
-    const currentImages = watch('images');
-    if (currentImages.length + e.target.files.length > MAX_IMAGES) {
-      setFormError({
-        field: 'images',
-        message: `You cannot upload more than ${MAX_IMAGES} images`
-      });
-      return;
-    }
-
-    try {
-      const newImages = await Promise.all(
-        Array.from(e.target.files).map((file) => processImage(file))
-      );
-
-      const updatedImages = [...currentImages, ...newImages];
-      setValue('images', updatedImages);
-      localStorage.setItem('images', JSON.stringify(updatedImages));
-      setFormError(null);
-    } catch (error) {
-      console.error('Error processing images:', error);
-      setFormError({
-        field: 'images',
-        message:
-          'Error uploading images. Please ensure each image is under 5MB.'
-      });
-    }
+  // upload file
+  const handleFileUpload = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: 'primary' | 'other'
+  ) => {
+    e.preventDefault();
+    if (!e.target?.files?.length) return;
+    handleFileUploadOrDrop(e.target.files, type, setValue, watch);
   };
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+  // drop file
+  const handleDrop = (
+    e: React.DragEvent<HTMLDivElement>,
+    type: 'primary' | 'other'
+  ) => {
     e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  };
-
-  const handleDragEnter = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
     setIsDragging(false);
+    handleFileUploadOrDrop(e.dataTransfer.files, type, setValue, watch);
   };
 
-  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+  // drag file
+  const handleDrag = (
+    e: React.DragEvent<HTMLDivElement>,
+    isEntering: boolean
+  ) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsDragging(false);
+    setIsDragging(isEntering);
 
-    const files = Array.from(e.dataTransfer.files).filter((file) =>
-      file.type.startsWith('image/')
-    );
-
-    if (!files.length) {
-      toast.error('Please drop only image files');
-      return;
+    const target = e.currentTarget; //get ref of element with listener
+    if (isEntering) {
+      target.classList.add('drag-over');
+    } else {
+      target.classList.remove('drag-over');
     }
+  };
 
-    const currentImages = watch('images');
-    if (currentImages.length + files.length > MAX_IMAGES) {
-      toast.error(`You cannot upload more than ${MAX_IMAGES} images`);
-      return;
-    }
-
+  // handle draft
+  const handleSaveDraft = () => {
     try {
-      const newImages = await Promise.all(
-        files.map((file) => processImage(file))
-      );
-
-      const updatedImages = [...currentImages, ...newImages];
-      setValue('images', updatedImages);
-      localStorage.setItem('images', JSON.stringify(updatedImages));
-      setFormError(null);
-      toast.success('Images uploaded successfully');
+      // localStorage.setItem(STORAGE_KEY, JSON.stringify(formValues));
+      toast.success('Draft saved successfully');
     } catch (error) {
-      console.error('Error processing images:', error);
-      toast.error(
-        'Error uploading images. Please ensure each image is under 5MB.'
-      );
+      console.error('Error saving draft:', error);
+      toast.error('Failed to save draft.');
     }
   };
 
-  const handleImageDelete = (index: number) => {
-    const currentImages = watch('images');
-    const updatedImages = currentImages.filter((_, i) => i !== index);
-    setValue('images', updatedImages);
-    localStorage.setItem('images', JSON.stringify(updatedImages));
-    setFormError(null);
+  // delete file
+  const handleImageDelete = (type: 'primary' | 'other', index?: number) => {
+    if (confirm('Are you sure you want to delete this file?')) {
+      if (type === 'primary') {
+        setValue('primaryFile', { name: '', data: '' });
+        toast.success('Primary file removed');
+      } else if (type === 'other' && index !== undefined) {
+        const currentOtherFiles = watch('otherFiles') || [];
+        const updatedFiles = currentOtherFiles.filter((_, i) => i !== index);
+        setValue('otherFiles', updatedFiles);
+        toast.success('File removed');
+      }
+    }
   };
 
+  // submit form to create listing
   const onSubmit = async (data: PropertyFormData) => {
+    if (!data.primaryFile || !data.primaryFile.data) {
+      setFormError({
+        field: 'primaryFile',
+        message: 'Primary image is required'
+      });
+      return;
+    }
+
     try {
-      console.log('Submitting property listing:', data);
       localStorage.removeItem(STORAGE_KEY);
-      alert('Property listing created successfully!');
       router.push('/admin/property-management');
     } catch (error) {
       console.error('Error submitting form:', error);
-      setFormError({
-        field: 'submit',
-        message: 'Error submitting form. Please try again.'
-      });
+      setFormError({ field: 'submit', message: 'Failed to submit the form' });
     }
   };
 
   return (
-    <DashboardLayout>
-      <AdminHeader title="Create Listing" />
+    <DashboardLayout title="Create Listing">
       <main className="p-5">
         <Button
           variant="default"
@@ -221,25 +182,28 @@ export default function CreateListing() {
           </div>
         )}
 
-        <section className="grid grid-cols-2 gap-10">
-          <Preview
-            control={control}
-            watch={watch}
-            images={watch('images')}
-            onImageDelete={handleImageDelete}
-          />
+        <section className="w-full grid lg:grid-cols-2 gap-20">
           <ListingForm
             control={control}
             errors={errors}
             watch={watch}
-            onImageUpload={handleImageUpload}
+            setValue={setValue}
             onInputChange={setValue}
-            onSubmit={handleSubmit(onSubmit)}
-            onDragOver={handleDragOver}
-            onDragEnter={handleDragEnter}
-            onDragLeave={handleDragLeave}
+            handlePrimaryFileUpload={(e) => handleFileUpload(e, 'primary')}
+            handleOtherFileUpload={(e) => handleFileUpload(e, 'other')}
+            onDragOver={(e) => handleDrag(e, true)}
+            onDragEnter={(e) => handleDrag(e, true)}
+            onDragLeave={(e) => handleDrag(e, false)}
+            handleSaveDraft={handleSaveDraft}
             isDragging={isDragging}
             onDrop={handleDrop}
+            onSubmit={handleSubmit(onSubmit)}
+          />
+          <Preview
+            watch={watch}
+            primaryFile={watch('primaryFile')}
+            otherFiles={watch('otherFiles')}
+            onImageDelete={handleImageDelete}
           />
         </section>
       </main>

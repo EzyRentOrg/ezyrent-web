@@ -3,23 +3,29 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, Plus } from 'lucide-react';
+import { Search, Plus, Menu } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { useWindowResizer } from '@/hooks/useWindowResizer';
 
 type AdminHeaderPropType = {
-  title: string;
+  title: string | undefined;
   handleClick?: () => void;
   btnTitle?: string;
+  setIsMobileMenuOpen: (isOpen: boolean) => void;
 };
 
 export default function AdminHeader({
   title,
   handleClick,
-  btnTitle
+  btnTitle,
+  setIsMobileMenuOpen
 }: AdminHeaderPropType) {
   const handleProfileClick = () => {
     alert('Profile clicked!');
   };
+  const { windowWidth } = useWindowResizer();
+
+  const hideTitle = windowWidth <= 768 && handleClick;
 
   return (
     <header
@@ -27,16 +33,28 @@ export default function AdminHeader({
       role="banner"
       aria-label={`${title} Header`}
     >
-      {/* Title */}
-      <h1
-        className="font-bold capitalize w-fit max-w-[250px] truncate text-[#000929] leading-7 text-[2rem]"
-        id="header-title"
+      {/* open menu */}
+      <Button
+        variant="ghost"
+        className="lg:hidden p-2 border !size-10 rounded-md bg-white shadow-md"
+        onClick={() => setIsMobileMenuOpen(true)}
+        aria-label={'Open menu'}
       >
-        {title}
-      </h1>
+        <Menu className="!size-6" />
+      </Button>
+
+      {/* Title */}
+      {!hideTitle && (
+        <h1
+          className="font-bold w-full capitalize text-center lg:w-[250px] truncate text-[#000929] leading-7 text-[1.125rem] lg:text-[2rem]"
+          id="header-title"
+        >
+          {title}
+        </h1>
+      )}
 
       {/* Search */}
-      <div className="relative" role="search">
+      <div className="hidden lg:block relative" role="search">
         <label htmlFor="search-input" className="sr-only">
           Search {title}
         </label>
@@ -50,7 +68,7 @@ export default function AdminHeader({
       </div>
 
       {/* Action Button */}
-      <div className="flex items-center justify-between">
+      <div className="flex  items-center justify-between">
         {handleClick && (
           <Button
             variant="default"
