@@ -1,0 +1,376 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --PhoneInput-color--focus: #03b2cb;
+  --PhoneInputInternationalIconPhone-opacity: 0.8;
+  --PhoneInputInternationalIconGlobe-opacity: 0.65;
+  --PhoneInputCountrySelect-marginRight: 0.35em;
+  --PhoneInputCountrySelectArrow-width: 0.3em;
+  --PhoneInputCountrySelectArrow-marginLeft: var(
+    --PhoneInputCountrySelect-marginRight
+  );
+  --PhoneInputCountrySelectArrow-borderWidth: 1px;
+  --PhoneInputCountrySelectArrow-opacity: 0.45;
+  --PhoneInputCountrySelectArrow-color: currentColor;
+  --PhoneInputCountrySelectArrow-color--focus: var(--PhoneInput-color--focus);
+  --PhoneInputCountrySelectArrow-transform: rotate(45deg);
+  --PhoneInputCountryFlag-aspectRatio: 1.5;
+  --PhoneInputCountryFlag-height: 1em;
+  --PhoneInputCountryFlag-borderWidth: 1px;
+  --PhoneInputCountryFlag-borderColor: rgba(0, 0, 0, 0.5);
+  --PhoneInputCountryFlag-borderColor--focus: var(--PhoneInput-color--focus);
+  --PhoneInputCountryFlag-backgroundColor--loading: rgba(0, 0, 0, 0.1);
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary: 0 0% 9%;
+    --primary: 214 92% 53%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+}
+
+/* image */
+@layer base {
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* stops shadcn overflow */
+html {
+  @apply overflow-x-hidden;
+}
+
+body {
+  @apply !min-w-full;
+}
+
+.drag-over {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.1
+  ); /* Add a light background when dragging */
+}
+
+/* Hide scrollbar */
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* Custom thin scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 0;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #d4d4d4;
+    border-radius: 20px;
+  }
+
+  .custom-scrollbar {
+    scrollbar-width: none; /* Firefox */
+    scrollbar-color: #d4d4d4 transparent; /* Firefox */
+  }
+}
+
+/* Remove date icon for Chrome, Safari, Edge, Opera */
+input[type='date']::-webkit-calendar-picker-indicator {
+  content: url('/calendar.svg');
+  position: absolute;
+  left: 0;
+  padding-left: 90%;
+  cursor: pointer;
+}
+
+/* Remove date icon for Firefox */
+input[type='date']::-moz-calendar-picker-indicator {
+  display: none;
+  -moz-appearance: none;
+}
+
+/* Internet Explorer 10+ */
+input[type='date']::-ms-clear {
+  display: none;
+}
+
+@layer utilities {
+  /* change auto fill color */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-text-fill-color: inherit !important;
+    transition: background-color 5000s ease-in-out 0s !important;
+    box-shadow: inset 0 0 0px 1000px var(--background) !important;
+  }
+}
+
+/*Tailwind class */
+@layer utilities {
+  .bg-mobile-gradient {
+    background: linear-gradient(
+      71.77deg,
+      rgba(255, 255, 255, 0.3) -13.78%,
+      rgba(0, 9, 41, 0.3) 29.34%
+    );
+  }
+
+  .bg-mobile-box-shadow {
+    box-shadow: 4px 8px 20px 0px #7065f026;
+  }
+
+  .bg-mobile-backdrop {
+    backdrop-filter: blur(1px);
+  }
+
+  .hero_banner {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0.5) 100%
+    );
+  }
+
+  .hero_banner-border {
+    border: 1px solid;
+    border-image-source: linear-gradient(
+      90.23deg,
+      rgba(255, 255, 255, 0.49) 0.2%,
+      rgba(112, 101, 240, 0.28) 101.65%
+    );
+  }
+
+  .about-image-gradient {
+    background: linear-gradient(
+      68.74deg,
+      rgba(255, 255, 255, 0.1) 1.48%,
+      rgba(112, 101, 240, 0.1) 45.69%
+    );
+  }
+  .about-image-box-shadow {
+    box-shadow: 4px 8px 20px 0px #7065f026;
+  }
+  .about-image-backdrop {
+    backdrop-filter: blur(101px);
+  }
+
+  .testimonial-card-bg {
+    background: linear-gradient(
+      68.74deg,
+      rgba(255, 255, 255, 0.1) 1.48%,
+      rgba(112, 101, 240, 0.1) 45.69%
+    );
+  }
+
+  .testimonial-card_box-shadow {
+    box-shadow: 4px 8px 20px 0px #7065f026;
+  }
+
+  .testimonial-card_backdrop {
+    backdrop-filter: blur(101px);
+  }
+
+  /* ipad 11 */
+  @media (min-width: 768px) and (max-width: 1024px) {
+    .ipad-height-adjust {
+      min-height: auto;
+    }
+  }
+
+  input:-webkit-autofill {
+    background-color: transparent !important;
+    box-shadow: 0 0 0px 1000px transparent inset !important;
+  }
+
+  .glassmorphism {
+    background: linear-gradient(
+      180deg,
+      rgba(214, 214, 214, 0.5) 0%,
+      rgba(204, 204, 204, 0.2) 100%
+    );
+    border: 1px solid;
+    border-image-source: linear-gradient(
+      98.42deg,
+      rgba(255, 255, 255, 0.7) -8.71%,
+      rgba(255, 255, 255, 0.2) 93.15%
+    );
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+  }
+
+  .right-side-linear {
+    background: linear-gradient(0deg, #f8f8f8, #f8f8f8),
+      linear-gradient(
+        180deg,
+        rgba(242, 242, 242, 0) 2.44%,
+        rgba(46, 46, 46, 0.14) 40.45%,
+        rgba(47, 47, 47, 0.2) 77.34%
+      );
+  }
+
+  .image-box-shadow {
+    box-shadow: 4px 4px 30px 0px #0000000a;
+  }
+}
+
+/* change auto fill color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: inherit !important;
+  transition: background-color 5000s ease-in-out 0s;
+  box-shadow: inset 0 0 20px 20px #23232329;
+}
+
+/* CSS variables. phone input and country select*/
+
+.PhoneInput {
+  /* This is done to stretch the contents of this component. */
+  display: flex;
+  align-items: center;
+}
+
+.PhoneInputInput:focus {
+  outline: none;
+  border: none;
+}
+
+.PhoneInputInput {
+  /* The phone number input stretches to fill all empty space */
+  flex: 1;
+  height: 3.5em;
+  background-color: transparent;
+  /* The phone number input should shrink
+	   to make room for the extension input */
+  min-width: 0;
+}
+
+.PhoneInputCountryIcon {
+  width: calc(
+    var(--PhoneInputCountryFlag-height) *
+      var(--PhoneInputCountryFlag-aspectRatio)
+  );
+  height: var(--PhoneInputCountryFlag-height);
+}
+
+.PhoneInputCountryIcon--square {
+  width: var(--PhoneInputCountryFlag-height);
+}
+
+.PhoneInputCountryIcon--border {
+  /* Removed `background-color` because when an `<img/>` was still loading
+	   it would show a dark gray rectangle. */
+  /* For some reason the `<img/>` is not stretched to 100% width and height
+	   and sometime there can be seen white pixels of the background at top and bottom. */
+  background-color: var(--PhoneInputCountryFlag-backgroundColor--loading);
+  /* Border is added via `box-shadow` because `border` interferes with `width`/`height`. */
+  /* For some reason the `<img/>` is not stretched to 100% width and height
+	   and sometime there can be seen white pixels of the background at top and bottom,
+	   so an additional "inset" border is added. */
+}
+
+.PhoneInputCountryIconImg {
+  /* Fixes weird vertical space above the flag icon. */
+  /* https://gitlab.com/catamphetamine/react-phone-number-input/-/issues/7#note_348586559 */
+  display: block;
+  /* 3rd party <SVG/> flag icons won't stretch if they have `width` and `height`.
+	   Also, if an <SVG/> icon's aspect ratio was different, it wouldn't fit too. */
+  width: 100%;
+  height: 100%;
+}
+
+.PhoneInputInternationalIconPhone {
+  opacity: var(--PhoneInputInternationalIconPhone-opacity);
+}
+
+.PhoneInputInternationalIconGlobe {
+  opacity: var(--PhoneInputInternationalIconGlobe-opacity);
+}
+
+/* Styling native country `<select/>`. */
+.PhoneInputCountry {
+  position: relative;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  margin-right: var(--PhoneInputCountrySelect-marginRight);
+}
+
+.PhoneInputCountrySelect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  border: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.PhoneInputCountrySelect:focus
+  + .PhoneInputCountryIcon
+  + .PhoneInputCountrySelectArrow {
+  opacity: 1;
+  outline: none;
+  box-shadow: none;
+}
+
+.PhoneInputCountrySelect:focus + .PhoneInputCountryIcon--border {
+  outline: none;
+  box-shadow: none;
+}
+
+.PhoneInputCountrySelect:focus
+  + .PhoneInputCountryIcon
+  .PhoneInputInternationalIconGlobe {
+  opacity: 1;
+  outline: none;
+  box-shadow: none;
+}
