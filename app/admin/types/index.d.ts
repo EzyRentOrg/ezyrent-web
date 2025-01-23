@@ -41,9 +41,15 @@ declare type AmenityType =
   | 'Restaurants Nearby'
   | 'Free WiFi';
 
+declare type FileData = {
+  name: string;
+  data: string;
+};
+
 // Main interface for property form data
 declare interface PropertyFormData {
-  images: string[];
+  primaryFile: FileData;
+  otherFiles: FileData[];
   price: string;
   duration: DurationType;
   address: string;
@@ -52,8 +58,8 @@ declare interface PropertyFormData {
   beds: BedOption;
   baths: BathOption;
   amenities: AmenityType[];
-  error: string | null;
-  errorMessage: string | null;
+  error?: string | null;
+  errorMessage?: string | null;
 }
 
 // Type for form submission response
