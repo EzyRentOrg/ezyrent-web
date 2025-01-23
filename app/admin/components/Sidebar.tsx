@@ -1,29 +1,41 @@
 'use client';
 
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState, useRef, useEffect } from 'react';
 import { siderbarItems } from '../constants';
 import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Settings, LogOut } from 'lucide-react';
-export default function Sidebar() {
+import { Settings, LogOut, X } from 'lucide-react';
+import { useWindowResizer } from '@/hooks/useWindowResizer';
+
+interface SidebarPropsType {
+  setIsMobileMenuOpen: (isOpen: boolean) => void;
+  isMobileMenuOpen: boolean;
+}
+
+export default function Sidebar({
+  setIsMobileMenuOpen,
+  isMobileMenuOpen
+}: SidebarPropsType) {
   const pathname = usePathname();
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
   const menuRefs = useRef<(HTMLAnchorElement | null)[]>([]);
+  const [isSidebarHovered, setIsSidebarHovered] = useState(false);
+  const { windowWidth } = useWindowResizer();
+
+  useEffect(() => {
+    menuRefs.current = new Array(siderbarItems.length + 2).fill(null);
+  }, []);
 
   const handleKeyDown = (
     event: React.KeyboardEvent<HTMLAnchorElement | HTMLButtonElement>,
     index: number
   ) => {
-    if (
-      event.key !== 'ArrowDown' &&
-      event.key !== 'ArrowUp' &&
-      event.key !== 'Enter'
-    )
-      return;
+    const keys = ['ArrowDown', 'ArrowUp', 'Enter'];
+    if (!keys.includes(event.key)) return;
 
-    const maxIndex = siderbarItems.length + 2; // +2 for settings and logout
+    const maxIndex = siderbarItems.length + 2;
 
     if (event.key === 'Enter') {
       event.currentTarget.click();
@@ -42,128 +54,203 @@ export default function Sidebar() {
     }
   };
 
-  // Initialize refs array when component mounts
-  useEffect(() => {
-    menuRefs.current = new Array(siderbarItems.length + 2).fill(null);
-  }, []);
-
-  const getItemStyles = (isActive: boolean, isHovered: boolean) => {
+  // Custom link styles
+  const getItemStyles = (
+    isActive: boolean,
+    isLinkHovered: boolean,
+    isSidebarHovered?: boolean
+  ) => {
     return `
-      ${isActive || isHovered ? 'bg-[#7065F0] text-white' : 'text-[#000929] hover:text-[#7065F0]'}  my-5
-      flex items-center space-x-2 font-medium text-[1.125rem] px-4 py-3 rounded-[8px] w-fit
-      transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#7065F0] focus:ring-offset-2
+      ${isActive || isLinkHovered ? 'bg-[#7065F0] text-white' : 'text-[#000929] hover:text-[#7065F0]'} 
+      ${windowWidth < 1024 || isSidebarHovered ? 'rounded-[8px]' : ''} 
+      my-5 flex items-center font-medium text-[1.125rem] px-4 py-3 w-fit transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#7065F0] focus:ring-offset-2
     `;
   };
 
   return (
-    <aside
-      className="sticky top-0 shadow-md shadow-white bg-white border-r h-screen w-[220px] flex flex-col overflow-y-auto custom-scrollbar"
-      role="navigation"
-      aria-label="Main Sidebar"
-    >
-      {/* Logo Section */}
-      <div className="sticky top-0 bg-white w-full px-5 py-3 z-10">
-        <Link href="/admin/dashboard" aria-label="Go to homepage">
-          <Image
-            src="/logo/ezyRentNavLogo.svg"
-            width={200}
-            height={40}
-            tabIndex={0}
-            alt="EzyRent Logo"
-            className="w-[200px] h-[100px] object-fill"
-            priority
-          />
-        </Link>
-      </div>
+    <>
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-10"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
 
-      {/* Navigation Links */}
-      <nav className="flex-1 px-5">
-        <ul role="menu" aria-label="Main Navigation">
-          {siderbarItems.map((item, index) => {
-            const Icon = item.icon;
-            const isActive = pathname.startsWith(item.href);
-            const isHovered = hoveredItem === index;
-
-            return (
-              <li key={`${item.title}-${index}`} role="menuitem">
-                <Link
-                  href={item.href}
-                  aria-label={`Navigate to ${item.title}`}
-                  aria-current={isActive ? 'page' : undefined}
-                  onMouseEnter={() => setHoveredItem(index)}
-                  onMouseLeave={() => setHoveredItem(null)}
-                  ref={(el) => {
-                    menuRefs.current[index] = el;
-                  }}
-                  onKeyDown={(e) => handleKeyDown(e, index)}
-                  className={getItemStyles(isActive, isHovered)}
-                >
-                  <Icon className="size-5" aria-hidden="true" />
-                  <span
-                    className={`whitespace-nowrap capitalize ${
-                      isHovered ? 'w-fit' : 'max-w-[150px] truncate'
-                    }`}
-                  >
-                    {item.title}
-                  </span>
-                </Link>
-              </li>
-            );
-          })}
-
-          {/* Settings Link */}
-          <li role="menuitem">
-            <Link
-              href="/settings"
-              aria-label="Navigate to Settings"
-              aria-current={pathname === '/settings' ? 'page' : undefined}
-              onMouseEnter={() => setHoveredItem(-1)}
-              onMouseLeave={() => setHoveredItem(null)}
-              ref={(el) => {
-                menuRefs.current[siderbarItems.length] = el;
-              }}
-              onKeyDown={(e) => handleKeyDown(e, siderbarItems.length)}
-              className={getItemStyles(
-                pathname === '/settings',
-                hoveredItem === -1
-              )}
-            >
-              <Settings className="size-5" aria-hidden="true" />
-              <span
-                className={`whitespace-nowrap capitalize ${
-                  hoveredItem === -1 ? 'w-fit' : 'max-w-[150px] truncate'
-                }`}
-              >
-                Settings
-              </span>
-            </Link>
-          </li>
-        </ul>
-      </nav>
-
-      {/* Logout Button */}
-      <div className="mt-auto px-5 py-5">
+      {/* Sidebar */}
+      <aside
+        onMouseEnter={() => windowWidth >= 1024 && setIsSidebarHovered(true)}
+        onMouseLeave={() => windowWidth >= 1024 && setIsSidebarHovered(false)}
+        className={`fixed lg:sticky flex flex-col items-center top-0 z-20 h-screen bg-white border-r shadow-md
+          transition-all duration-300 ease-in-out
+          ${isMobileMenuOpen ? 'left-0' : '-left-full'}
+          lg:left-0
+          ${windowWidth < 1024 || isSidebarHovered ? 'w-60' : 'w-16'}
+          flex flex-col overflow-y-auto custom-scrollbar`}
+        role="navigation"
+        aria-label="Main Sidebar"
+      >
+        {/* Close Button */}
         <Button
           variant="ghost"
-          className="w-fit capitalize text-red-500 flex items-center space-x-2 font-medium text-[1.125rem] px-4 py-3 hover:bg-red-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-          aria-label="Logout from application"
-          onClick={() => {
-            /* Add logout handler */
-          }}
-          ref={(el) => {
-            if (el) {
-              menuRefs.current[siderbarItems.length + 1] =
-                el as unknown as HTMLAnchorElement;
-            }
-          }}
-          onKeyDown={(e) => handleKeyDown(e, siderbarItems.length + 1)}
+          className="lg:hidden absolute top-10 right-4 z-50 p-2 rounded-md bg-white shadow-md"
+          onClick={() => setIsMobileMenuOpen(false)}
+          aria-label="Close menu"
         >
-          <LogOut className="size-5" aria-hidden="true" />
-          <span className="max-w-[150px] truncate whitespace-nowrap">
-            Logout
-          </span>
+          <X className="size-6" />
         </Button>
-      </div>
-    </aside>
+
+        {/* Logo Section */}
+        <div
+          className={`${windowWidth < 1024 || isSidebarHovered ? 'pl-8' : 'pl-5'} sticky top-0 w-full flex items-center bg-white py-12 z-40`}
+        >
+          <div className="w-fit">
+            <Link href="/admin/dashboard" aria-label="Go to homepage">
+              {windowWidth < 1024 || isSidebarHovered ? (
+                windowWidth >= 1024 ? (
+                  <Image
+                    src="/logo/LeftNav.png"
+                    width={117}
+                    height={32}
+                    alt="EzyRent Logo"
+                  />
+                ) : (
+                  <Image
+                    src="/logo/LeftNav.png"
+                    width={117}
+                    height={32}
+                    alt="EzyRent Logo"
+                    className="!w-[120px]"
+                  />
+                )
+              ) : (
+                <Image
+                  src="/logo/Logo.png"
+                  width={30}
+                  height={30}
+                  alt="EzyRent Logo"
+                />
+              )}
+            </Link>
+          </div>
+        </div>
+
+        {/* Navigation Links */}
+        <nav className="w-[200px] mx-auto flex-1">
+          <ul role="menu">
+            {siderbarItems.map((item, index) => {
+              const Icon = item.icon;
+              const isActive = pathname.startsWith(item.href);
+              const isLinkHovered = hoveredItem === index;
+
+              return (
+                <li key={item.title} role="menuitem">
+                  <Link
+                    href={item.href}
+                    className={getItemStyles(
+                      isActive,
+                      isLinkHovered,
+                      windowWidth < 1024 || isSidebarHovered
+                    )}
+                    aria-label={`Navigate to ${item.title}`}
+                    aria-current={isActive ? 'page' : undefined}
+                    onMouseEnter={() => setHoveredItem(index)}
+                    onMouseLeave={() => setHoveredItem(null)}
+                    ref={(el) => {
+                      menuRefs.current[index] = el;
+                    }}
+                    onKeyDown={(e) => handleKeyDown(e, index)}
+                  >
+                    <div className="w-10">
+                      <Icon
+                        className={`size-6 transition-transform duration-300 ${
+                          windowWidth < 1024 || isSidebarHovered
+                            ? 'scale-100'
+                            : 'scale-100'
+                        }`}
+                      />
+                    </div>
+                    <span
+                      className={`capitalize whitespace-nowrap overflow-hidden transition-all duration-300 ${
+                        windowWidth < 1024 || isSidebarHovered
+                          ? 'w-auto opacity-100'
+                          : 'w-0 opacity-0'
+                      }`}
+                    >
+                      {item.title}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
+
+            {/* Settings Link */}
+            <li role="menuitem" className="mt-20">
+              <Link
+                href="/settings"
+                className={getItemStyles(
+                  pathname === '/settings',
+                  hoveredItem === -1,
+                  windowWidth < 1024 || isSidebarHovered
+                )}
+                aria-label="Navigate to Settings"
+                aria-current={pathname === '/settings' ? 'page' : undefined}
+                onMouseEnter={() => setHoveredItem(-1)}
+                onMouseLeave={() => setHoveredItem(null)}
+                ref={(el) => {
+                  if (el) {
+                    menuRefs.current[siderbarItems.length] = el;
+                  }
+                }}
+                onKeyDown={(e) => handleKeyDown(e, siderbarItems.length)}
+              >
+                <div className="w-10">
+                  <Settings className="size-6" />
+                </div>
+                <span
+                  className={`whitespace-nowrap overflow-hidden transition-all duration-300 ${
+                    windowWidth < 1024 || isSidebarHovered
+                      ? 'w-auto opacity-100'
+                      : 'w-0 opacity-0'
+                  }`}
+                >
+                  Settings
+                </span>
+              </Link>
+            </li>
+          </ul>
+
+          {/* Logout Button */}
+          <div className="mt-5">
+            <Button
+              variant="ghost"
+              className={`text-red-500 hover:bg-red-50 my-5 flex items-center font-medium text-[1.125rem] px-4 py-3 w-fit transition-colors duration-200 focus:outline-none focus:ring-1 focus:ring-red-500 focus:ring-offset-1`}
+              aria-label="Logout"
+              onClick={() => setIsMobileMenuOpen(false)}
+              ref={(el) => {
+                if (el) {
+                  menuRefs.current[siderbarItems.length + 1] =
+                    el as unknown as HTMLAnchorElement;
+                }
+              }}
+              onKeyDown={(e) => handleKeyDown(e, siderbarItems.length + 1)}
+            >
+              <div className="w-10">
+                <LogOut className="size-6" />
+              </div>
+              <span
+                className={`whitespace-nowrap overflow-hidden transition-all duration-300 ${
+                  windowWidth < 1024 || isSidebarHovered
+                    ? 'w-auto opacity-100'
+                    : 'w-0 opacity-0'
+                }`}
+              >
+                Logout
+              </span>
+            </Button>
+          </div>
+        </nav>
+      </aside>
+    </>
   );
 }

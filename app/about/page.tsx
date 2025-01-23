@@ -6,13 +6,13 @@ import Image from 'next/image';
 
 export default function About() {
   return (
-    <MaxWidthWrapper>
+    <MaxWidthWrapper className="px-0">
+      <div className="px-5">
+        <Breadcrumb />
+      </div>
       <main>
-        <div className="lg:pl-20">
-          <Breadcrumb />
-        </div>
         {/* Hero Section */}
-        <header className="mt-5 relative w-full max-w-[1240px] mx-auto h-[400px] md:h-[500px] rounded-[40px] bg-[url('/about/about-image2479x1653.jpeg')] bg-no-repeat bg-center bg-cover overflow-hidden">
+        <header className="mt-5 relative w-full max-w-[1240px] mx-auto h-[400px] md:h-[500px] lg:rounded-[40px] bg-[url('/about/about-image2479x1653.jpeg')] bg-no-repeat bg-center bg-cover overflow-hidden">
           <div className="absolute inset-0 bg-[#000929] bg-opacity-75 flex flex-col justify-center items-center text-white text-center h-full">
             <div className="max-w-[900px] mx-auto flex flex-col items-center justify-center h-full px-4">
               <h1 className="mb-10 sm:text-[1.2rem] text-[1.5rem] md:text-[3rem] lg:text-[3.5rem] font-semibold !leading-[1.4]">
@@ -34,7 +34,7 @@ export default function About() {
         </header>
 
         {/* Mission Section */}
-        <section className="py-10 lg:py-20 max-w-[900px] mx-auto">
+        <section className="px-5 lg:px-0 py-10 lg:py-20 max-w-[900px] mx-auto">
           <h2 className="lg:mb-10 text-2xl md:text-3xl lg:text-[2.5rem] 2xl:text-[3rem] font-medium text-[#7065F0] text-center">
             Our Mission
           </h2>
@@ -51,7 +51,7 @@ export default function About() {
         </section>
 
         {/* What We Offer Section */}
-        <section className="py-10 max-w-[900px] mx-auto ">
+        <section className="px-5 lg:px-0 py-10 max-w-[900px] mx-auto ">
           <h2 className="text-2xl md:text-3xl lg:text-[2.5rem] 2xl:text-[3rem] font-medium text-[#7065F0] text-center mb-2 lg:mb-4">
             What We Offer
           </h2>
@@ -76,7 +76,7 @@ export default function About() {
         </section>
 
         {/* Team Members Section */}
-        <section className="py-10 max-w-[1240px] mx-auto ">
+        <section className="px-5 lg:px-0 py-10 max-w-[1240px] mx-auto ">
           <h2 className="!mb-10 text-2xl md:text-3xl lg:text-[2.5rem] 2xl:text-[3rem] font-medium text-[#7065F0] text-center">
             Meet the Team
           </h2>

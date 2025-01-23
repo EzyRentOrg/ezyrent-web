@@ -50,12 +50,12 @@ export default function Login() {
   };
 
   return (
-    <MaxWidthWrapper className="w-full">
-      <section className="min-h-[984px] mx-auto mb-10 flex items-center space-x-10">
+    <MaxWidthWrapper className="px-0 w-full">
+      <section className="min-h-[984px] w-full mx-auto mb-10 flex items-center space-x-10">
         {/* left side */}
 
         <main className="h-[964px] w-full flex flex-col ">
-          <div className="bg-[#F8F8F8] h-full mb-10 rounded-[20px] pt-[120px]">
+          <div className="bg-[#F8F8F8] h-full mb-10 rounded-[20px] px-5 lg:px-0 flex flex-col items-center justify-center">
             <div className="md:w-[80%] mx-auto pb-10">
               <div>
                 <h2 className="capitalize text-[#7F56D9] text-[1.5rem] font-extrabold leading-[33.6px] -tracking-[2%]">

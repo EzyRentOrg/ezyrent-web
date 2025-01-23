@@ -23,7 +23,6 @@ import { plusJakartaSans } from '@/lib/font';
 import { houseAmenities } from '@/config';
 import SecurityTips from '@/components/SecurityTips';
 import RecommendedProperties from '@/components/Recommended';
-
 import { Button } from '@/components/ui/button';
 import CopyToClipboard from '@/components/CopyToClipboard';
 import Link from 'next/link';
@@ -37,6 +36,7 @@ export default function ProductDetails() {
   const [houseDetails, setHouseDetails] = useState<HouseListing | null>(null);
   const [activeTab, setActiveTab] = useState('details');
 
+  // get stored property, chnage with redux later
   useEffect(() => {
     try {
       const storedHouse = localStorage.getItem('selectedHouse');
@@ -232,15 +232,15 @@ export default function ProductDetails() {
   };
 
   return (
-    <MaxWidthWrapper>
+    <MaxWidthWrapper className="px-0 mx-0 lg:mx-auto lg:w-full">
       {/* breabcrumb and tab */}
-      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:justify-between">
+      <div className="px-5 md:px-0 flex flex-col md:flex-row space-y-4 md:space-y-0 md:justify-between">
         <Breadcrumb />
         {activeTab === 'location' && <Tab />}
       </div>
       {houseDetails ? (
         <main className="mt-10">
-          <div className="flex flex-col space-y-10 lg:space-y-0 lg:flex-row items-start lg:space-x-20 h-auto">
+          <div className="flex flex-col space-y-10 lg:space-y-0 lg:flex-row items-start lg:space-x-20 h-auto px-5 md:px-0">
             {/* images */}
             <section className="relative w-full lg:w-[554px] h-[400px] md:h-[600px]">
               <div className="h-[400px] md:h-[600px]">
@@ -255,18 +255,18 @@ export default function ProductDetails() {
               <div className="absolute top-10 right-5 max-w-[429px] w-fit px-3 py-[10px] flex flex-col space-y-5 items-center">
                 {/* TODO: Add favorite to the user favorite house selection */}
                 {/* <button
-                    onClick={handleFavorite}
-                    className="cursor-pointer flex items-center justify-center bg-[#f1f1f1] rounded-full size-12 hover:bg-[#e5e5e5] transition-colors"
-                  >
-                    <Heart
-                      stroke="#7065F0"
-                      fill={isFavorite ? '#7065F0' : 'none'}
-                      className={cn(
-                        'transition-colors',
-                        isFavorite && 'text-[#7065F0]'
-                      )}
-                    />
-                  </button> */}
+                      onClick={handleFavorite}
+                      className="cursor-pointer flex items-center justify-center bg-[#f1f1f1] rounded-full size-12 hover:bg-[#e5e5e5] transition-colors"
+                    >
+                      <Heart
+                        stroke="#7065F0"
+                        fill={isFavorite ? '#7065F0' : 'none'}
+                        className={cn(
+                          'transition-colors',
+                          isFavorite && 'text-[#7065F0]'
+                        )}
+                      />
+                    </button> */}
                 <button
                   onClick={handleShare}
                   className="cursor-pointer flex items-center justify-center bg-[#f1f1f1] rounded-full size-12 hover:bg-[#e5e5e5] transition-colors"
@@ -356,7 +356,7 @@ export default function ProductDetails() {
           {/* Amenities */}
           {/* TODO: Add an input for amentites in listing page */}
           {activeTab !== 'location' && (
-            <section className="pt-[80px] max-w-[1035px] mx-auto w-full flex flex-col items-center justify-center">
+            <section className="pt-[80px] lg:w-[1035px] mx-auto w-full flex flex-col items-center justify-center">
               <h2 className="text-[1.3rem] md:text-[2rem] font-bold text-[#7065F0] lg:leading-[50.4px] ">
                 Amenities
               </h2>
@@ -383,10 +383,12 @@ export default function ProductDetails() {
           <SecurityTips />
           {/* recommended properties */}
           {/* TODO: Use map to show recommended properties */}
-          <RecommendedProperties />
+          <div className="px-5 md:px-0">
+            <RecommendedProperties />
+          </div>
         </main>
       ) : (
-        <p>Loading...</p>
+        <p className="my-20 text-center">Loading...</p>
       )}
     </MaxWidthWrapper>
   );

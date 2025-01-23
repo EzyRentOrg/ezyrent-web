@@ -1,41 +1,56 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { FileUp, Save, CloudUpload } from 'lucide-react';
-import NumberLabel from './label';
+import { Save, CloudUpload } from 'lucide-react';
 import {
   Control,
   UseFormWatch,
   FieldErrors,
-  Controller
+  Controller,
+  UseFormSetValue
 } from 'react-hook-form';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
-import SelectionButton from './selectionButton';
 import {
   amenityOptions,
   bathOptions,
   bedOptions,
   buildingTypes,
-  durations
-} from '@/app/admin/constants/property-form';
-import {
+  durations,
   MAX_ADDRESS_LENGTH,
   MAX_DESCRIPTION_LENGTH
-} from '@/app/admin/constants/propertyForm';
-import { toast } from 'sonner';
+} from '@/app/admin/constants/property-form';
+import { Checkbox } from '@/components/ui/checkbox';
+import MediaUploadField from './mediaUploadField';
+import { Label } from '@/components/ui/label';
+import SelectionButton from './selectionButton';
+import FormError from './FormError';
+import NumberLabel from './label';
+import ErrorSummary from './ErrorSummary';
+import RenderSelectionSection from './renderSelection';
+import React from 'react';
 
 interface ListingFormProps {
   control: Control<PropertyFormData>;
   errors: FieldErrors<PropertyFormData>;
   watch: UseFormWatch<PropertyFormData>;
-  onImageUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setValue: UseFormSetValue<PropertyFormData>;
+  handlePrimaryFileUpload: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: 'primary' | 'other'
+  ) => void;
+  handleOtherFileUpload: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    type: 'primary' | 'other'
+  ) => void;
+  handleSaveDraft: () => void;
   onInputChange: (field: keyof PropertyFormData, value: string) => void;
-  onSubmit: (e: React.FormEvent) => void;
   onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
   onDragEnter: (e: React.DragEvent<HTMLDivElement>) => void;
   onDragLeave: (e: React.DragEvent<HTMLDivElement>) => void;
-  onDrop: (e: React.DragEvent<HTMLDivElement>) => void;
+  onDrop: (
+    e: React.DragEvent<HTMLDivElement>,
+    type: 'primary' | 'other'
+  ) => void;
+  onSubmit: (e: React.FormEvent) => void;
   isDragging: boolean;
 }
 
@@ -43,95 +58,106 @@ export default function ListingForm({
   control,
   errors,
   watch,
-  onImageUpload,
-  onInputChange,
-  onSubmit,
-  onDrop,
-  onDragOver,
+  setValue,
+  handlePrimaryFileUpload,
+  handleOtherFileUpload,
+  handleSaveDraft,
   onDragEnter,
   onDragLeave,
+  onDragOver,
+  onDrop,
+  onInputChange,
+  onSubmit,
   isDragging
 }: ListingFormProps) {
+  // Remove a primary file
+  const removePrimaryFile = () => {
+    setValue('primaryFile', { name: '', data: '' });
+  };
+
+  // Remove an other file
+  const removeOtherFile = (index: number) => {
+    const currentOtherFiles = watch('otherFiles') || [];
+    const updatedFiles = currentOtherFiles.filter((_, i) => i !== index);
+    setValue('otherFiles', updatedFiles);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit(e);
   };
 
   return (
-    <aside className="w-full max-w-[740px] flex flex-col space-y-8 lg:pl-10 bg-gradient-to-b from-neutral-50 to-white/70 rounded-lg">
+    <aside className="mx-auto flex flex-col space-y-8 bg-gradient-to-b from-neutral-50 to-white/70 rounded-lg">
       <h2 className="text-[#000929] text-[1.25rem] font-medium mb-3 capitalize">
-        property listing
+        Property Listing Form
       </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-8">
+      <ErrorSummary errors={errors} />
+      <form onSubmit={handleSubmit} className="w-full space-y-8">
         <section aria-label="Image Upload">
-          <h2 className="text-[#000929] text-xl font-medium mb-3">Add Image</h2>
-          <div className="bg-white h-40 w-full max-w-[416px] rounded-lg flex items-center justify-center shadow-sm">
-            <div
-              className={`${isDragging && 'border-solid border-[#7065F0]'} w-[90%] h-[85%] border border-dashed border-[#CACACA] rounded-lg flex flex-col items-center justify-center `}
-              onDragOver={onDragOver}
+          <h2 className="text-[#000929] text-xl font-medium mb-3">
+            Add Images
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-10">
+            {/* primary image */}
+            <MediaUploadField
+              label="Primary file"
+              type="primary"
+              handleFileUpload={(e) => handlePrimaryFileUpload(e, 'primary')}
+              isDragging={isDragging}
               onDragEnter={onDragEnter}
               onDragLeave={onDragLeave}
-              onDrop={onDrop}
-            >
-              <label
-                htmlFor="image"
-                className="w-full h-full flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-colors"
-              >
-                <input
-                  id="image"
-                  type="file"
-                  className="hidden"
-                  accept="image/*"
-                  multiple
-                  onChange={onImageUpload}
-                  aria-label="Upload images"
-                />
-                <span className="w-11 h-11 bg-[#F5F5F5] flex items-center justify-center rounded-full mb-2">
-                  <FileUp className="text-[#7065F0]" size={24} />
-                </span>
-                <div className="flex flex-col items-center">
-                  <p className="text-center text-sm">
-                    <span className="text-[#7065F0] font-medium hover:underline">
-                      Click to upload
-                    </span>{' '}
-                    or{' '}
-                    <span className="text-[#7065F0] font-medium hover:underline">
-                      Drag and drop
-                    </span>
-                  </p>
-                  <small className="text-[#707070] mt-1">
-                    (Max. file size: 25 MB)
-                  </small>
-                </div>
-              </label>
-            </div>
+              onDragOver={onDragOver}
+              onDrop={(e) => onDrop(e, 'primary')}
+              files={watch('primaryFile') ? [watch('primaryFile')] : []}
+              removeFile={removePrimaryFile}
+            />
+
+            {/* other files */}
+            <MediaUploadField
+              label="Other files"
+              type="other"
+              handleFileUpload={(e) => handleOtherFileUpload(e, 'other')}
+              isDragging={isDragging}
+              onDragEnter={onDragEnter}
+              onDragLeave={onDragLeave}
+              onDragOver={onDragOver}
+              onDrop={(e) => onDrop(e, 'other')}
+              files={watch('otherFiles') || []}
+              removeFile={removeOtherFile}
+            />
           </div>
-          {errors.images && (
-            <p className="mt-2 text-red-500 text-sm">{errors.images.message}</p>
-          )}
         </section>
 
-        <div className="flex-1">
+        {/* Price */}
+        <div className="mt-10 w-full md:w-[200px] h-auto">
           <h2 className="text-[#000929] text-xl font-medium mb-3">Price</h2>
           <Controller
             name="price"
             control={control}
+            rules={{
+              required: 'Price is required',
+              validate: (value) =>
+                !isNaN(Number(value)) || 'Price must be a valid number'
+            }}
             render={({ field }) => (
               <Input
                 {...field}
-                className="focus-visible:ring-1 focus-visible:ring-[#7065F0] bg-[#F7F7F7] border border-[#E6E6E6]"
+                type="number"
+                min={0}
+                step={0.01}
+                className="pl-8 focus-visible:ring-1 focus-visible:ring-[#7065F0] bg-[#F7F7F7] border border-[#E6E6E6]"
                 placeholder="Enter property price"
-                aria-label="Property price"
               />
             )}
           />
-          {errors.price && (
-            <p className="mt-2 text-red-500 text-sm">{errors.price.message}</p>
-          )}
+          <FormError message={errors.price?.message} />
         </div>
 
-        <div className="w-full md:w-[200px] h-auto border-black">
+        {/* Duration */}
+        <div className="w-full mt-10 md:w-[200px] h-auto">
           <h2 className="text-[#000929] text-xl font-medium mb-3">Duration</h2>
           <Controller
             name="duration"
@@ -140,7 +166,6 @@ export default function ListingForm({
               <select
                 {...field}
                 className="w-full rounded-md border border-gray-300 bg-[#F7F7F7] py-2 px-3 shadow-sm focus:border-[#7065F0] focus:outline-none focus:ring-1 focus:ring-[#7065F0]"
-                aria-label="Select duration"
               >
                 {durations.map((duration) => (
                   <option key={duration} value={duration}>
@@ -150,15 +175,11 @@ export default function ListingForm({
               </select>
             )}
           />
-          {errors.duration && (
-            <p className="mt-2 text-red-500 text-sm">
-              {errors.duration.message}
-            </p>
-          )}
+          <FormError message={errors.duration?.message} />
         </div>
 
         {/* building type */}
-        <div className="w-fit mt-10">
+        <div className=" mt-10">
           <h2 className="text-[#000929] text-xl font-medium mb-3">
             Building Type
           </h2>
@@ -166,7 +187,7 @@ export default function ListingForm({
             name="buildingType"
             control={control}
             render={({ field }) => (
-              <div className="grid grid-cols-5 gap-3 mt-2">
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mt-2">
                 {buildingTypes.map((type) => (
                   <SelectionButton
                     {...field}
@@ -181,63 +202,42 @@ export default function ListingForm({
               </div>
             )}
           />
-          {errors.buildingType && (
-            <p className="mt-2 text-red-500 text-sm">
-              {errors.buildingType.message}
-            </p>
-          )}
+          <FormError message={errors.buildingType?.message} />
         </div>
 
-        {/* Beds and Baths */}
+        {/* beds and baths */}
         {[
           {
             label: 'No. of Beds',
             options: bedOptions,
-            fieldName: 'beds' as const
+            fieldName: 'beds' as keyof PropertyFormData
           },
           {
             label: 'No. of Baths',
             options: bathOptions,
-            fieldName: 'baths' as const
+            fieldName: 'baths' as keyof PropertyFormData
           }
-        ].map(({ label, options, fieldName }) => (
-          <div key={fieldName} className="w-fit mt-10">
-            <h2 className="text-[#000929] text-xl font-medium mb-3">{label}</h2>
-            <Controller
-              name={fieldName}
-              control={control}
-              render={({ field, fieldState }) => (
-                <>
-                  <div className="grid grid-cols-5 gap-3 mt-2">
-                    {options.map((option) => (
-                      <SelectionButton
-                        {...field}
-                        key={option}
-                        label={option}
-                        selected={field.value === option}
-                        onClick={() => field.onChange(option)}
-                      />
-                    ))}
-                  </div>
-                  {fieldState.error && (
-                    <p className="mt-2 text-red-500 text-sm">
-                      {fieldState.error.message}
-                    </p>
-                  )}
-                </>
-              )}
-            />
-          </div>
+        ].map(({ label, options, fieldName }, index) => (
+          <React.Fragment key={`${fieldName}-${index}`}>
+            {RenderSelectionSection({
+              errors,
+              control,
+              label,
+              options,
+              fieldName
+            })}
+          </React.Fragment>
         ))}
 
-        {/* Amenities */}
-        <div className="mt-10 w-fit">
+        {/* amenities */}
+
+        <div className="mt-10">
           <h2 className="text-[#000929] text-xl font-medium mb-3">Amenities</h2>
           <Controller
             name="amenities"
             control={control}
             render={({ field }) => (
-              <div className="mt-2 grid grid-cols-3 gap-5">
+              <div className="mt-2 grid grid-cols-2 lg:grid-cols-3 gap-5">
                 {amenityOptions.map((amenity) => (
                   <div key={amenity} className="flex items-center space-x-2">
                     <Checkbox
@@ -259,15 +259,10 @@ export default function ListingForm({
               </div>
             )}
           />
-
-          {errors.amenities && (
-            <p className="mt-2 text-red-500 text-sm">
-              {errors.amenities.message}
-            </p>
-          )}
+          <FormError message={errors.amenities?.message} />
         </div>
 
-        {/* Address */}
+        {/* address */}
         <section>
           <h2 className="text-[#000929] text-xl font-medium mb-3">Address</h2>
           <div className="relative">
@@ -293,14 +288,13 @@ export default function ListingForm({
                 maxValue={MAX_ADDRESS_LENGTH}
                 className="bg-[#F7F7F7] text-xs w-fit"
               />
-              {errors.address && (
-                <p className="text-red-500 text-sm">{errors.address.message}</p>
-              )}
+
+              <FormError message={errors.address?.message} />
             </div>
           </div>
         </section>
 
-        {/* Description */}
+        {/* description */}
         <section>
           <h2 className="text-[#000929] text-xl font-medium mb-3">
             Description
@@ -328,11 +322,8 @@ export default function ListingForm({
                 maxValue={MAX_DESCRIPTION_LENGTH}
                 className="bg-[#F7F7F7] text-xs w-fit"
               />
-              {errors.description && (
-                <p className="text-red-500 text-sm">
-                  {errors.description.message}
-                </p>
-              )}
+
+              <FormError message={errors.description?.message} />
             </div>
           </div>
         </section>
@@ -340,15 +331,15 @@ export default function ListingForm({
         <section className="flex items-center justify-center gap-6 pt-4">
           <Button
             type="button"
-            onClick={() => {
-              toast.success('Draft Saved');
-            }}
+            onClick={handleSaveDraft}
             className="flex items-center gap-2 h-12 lg:text-[1.1rem] bg-white text-[#037F4A] shadow-sm hover:bg-[#F5FFF9] border border-[#037F4A] transition-colors"
             aria-label="Save draft"
           >
             <span>Save</span>
             <Save size={18} />
           </Button>
+
+          {/* save */}
           <Button
             type="submit"
             className="flex items-center gap-2 h-12 lg:text-[1.1rem] bg-[#7065F0] hover:bg-[#5B52C5] transition-colors"
