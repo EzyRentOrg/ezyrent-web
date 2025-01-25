@@ -211,20 +211,20 @@ export default function VerificationOTP() {
   return (
     <div className="px-5 lg:ml-5 pb-5">
       <div className="w-full md:w-[80%] mx-auto">
-        <div className="mb-10 text-center flex flex-col items-center justify-center space-y-4">
+        <form className="mb-10 text-center flex flex-col items-center justify-center space-y-4">
           <div className="bg-[#E9D7FE] rounded-full size-20 flex items-center justify-center">
             <Mail stroke="#f1f1f1" fill="#7F56D9" size={35} />
           </div>
           <h2 className="capitalize text-[#344054] text-[1.5rem] font-extrabold leading-[33.6px] -tracking-[2%]">
             Check your email
           </h2>
-          <form>
+         
           <p className="my-1px text-[#475467] text-[0.875rem] leading-[28px] font-medium -tracking-[2%] w-[80%]">
             Input the
             <span className="text-[#4036af] font-medium mx-2">6-digit</span>
             code sent to your email to complete registration
           </p>
-        </div>
+        
 
         <div className="flex items-center justify-between">
           {state.code.map((digit, index) => (
@@ -264,7 +264,8 @@ export default function VerificationOTP() {
               'Proceed'
             )}
           </Button>
-</form>
+          </div>
+        </form>
           <div className="text-center">
             <CountdownButton
               onClick={handleResendCode}
@@ -273,7 +274,7 @@ export default function VerificationOTP() {
             />
           </div>
         </div>
-      </div>
+     
     </div>
   );
 }
