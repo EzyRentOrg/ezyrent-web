@@ -225,7 +225,7 @@ export default function VerificationOTP() {
           </p>
         </div>
 
-        <div className="flex items-center justify-between lg:gap-10">
+        <div className="flex items-center justify-between">
           {state.code.map((digit, index) => (
             <VerificationInput
               key={index}
