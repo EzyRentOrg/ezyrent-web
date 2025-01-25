@@ -17,6 +17,7 @@ export const carouselContent: CarouselContent[] = [
   },
   {
     icon: FaRegRectangleList,
+
     title: 'Property Listings',
     content:
       'Detailed property listings with high-quality images, accurate descriptions, and price information.'
@@ -29,30 +30,38 @@ export const carouselContent: CarouselContent[] = [
   },
   {
     icon: BsFillHouseCheckFill,
+
     title: 'Rental Payment',
     content:
       ' Flexible payment options, including subscription-based models and token-based payments, catering to different user preferences.'
   },
   {
+
     icon: MdManageHistory,
+
     title: 'Property Management',
     content:
       ' For landlords not residing in the same region as their properties, EzyRent offers property management services to handle tenant interactions, maintenance, and other responsibilities.'
   },
   {
+
     icon: FaListCheck,
+
     title: 'Verified Listings',
     content:
       ' Ensuring that all properties listed are verified to prevent fraudulent activities.'
   },
   {
+
     icon: SiSimpleanalytics,
+
     title: 'Analytics and Insights',
     content:
       'Tools for landlords to track property engagement and manage their listings effectively.'
   },
   {
     icon: MdNotificationsActive,
+
     title: 'Notification Alerts',
     content:
       'Personalized alerts for new properties that match tenants’ preferences.'

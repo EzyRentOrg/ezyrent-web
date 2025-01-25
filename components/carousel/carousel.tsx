@@ -125,6 +125,7 @@ const Carousel = React.forwardRef<
         value={{
           carouselRef,
           api: api,
+
           opts,
           orientation:
             orientation || (opts?.axis === 'y' ? 'vertical' : 'horizontal'),
@@ -207,6 +208,7 @@ const CarouselPrevious = React.forwardRef<
       size={size}
       className={cn(
         'absolute rounded-full bg-[#ffffff] shadow-md shadow-black/40 p-2 flex items-center justify-center cursor-pointer transition-transform duration-300',
+
         orientation === 'horizontal'
           ? '-left-12 top-1/2 -translate-y-1/2'
           : '-top-12 left-1/2 -translate-x-1/2 rotate-90',
@@ -217,6 +219,7 @@ const CarouselPrevious = React.forwardRef<
       {...props}
     >
       <ChevronLeft className="h-10 w-10 text-[#7065F0] " />
+
       <span className="sr-only">Previous slide</span>
     </Button>
   );
@@ -236,6 +239,7 @@ const CarouselNext = React.forwardRef<
       size={size}
       className={cn(
         'absolute rounded-full bg-[#ffffff] shadow-md shadow-black/40 p-2 flex items-center justify-center cursor-pointer transition-transform duration-300',
+
         orientation === 'horizontal'
           ? '-right-12 top-1/2 -translate-y-1/2'
           : '-bottom-12 left-1/2 -translate-x-1/2 rotate-90',
@@ -246,6 +250,7 @@ const CarouselNext = React.forwardRef<
       {...props}
     >
       <ChevronRight className="h-6 w-6 text-[#7065F0] text-xl" />
+
       <span className="sr-only">Next slide</span>
     </Button>
   );

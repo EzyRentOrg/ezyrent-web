@@ -35,7 +35,7 @@ export default function NewsletterForm() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between md:space-y-4">
+    <div className="flex flex-col md:flex-row md:items-center justify-between md:space-y-4">
       <div>
         <p className="text-lg text-[#475467] md:text-xl font-[500] first-letter:capitalize">
           join our newsletter
@@ -47,7 +47,7 @@ export default function NewsletterForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4 items-center "
+          className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4 md:items-center "
         >
           <FormField
             control={form.control}
