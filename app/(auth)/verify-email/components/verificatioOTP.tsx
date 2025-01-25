@@ -218,14 +218,15 @@ export default function VerificationOTP() {
           <h2 className="capitalize text-[#344054] text-[1.5rem] font-extrabold leading-[33.6px] -tracking-[2%]">
             Check your email
           </h2>
+         <form className="w-full">
           <p className="my-1px text-[#475467] text-[0.875rem] leading-[28px] font-medium -tracking-[2%] w-[80%]">
             Input the
             <span className="text-[#4036af] font-medium mx-2">6-digit</span>
             code sent to your email to complete registration
           </p>
-        </div>
+        
 
-        <div className="flex items-center justify-between lg:gap-10">
+        <div className="flex items-center justify-between">
           {state.code.map((digit, index) => (
             <VerificationInput
               key={index}
@@ -263,7 +264,8 @@ export default function VerificationOTP() {
               'Proceed'
             )}
           </Button>
-
+          </div>
+        </form>
           <div className="text-center">
             <CountdownButton
               onClick={handleResendCode}
@@ -272,7 +274,7 @@ export default function VerificationOTP() {
             />
           </div>
         </div>
-      </div>
+     </div>
     </div>
   );
 }

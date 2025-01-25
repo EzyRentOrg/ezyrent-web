@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import { ArrowRight, PlayCircle, PauseCircle } from 'lucide-react';
-import MaxWidthWrapper from '@/app/maxWidthWrapper';
+import Link from 'next/link';
 
 const StartYourJourney: React.FC = () => {
   // Initialize refs for each video
@@ -36,8 +36,7 @@ const StartYourJourney: React.FC = () => {
   };
 
   return (
-    <div className="my-10">
-      <MaxWidthWrapper>
+    <div className="mt-10 max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 ">
         {/* Video content */}
         <div className="my-10 w-full md:h-[496px] grid md:grid-cols-2 gap-5">
           <div className="relative rounded-lg w-full border h-[250px] md:h-full overflow-hidden">
@@ -114,12 +113,13 @@ const StartYourJourney: React.FC = () => {
             Let’s Start Your Real Estate Journey Today
           </p>
           <div className="flex items-center justify-center w-full my-10">
-            <Button className={cn('h-[72px] text-xl capitalize')}>
-              discover now <ArrowRight size={32} className="h-8 w-8" />
-            </Button>
+            <Link href={'/contact'}>
+              <Button className={cn('h-[72px] text-xl ')}>
+                Send us a Message <ArrowRight size={32} className="h-8 w-8" />
+              </Button>
+            </Link>
           </div>
         </div>
-      </MaxWidthWrapper>
     </div>
   );
 };

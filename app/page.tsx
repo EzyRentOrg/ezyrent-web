@@ -11,6 +11,8 @@ import Header from '@/components/nav/Header';
 import Footer from '@/components/footer/Footer';
 import GetStarted from '@/components/GetStarted';
 import AboutUsCarousel from '@/components/carousel/about-us-carousel';
+import StartYourJourney from '@/components/StartYourJourney';
+import AboutUsVideo from '@/components/AboutUsVideo';
 
 export default function Home() {
   return (
@@ -20,6 +22,7 @@ export default function Home() {
         <HeroPage />
       </div>
       <AboutUs />
+      <AboutUsVideo />
       <BasedOnYourLocation />
       <OfferSection />
       <BestDeal />
@@ -27,6 +30,8 @@ export default function Home() {
       <FAQs />
       <AboutUsCarousel />
       <GetStarted />
+      <StartYourJourney />
+
       {/* <StartYourJourney /> */}
       <Footer />
     </div>
