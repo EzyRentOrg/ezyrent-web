@@ -4,7 +4,6 @@ import React, { useRef, useState } from 'react';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import { ArrowRight, PlayCircle, PauseCircle } from 'lucide-react';
-import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import Link from 'next/link';
 
 const StartYourJourney: React.FC = () => {
