@@ -7,6 +7,8 @@ import OfferSection from '@/components/OfferSection';
 import BestDeal from '@/components/BestDeal';
 import FAQs from '@/components/FAQs/FAQs';
 import HeroPage from '@/components/hero-page/HeroPage';
+import Header from '@/components/nav/Header';
+import Footer from '@/components/footer/Footer';
 import GetStarted from '@/components/GetStarted';
 import AboutUsCarousel from '@/components/carousel/about-us-carousel';
 import StartYourJourney from '@/components/StartYourJourney';
@@ -15,6 +17,7 @@ import AboutUsVideo from '@/components/AboutUsVideo';
 export default function Home() {
   return (
     <div>
+      <Header />
       <div>
         <HeroPage />
       </div>
@@ -28,6 +31,9 @@ export default function Home() {
       <AboutUsCarousel />
       <GetStarted />
       <StartYourJourney />
+
+      {/* <StartYourJourney /> */}
+      <Footer />
     </div>
   );
 }

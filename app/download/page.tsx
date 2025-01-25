@@ -10,14 +10,14 @@ export default function DownloadPage() {
     <section className="">
       <MaxWidthWrapper className=" flex flex-col ">
         <Breadcrumb />
-        <main className=" flex flex-col gap-6 md:gap-8 items-center text-center justify-center bg-white py-4 px-2">
+        <main className=" flex flex-col gap-6 md:gap-8 items-center text-center justify-center bg-white py-4 px-2 my-10">
           <div className="text-center">
-            <p>
+            <div>
               <AnimatedText
                 text={'will be available soon'}
                 className="text-[#7065F0] uppercase font-bold md:text-2xl"
               />
-            </p>
+            </div>
           </div>
           <div className="bg-[#7065F0] h-[350px] rounded-[3rem] shadow-xl p-8 pt-12 max-w-xl text-[#f1f1f1] md:text-lg w-full flex flex-col justify-between">
             <div>

@@ -5,5 +5,6 @@
   "trailingComma": "none",
   "quoteProps": "as-needed",
   "bracketSameLine": false,
-  "bracketSpacing": true
+  "bracketSpacing": true,
+  "endOfLine": "lf"
 }
