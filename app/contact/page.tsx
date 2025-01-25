@@ -21,7 +21,6 @@ import { Loader, Mail, User } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
-import { AnimatedText } from '@/components/animatedText';
 
 // Infer the type from the schema
 type FormValues = z.infer<typeof contactSchema>;
@@ -67,6 +66,14 @@ export default function Contatct() {
                 <FormItem>
                   <FormControl>
                     <div className="relative flex items-center ">
+                       {/* Icon Container */}
+                      <div className="absolute left-5 flex items-center space-x-4">
+                        <User size={20} stroke="#9E77ED" />
+                        <Separator
+                          orientation="vertical"
+                          className="bg-[#9E77ED] h-6 w-[1px]"
+                        />
+                      </div>
                       {/* Input Field */}
                       <Input
                         type="text"
