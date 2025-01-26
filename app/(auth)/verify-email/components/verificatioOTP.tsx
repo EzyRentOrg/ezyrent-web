@@ -218,7 +218,7 @@ export default function VerificationOTP() {
           <h2 className="capitalize text-[#344054] text-[1.5rem] font-extrabold leading-[33.6px] -tracking-[2%]">
             Check your email
           </h2>
-         <form className="w-full">
+         <form className="w-full ">
           <p className="my-1px text-[#475467] text-[0.875rem] leading-[28px] font-medium -tracking-[2%] w-[80%]">
             Input the
             <span className="text-[#4036af] font-medium mx-2">6-digit</span>

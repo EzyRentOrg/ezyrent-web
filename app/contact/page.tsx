@@ -50,14 +50,12 @@ export default function Contatct() {
   };
 
   return (   
-
-    <MaxWidthWrapper className="mx-auto pb-10 ">
-      <Form {...form}>
+    <MaxWidthWrapper className="mx-auto pb-10 w-full">
+      <Form {...form} >
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="max-w-[50%] w-full mx-auto mt-6"
+          className="max-w-[500px] grid gap-4  w-full mx-auto mt-10"
         >
-          <div className="grid gap-4">
             {/* full name */}
             <FormField
               control={form.control}
@@ -136,7 +134,7 @@ export default function Contatct() {
                 </FormItem>
               )}
             />
-          </div>
+         
 
           <Button
             type="submit"
