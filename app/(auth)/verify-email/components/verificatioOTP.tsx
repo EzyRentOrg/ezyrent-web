@@ -218,54 +218,55 @@ export default function VerificationOTP() {
           <h2 className="capitalize text-[#344054] text-[1.5rem] font-extrabold leading-[33.6px] -tracking-[2%]">
             Check your email
           </h2>
-         <form className="w-full ">
-          <p className="my-1px text-[#475467] text-[0.875rem] leading-[28px] font-medium -tracking-[2%] w-[80%]">
-            Input the
-            <span className="text-[#4036af] font-medium mx-2">6-digit</span>
-            code sent to your email to complete registration
-          </p>
-        
+          <form className="w-full ">
+            <p className="my-1px text-[#475467] text-[0.875rem] leading-[28px] font-medium -tracking-[2%] w-[80%]">
+              Input the
+              <span className="text-[#4036af] font-medium mx-2">6-digit</span>
+              code sent to your email to complete registration
+            </p>
 
-        <div className="flex items-center justify-between">
-          {state.code.map((digit, index) => (
-            <VerificationInput
-              key={index}
-              value={digit}
-              index={index}
-              isError={state.isError}
-              isSuccess={state.isSuccess}
-              onChange={(value) => handleChange(value, index)}
-              onKeyDown={(e) => handleKeyDown(e, index)}
-              onPaste={handlePaste}
-              ref={setInputRef(index)}
-            />
-          ))}
-        </div>
+            <div className="flex items-center justify-between">
+              {state.code.map((digit, index) => (
+                <VerificationInput
+                  key={index}
+                  value={digit}
+                  index={index}
+                  isError={state.isError}
+                  isSuccess={state.isSuccess}
+                  onChange={(value) => handleChange(value, index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
+                  onPaste={handlePaste}
+                  ref={setInputRef(index)}
+                />
+              ))}
+            </div>
 
-        <div className="space-y-4">
-          <Button
-            onClick={handleVerification}
-            disabled={state.isVerifying || state.code.some((digit) => !digit)}
-            type="submit"
-            className={cn(
-              'bg-[#000929] h-[72px] !mt-10 w-full capitalize text-[1.25rem] font-medium leading-[28px] mx-auto rounded-[80px] hover:bg-opacity-85 transition-colors duration-150',
-              {
-                'bg-opacity-75 transition-colors duration-150 ease-in-out':
-                  state.isVerifying
-              }
-            )}
-          >
-            {state.isVerifying ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Verifying...
-              </>
-            ) : (
-              'Proceed'
-            )}
-          </Button>
-          </div>
-        </form>
+            <div className="space-y-4">
+              <Button
+                onClick={handleVerification}
+                disabled={
+                  state.isVerifying || state.code.some((digit) => !digit)
+                }
+                type="submit"
+                className={cn(
+                  'bg-[#000929] h-[72px] !mt-10 w-full capitalize text-[1.25rem] font-medium leading-[28px] mx-auto rounded-[80px] hover:bg-opacity-85 transition-colors duration-150',
+                  {
+                    'bg-opacity-75 transition-colors duration-150 ease-in-out':
+                      state.isVerifying
+                  }
+                )}
+              >
+                {state.isVerifying ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Verifying...
+                  </>
+                ) : (
+                  'Proceed'
+                )}
+              </Button>
+            </div>
+          </form>
           <div className="text-center">
             <CountdownButton
               onClick={handleResendCode}
@@ -274,7 +275,7 @@ export default function VerificationOTP() {
             />
           </div>
         </div>
-     </div>
+      </div>
     </div>
   );
 }
