@@ -49,94 +49,91 @@ export default function Contatct() {
     console.log(data);
   };
 
-  return (   
-
-    <MaxWidthWrapper className="mx-auto pb-10 ">
+  return (
+    <MaxWidthWrapper className="mx-auto pb-10 w-full">
       <Form {...form}>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="max-w-[50%] w-full mx-auto mt-6"
+          className="max-w-[500px] grid gap-4  w-full mx-auto mt-10"
         >
-          <div className="grid gap-4">
-            {/* full name */}
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="relative flex items-center ">
-                       {/* Icon Container */}
-                      <div className="absolute left-5 flex items-center space-x-4">
-                        <User size={20} stroke="#9E77ED" />
-                        <Separator
-                          orientation="vertical"
-                          className="bg-[#9E77ED] h-6 w-[1px]"
-                        />
-                      </div>
-                      {/* Input Field */}
-                      <Input
-                        type="text"
-                        className="bg-white h-[64px] pl-[70px] pr-[48px] border-[#EAECF0] rounded-full placeholder:text-[#D0D5DD] focus:ring-[#EAECF0] ring-[#EAECF0] focus:outline-[#EAECF0] outline-[#EAECF0] focus:border-[#EAECF0] leading-[22.4px] text-black !text-[1.1rem]"
-                        placeholder="Full Name"
-                        {...field}
+          {/* full name */}
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="relative flex items-center ">
+                    {/* Icon Container */}
+                    <div className="absolute left-5 flex items-center space-x-4">
+                      <User size={20} stroke="#9E77ED" />
+                      <Separator
+                        orientation="vertical"
+                        className="bg-[#9E77ED] h-6 w-[1px]"
                       />
                     </div>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+                    {/* Input Field */}
+                    <Input
+                      type="text"
+                      className="bg-white h-[64px] pl-[70px] pr-[48px] border-[#EAECF0] rounded-full placeholder:text-[#D0D5DD] focus:ring-[#EAECF0] ring-[#EAECF0] focus:outline-[#EAECF0] outline-[#EAECF0] focus:border-[#EAECF0] leading-[22.4px] text-black !text-[1.1rem]"
+                      placeholder="Full Name"
+                      {...field}
+                    />
+                  </div>
+                </FormControl>
+              </FormItem>
+            )}
+          />
 
-            {/* email */}
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="relative flex items-center ">
-                      {/* Icon Container */}
-                      <div className="absolute left-5 flex items-center space-x-4">
-                        <Mail size={20} stroke="#9E77ED" />
-                        <Separator
-                          orientation="vertical"
-                          className="bg-[#9E77ED] h-6 w-[1px]"
-                        />
-                      </div>
-                      {/* Input Field */}
-                      <Input
-                        type="email"
-                        className="bg-white h-[64px] pl-[70px] pr-[48px] border-[#EAECF0] rounded-full placeholder:text-[#D0D5DD] focus:ring-[#EAECF0] ring-[#EAECF0] focus:outline-[#EAECF0] outline-[#EAECF0] focus:border-[#EAECF0] leading-[22.4px] text-black !text-[1.1rem]"
-                        placeholder="example@gmail.com"
-                        {...field}
+          {/* email */}
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="relative flex items-center ">
+                    {/* Icon Container */}
+                    <div className="absolute left-5 flex items-center space-x-4">
+                      <Mail size={20} stroke="#9E77ED" />
+                      <Separator
+                        orientation="vertical"
+                        className="bg-[#9E77ED] h-6 w-[1px]"
                       />
                     </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    {/* Input Field */}
+                    <Input
+                      type="email"
+                      className="bg-white h-[64px] pl-[70px] pr-[48px] border-[#EAECF0] rounded-full placeholder:text-[#D0D5DD] focus:ring-[#EAECF0] ring-[#EAECF0] focus:outline-[#EAECF0] outline-[#EAECF0] focus:border-[#EAECF0] leading-[22.4px] text-black !text-[1.1rem]"
+                      placeholder="example@gmail.com"
+                      {...field}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            {/* message */}
-            <FormField
-              control={form.control}
-              name="message"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="relative flex items-center ">
-                      {/* Input Field */}
-                      <textarea
-                        className="bg-white h-[200px] pl-[70px] pr-[48px] pt-[20px] border !border-[#EAECF0] rounded-[2rem] placeholder:text-[#D0D5DD] focus:ring-[#EAECF0] ring-[#EAECF0] focus:outline-[#EAECF0] outline-[#EAECF0] focus:border-[#EAECF0] leading-[22.4px] text-black !text-[1.1rem] w-full"
-                        placeholder="Message"
-                        {...field}
-                      />
-                    </div>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
+          {/* message */}
+          <FormField
+            control={form.control}
+            name="message"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="relative flex items-center ">
+                    {/* Input Field */}
+                    <textarea
+                      className="bg-white h-[200px] pl-[70px] pr-[48px] pt-[20px] border !border-[#EAECF0] rounded-[2rem] placeholder:text-[#D0D5DD] focus:ring-[#EAECF0] ring-[#EAECF0] focus:outline-[#EAECF0] outline-[#EAECF0] focus:border-[#EAECF0] leading-[22.4px] text-black !text-[1.1rem] w-full"
+                      placeholder="Message"
+                      {...field}
+                    />
+                  </div>
+                </FormControl>
+              </FormItem>
+            )}
+          />
 
           <Button
             type="submit"

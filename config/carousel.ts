@@ -36,7 +36,6 @@ export const carouselContent: CarouselContent[] = [
       ' Flexible payment options, including subscription-based models and token-based payments, catering to different user preferences.'
   },
   {
-
     icon: MdManageHistory,
 
     title: 'Property Management',
@@ -44,7 +43,6 @@ export const carouselContent: CarouselContent[] = [
       ' For landlords not residing in the same region as their properties, EzyRent offers property management services to handle tenant interactions, maintenance, and other responsibilities.'
   },
   {
-
     icon: FaListCheck,
 
     title: 'Verified Listings',
@@ -52,7 +50,6 @@ export const carouselContent: CarouselContent[] = [
       ' Ensuring that all properties listed are verified to prevent fraudulent activities.'
   },
   {
-
     icon: SiSimpleanalytics,
 
     title: 'Analytics and Insights',

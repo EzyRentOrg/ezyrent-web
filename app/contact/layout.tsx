@@ -11,5 +11,5 @@ export default function ContactLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <section className="my-20">{children}</section>;
+  return <section className="flex-1 py-20 bg-neutral-100">{children}</section>;
 }
