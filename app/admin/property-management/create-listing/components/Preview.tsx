@@ -28,12 +28,35 @@ export default function Preview({
 
   return (
     <aside className="hidden lg:block w-full max-w-[520px]">
-      <h2 className="text-[#000929] text-[1.25rem] font-medium mb-3 capitalize">
+      <h2 className="text-[#000929] text-[1.25rem] font-medium capitalize">
         property listing preview
       </h2>
-      {/* Images Display */}
-      <div>
-        {/* primary image */}
+      {/* Address Display*/}
+      <div className="mt-10 w-full relative">
+        {/* images */}
+        <h3 className="text-[#000929] text-xl font-medium capitalize mb-3">
+          name
+        </h3>
+        <Input
+          value={formValues.name}
+          disabled
+          className="border border-[#E6E6E6] focus-visible:ring-0 focus-visible:outline-0 w-full"
+        />
+
+        <NumberLabel
+          minValue={formValues.name?.length || 0}
+          maxValue={150}
+          className="text-[0.75rem] w-fit mt-2"
+        />
+      </div>
+
+      {/* images */}
+      {/* primary image */}
+      <div className="mt-10">
+        <h3 className="text-[#000929] text-xl font-medium capitalize mb-3">
+          Main Image
+        </h3>
+
         <div className="relative w-full min-h-[200px] max-h-[300px] overflow-hidden rounded-[16px] bg-white shadow-md shadow-[#000000]/35 p-4">
           <div>
             {primaryFile?.data ? (
@@ -57,7 +80,10 @@ export default function Preview({
       </div>
 
       {/* other images */}
-      <div className="mt-5">
+      <div className="mt-10">
+        <h3 className="text-[#000929] text-xl font-medium capitalize mb-3">
+          Other files
+        </h3>
         <div className="relative w-full min-h-[200px] max-h-[350px] overflow-y-auto rounded-[16px] bg-white shadow-md shadow-[#000000]/35 p-4">
           <div className="grid grid-cols-[repeat(3,_minmax(0,_150px))] gap-4">
             {otherFiles.length > 0 ? (
@@ -85,6 +111,9 @@ export default function Preview({
 
       {/* Address Display*/}
       <div className="mt-10 w-full relative">
+        <h3 className="text-[#000929] text-xl font-medium capitalize">
+          address
+        </h3>
         <Input
           value={formValues.address}
           disabled
@@ -100,6 +129,9 @@ export default function Preview({
 
       {/* Description Display */}
       <div className="mt-10 w-full relative">
+        <h3 className="text-[#000929] text-xl font-medium capitalize">
+          description
+        </h3>
         <Textarea
           value={formValues.description}
           disabled
@@ -114,8 +146,8 @@ export default function Preview({
       </div>
 
       {/* Price Display */}
-      <div className="capitalize flex items-center space-x-3 text-[1.125rem] mt-10">
-        <h3 className="capitalize">price</h3>
+      <div className="capitalize flex items-center text-xl space-x-3 mt-10">
+        <h3 className="text-[#000929] text-xl font-medium">price</h3>
         <div className="flex items-center space-x-px">
           <span className="flex items-center line-through decoration-double">
             N
@@ -126,40 +158,49 @@ export default function Preview({
         </div>
       </div>
 
-      {/* Duration Display */}
-      <div className="mt-10 ">
-        <h3 className="capitalize">Duration</h3>
-        <div className="mt-1 block w-fit rounded-md border border-gray-300 bg-[#F7F7F7] py-2 px-3">
-          {formValues.duration}
+      {/* duration, building type  */}
+      <div className="flex flex-col md:flex-row md:items-center ">
+        {/* Duration Display */}
+        <div className="mt-10 w-full ">
+          <h3 className="text-[#000929] text-xl font-medium">Duration</h3>
+          <div className="mt-1 block w-fit rounded-md border border-gray-300 bg-[#F7F7F7] py-2 px-3 capitalize">
+            {formValues.duration} {formValues.duration === 1 ? 'Year' : 'Years'}
+          </div>
+        </div>
+
+        {/* Building Type Display */}
+        <div className="mt-10 w-full">
+          <h3 className="text-[#000929] text-xl font-medium capitalize">
+            building Type
+          </h3>
+          <div className="capitalize mt-1 block w-fit rounded-md border border-gray-300 bg-[#F7F7F7] py-2 px-3">
+            {formValues.buildingType}
+          </div>
         </div>
       </div>
-
-      {/* Building Type Display */}
-      <div className="mt-10 ">
-        <h3 className="capitalize">building Type</h3>
-        <div className="mt-1 block w-fit rounded-md border border-gray-300 bg-[#F7F7F7] py-2 px-3">
-          {formValues.buildingType}
+      {/* beds, baths */}
+      <div className="flex flex-col md:flex-row md:items-center">
+        {/* Beds Display */}
+        <div className="mt-10 w-full">
+          <h3 className="text-[#000929] text-xl font-medium">Beds</h3>
+          <div className="mt-1 block w-fit rounded-md border border-gray-300 bg-[#F7F7F7] py-2 px-3 capitalize">
+            {formValues.beds} {formValues.beds === '1' ? 'bed' : 'beds'}
+          </div>
         </div>
-      </div>
 
-      {/* Beds Display */}
-      <div className="mt-10 ">
-        <h3 className="capitalize">Beds</h3>
-        <div className="mt-1 block w-fit rounded-md border border-gray-300 bg-[#F7F7F7] py-2 px-3">
-          {formValues.beds}
-        </div>
-      </div>
-
-      {/* Batjs display */}
-      <div className="mt-10">
-        <h3 className="capitalize">Baths</h3>
-        <div className="mt-1 block w-fit rounded-md border border-gray-300 bg-[#F7F7F7] py-2 px-3">
-          {formValues.baths}
+        {/* Baths display */}
+        <div className="mt-10 w-full">
+          <h3 className="text-[#000929] text-xl font-medium">Baths</h3>
+          <div className="mt-1 block w-fit rounded-md border border-gray-300 bg-[#F7F7F7] py-2 px-3 capitalize">
+            {formValues.baths} {formValues.baths === '1' ? 'bath' : 'baths'}
+          </div>
         </div>
       </div>
       {/* Amenities Display */}
       <div className="mt-10 w-full">
-        <h3 className="capitalize">amenities</h3>
+        <h3 className="text-[#000929] text-xl font-medium capitalize">
+          amenities
+        </h3>
         <div className="flex items-center flex-wrap gap-2 text-sm ">
           {formValues.amenities.map((amenity) => (
             <span

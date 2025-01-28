@@ -1,4 +1,4 @@
-export const durations: DurationType[] = ['1 year', '2 years', '3 years'];
+export const durations: DurationType[] = [1, 2, 3];
 
 export const buildingTypes: BuildingType[] = [
   'apartment',
@@ -8,18 +8,18 @@ export const buildingTypes: BuildingType[] = [
   'condo'
 ];
 export const bedOptions: BedOption[] = [
-  '1 bed',
-  '2 beds',
-  '3 beds',
-  '4 beds',
-  '5+ beds'
+  '1',
+  '2',
+  '3',
+  '4',
+  '5+'
 ];
 export const bathOptions: BathOption[] = [
-  '1 bath',
-  '2 baths',
-  '3 baths',
-  '4 baths',
-  '5+ baths'
+  '1',
+  '2',
+  '3',
+  '4',
+  '5+'
 ];
 export const amenityOptions: AmenityType[] = [
   'Gym',

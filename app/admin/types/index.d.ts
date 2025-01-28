@@ -13,18 +13,18 @@ declare type BuildingType =
   | 'condo';
 
 // Bed options
-declare type BedOption = '1 bed' | '2 beds' | '3 beds' | '4 beds' | '5+ beds';
+declare type BedOption = '1' | '2' | '3' | '4' | '5+';
 
 // Bath options
 declare type BathOption =
-  | '1 bath'
-  | '2 baths'
-  | '3 baths'
-  | '4 baths'
-  | '5+ baths';
+  | '1'
+  | '2'
+  | '3'
+  | '4'
+  | '5+';
 
 // Duration options
-declare type DurationType = '1 year' | '2 years' | '3 years';
+declare type DurationType = 1 | 2 | 3;
 
 // Amenity options
 declare type AmenityType =
@@ -50,10 +50,15 @@ declare type FileData = {
 declare interface PropertyFormData {
   primaryFile: FileData;
   otherFiles: FileData[];
+  name: string;
   price: string;
+  address: string;
   duration: DurationType;
   address: string;
   description: string;
+  latitude?: string;
+  longitude?: string;
+  landSize?: string;
   buildingType: BuildingType;
   beds: BedOption;
   baths: BathOption;

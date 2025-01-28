@@ -36,11 +36,13 @@ export default function VerificationOTP() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const delay = useDelay();
+  const callbackUrl = searchParams.get('callbackUrl'); // Get the callback URL from the query
 
   const updateState = (updates: Partial<VerificationState>) => {
     setState((prev) => ({ ...prev, ...updates }));
   };
 
+  // get code from url
   useEffect(() => {
     const urlCode = searchParams.get('code');
     if (urlCode?.length === 6) {
@@ -48,6 +50,7 @@ export default function VerificationOTP() {
     }
   }, [searchParams]);
 
+  // timeout
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (state.timeLeft > 0 && state.isResendDisabled) {
@@ -64,6 +67,7 @@ export default function VerificationOTP() {
     return codeArray.every((digit) => digit !== '');
   };
 
+  // handle change 
   const handleChange = (value: string, index: number): void => {
     if (!/^\d*$/.test(value)) return;
 
@@ -89,6 +93,7 @@ export default function VerificationOTP() {
     }
   };
 
+  // if keystroke
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
     index: number
@@ -124,6 +129,7 @@ export default function VerificationOTP() {
     });
   };
 
+  // handle paste
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>): void => {
     e.preventDefault();
     const pastedData = e.clipboardData
@@ -142,6 +148,7 @@ export default function VerificationOTP() {
     }
   };
 
+  // handle verification
   const handleVerification = async (): Promise<void> => {
     const enteredCode = state.code.join('');
     if (!enteredCode || enteredCode.length !== 6) {
@@ -160,6 +167,12 @@ export default function VerificationOTP() {
       await delay(2000);
       if (enteredCode === '123456') {
         updateState({ isSuccess: true });
+        // Redirect to the callbackUrl if it exists; otherwise, go to a default page
+        if (callbackUrl) {
+          router.push(callbackUrl as string); // Cast `callbackUrl` to string
+        } else {
+          router.push('/dashboard'); // Default redirect if callbackUrl is missing
+        }
         router.replace('/admin/dashboard');
       } else {
         toast.error('Invalid verification code. Please try again.');
@@ -184,6 +197,7 @@ export default function VerificationOTP() {
     }
   };
 
+  // resend code
   const handleResendCode = async (): Promise<void> => {
     if (state.isResendDisabled) return;
 
@@ -204,6 +218,7 @@ export default function VerificationOTP() {
     }
   };
 
+  // set input ref
   const setInputRef = (index: number) => (el: HTMLInputElement | null) => {
     inputRefs.current[index] = el;
   };
@@ -224,7 +239,7 @@ export default function VerificationOTP() {
               <span className="text-[#4036af] font-medium mx-2">6-digit</span>
               code sent to your email to complete registration
             </p>
-
+{/* input */}
             <div className="flex items-center justify-between">
               {state.code.map((digit, index) => (
                 <VerificationInput

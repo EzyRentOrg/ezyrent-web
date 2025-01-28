@@ -72,24 +72,31 @@ export const propertyFormSchema = z.object({
     .min(1, 'Description is required')
     .max(1500, 'Description must be less than 1500 characters'),
   price: z
-    .string()
-    .min(1, 'Price is required')
-    .refine((val) => !isNaN(Number(val)), 'Price must be a valid number'),
-  duration: z.enum(['1 year', '2 years', '3 years'], {
+  .string()
+  .min(1, 'Price is required')
+  .refine((val) => !isNaN(Number(val)), 'Price must be a valid number')
+  .refine((val) => !val.startsWith('0'), 'Price cannot start with 0')
+  .refine((val) => Number(val) !== 0, 'Price cannot be 0'),
+  duration: z.number({
     required_error: 'Please select a duration'
   }),
-  primaryFile: z.string().min(1, 'Main image is required'),
+  primaryFile: z.object({
+    name: z.string().min(1, 'Main image is required'),
+    data: z.string().min(1, 'Main image data is required')
+  }),
   otherFiles: z
-    .array(z.string())
+    .array(
+      z.object({
+        name: z.string(),
+        data: z.string()
+      })
+    )
     .min(1, 'At least one image is required for other images')
     .max(7, 'Maximum 6 images allowed'),
-  buildingType: z.enum(['apartment', 'shortlet', 'flat', 'hotel', 'condo'], {
-    required_error: 'Please select a building type'
-  }),
-  beds: z.enum(['1 bed', '2 beds', '3 beds', '4 beds', '5+ beds'], {
+  beds: z.enum(['1', '2', '3', '4', '5+ '], {
     required_error: 'Please select number of beds'
   }),
-  baths: z.enum(['1 bath', '2 baths', '3 baths', '4 baths', '5+ baths'], {
+  baths: z.enum(['1', '2', '3', '4', '5+'], {
     required_error: 'Please select number of baths'
   }),
   amenities: z.array(
