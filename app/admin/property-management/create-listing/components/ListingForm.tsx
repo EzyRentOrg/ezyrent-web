@@ -52,6 +52,7 @@ interface ListingFormProps {
   ) => void;
   onSubmit: (e: React.FormEvent) => void;
   isDragging: boolean;
+  isLoading: boolean;
 }
 
 export default function ListingForm({
@@ -68,7 +69,8 @@ export default function ListingForm({
   onDrop,
   onInputChange,
   onSubmit,
-  isDragging
+  isDragging,
+  isLoading
 }: ListingFormProps) {
   // Remove a primary file
   const removePrimaryFile = () => {
@@ -89,12 +91,48 @@ export default function ListingForm({
 
   return (
     <aside className="mx-auto flex flex-col space-y-8 bg-gradient-to-b from-neutral-50 to-white/70 rounded-lg">
-      <h2 className="text-[#000929] text-[1.25rem] font-medium mb-3 capitalize">
+      <h2 className="text-[#000929] text-[1.25rem] font-medium capitalize">
         Property Listing Form
       </h2>
 
       <ErrorSummary errors={errors} />
-      <form onSubmit={handleSubmit} className="w-full space-y-8">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full ! flex flex-col !mt-10 space-y-10"
+      >
+        {/* property name */}
+        <section>
+          <h2 className="text-[#000929] text-xl font-medium mb-3">Name</h2>
+          <div className="relative">
+            <Controller
+              name="name"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    onInputChange('name', e.target.value);
+                  }}
+                  className="bg-[#F7F7F7] border border-[#E6E6E6] pr-14 focus-visible:ring-1 focus-visible:ring-[#7065F0]"
+                  placeholder="Enter property name"
+                  aria-label="Property name"
+                />
+              )}
+            />
+            <div className="mt-2 flex items-center space-x-5">
+              <NumberLabel
+                minValue={watch('address')?.length || 0}
+                maxValue={MAX_ADDRESS_LENGTH}
+                className="bg-[#F7F7F7] text-xs w-fit"
+              />
+
+              <FormError message={errors.address?.message} />
+            </div>
+          </div>
+        </section>
+
+        {/* property images */}
         <section aria-label="Image Upload">
           <h2 className="text-[#000929] text-xl font-medium mb-3">
             Add Images
@@ -132,15 +170,20 @@ export default function ListingForm({
         </section>
 
         {/* Price */}
-        <div className="mt-10 w-full md:w-[200px] h-auto">
+        <div className="w-full md:w-[200px] h-auto">
           <h2 className="text-[#000929] text-xl font-medium mb-3">Price</h2>
           <Controller
             name="price"
             control={control}
             rules={{
               required: 'Price is required',
-              validate: (value) =>
-                !isNaN(Number(value)) || 'Price must be a valid number'
+              validate: (value) => {
+                if (isNaN(Number(value))) return 'Price must be a valid number';
+                if (value.toString().startsWith('0'))
+                  return 'Price cannot start with 0';
+                if (Number(value) === 0) return 'Price cannot be 0';
+                return true;
+              }
             }}
             render={({ field }) => (
               <Input
@@ -148,7 +191,7 @@ export default function ListingForm({
                 type="number"
                 min={0}
                 step={0.01}
-                className="pl-8 focus-visible:ring-1 focus-visible:ring-[#7065F0] bg-[#F7F7F7] border border-[#E6E6E6]"
+                className="focus-visible:ring-1 focus-visible:ring-[#7065F0] bg-[#F7F7F7] border border-[#E6E6E6]"
                 placeholder="Enter property price"
               />
             )}
@@ -157,7 +200,7 @@ export default function ListingForm({
         </div>
 
         {/* Duration */}
-        <div className="w-full mt-10 md:w-[200px] h-auto">
+        <div className="w-full  md:w-[200px] h-auto">
           <h2 className="text-[#000929] text-xl font-medium mb-3">Duration</h2>
           <Controller
             name="duration"
@@ -179,7 +222,7 @@ export default function ListingForm({
         </div>
 
         {/* building type */}
-        <div className=" mt-10">
+        <div className=" ">
           <h2 className="text-[#000929] text-xl font-medium mb-3">
             Building Type
           </h2>
@@ -231,7 +274,7 @@ export default function ListingForm({
 
         {/* amenities */}
 
-        <div className="mt-10">
+        <div className="">
           <h2 className="text-[#000929] text-xl font-medium mb-3">Amenities</h2>
           <Controller
             name="amenities"
@@ -342,10 +385,10 @@ export default function ListingForm({
           {/* save */}
           <Button
             type="submit"
-            className="flex items-center gap-2 h-12 lg:text-[1.1rem] bg-[#7065F0] hover:bg-[#5B52C5] transition-colors"
+            className="capitalize flex items-center gap-2 h-12 lg:text-[1.1rem] bg-[#7065F0] hover:bg-[#5B52C5] transition-colors"
             aria-label="Upload listing"
           >
-            <span>Upload</span>
+            <span>{isLoading ? 'Uploading...' : 'upload'}</span>
             <CloudUpload size={18} />
           </Button>
         </section>
