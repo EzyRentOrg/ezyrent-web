@@ -72,11 +72,11 @@ export const propertyFormSchema = z.object({
     .min(1, 'Description is required')
     .max(1500, 'Description must be less than 1500 characters'),
   price: z
-  .string()
-  .min(1, 'Price is required')
-  .refine((val) => !isNaN(Number(val)), 'Price must be a valid number')
-  .refine((val) => !val.startsWith('0'), 'Price cannot start with 0')
-  .refine((val) => Number(val) !== 0, 'Price cannot be 0'),
+    .string()
+    .min(1, 'Price is required')
+    .refine((val) => !isNaN(Number(val)), 'Price must be a valid number')
+    .refine((val) => !val.startsWith('0'), 'Price cannot start with 0')
+    .refine((val) => Number(val) !== 0, 'Price cannot be 0'),
   duration: z.number({
     required_error: 'Please select a duration'
   }),

@@ -7,20 +7,8 @@ export const buildingTypes: BuildingType[] = [
   'hotel',
   'condo'
 ];
-export const bedOptions: BedOption[] = [
-  '1',
-  '2',
-  '3',
-  '4',
-  '5+'
-];
-export const bathOptions: BathOption[] = [
-  '1',
-  '2',
-  '3',
-  '4',
-  '5+'
-];
+export const bedOptions: BedOption[] = ['1', '2', '3', '4', '5+'];
+export const bathOptions: BathOption[] = ['1', '2', '3', '4', '5+'];
 export const amenityOptions: AmenityType[] = [
   'Gym',
   'POP Ceiling',

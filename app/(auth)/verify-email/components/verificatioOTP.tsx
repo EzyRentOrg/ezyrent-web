@@ -67,7 +67,7 @@ export default function VerificationOTP() {
     return codeArray.every((digit) => digit !== '');
   };
 
-  // handle change 
+  // handle change
   const handleChange = (value: string, index: number): void => {
     if (!/^\d*$/.test(value)) return;
 
@@ -239,7 +239,7 @@ export default function VerificationOTP() {
               <span className="text-[#4036af] font-medium mx-2">6-digit</span>
               code sent to your email to complete registration
             </p>
-{/* input */}
+            {/* input */}
             <div className="flex items-center justify-between">
               {state.code.map((digit, index) => (
                 <VerificationInput

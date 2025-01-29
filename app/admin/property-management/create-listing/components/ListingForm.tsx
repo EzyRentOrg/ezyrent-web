@@ -179,7 +179,8 @@ export default function ListingForm({
               required: 'Price is required',
               validate: (value) => {
                 if (isNaN(Number(value))) return 'Price must be a valid number';
-                if (value.toString().startsWith('0')) return 'Price cannot start with 0';
+                if (value.toString().startsWith('0'))
+                  return 'Price cannot start with 0';
                 if (Number(value) === 0) return 'Price cannot be 0';
                 return true;
               }
@@ -387,7 +388,7 @@ export default function ListingForm({
             className="capitalize flex items-center gap-2 h-12 lg:text-[1.1rem] bg-[#7065F0] hover:bg-[#5B52C5] transition-colors"
             aria-label="Upload listing"
           >
-            <span>{isLoading ? "Uploading..." : "upload"}</span>
+            <span>{isLoading ? 'Uploading...' : 'upload'}</span>
             <CloudUpload size={18} />
           </Button>
         </section>

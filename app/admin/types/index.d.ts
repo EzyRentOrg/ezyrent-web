@@ -16,12 +16,7 @@ declare type BuildingType =
 declare type BedOption = '1' | '2' | '3' | '4' | '5+';
 
 // Bath options
-declare type BathOption =
-  | '1'
-  | '2'
-  | '3'
-  | '4'
-  | '5+';
+declare type BathOption = '1' | '2' | '3' | '4' | '5+';
 
 // Duration options
 declare type DurationType = 1 | 2 | 3;

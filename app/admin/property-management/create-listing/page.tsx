@@ -12,18 +12,18 @@ import { toast } from 'sonner';
 import { handleFileUploadOrDrop } from '@/lib/handleFileUploadOrDrop';
 import Preview from './components/Preview';
 import ListingForm from './components/ListingForm';
-import axios from 'axios'
+import axios from 'axios';
 
 const STORAGE_KEY = 'property_listing_draft';
 
 const initialFormData: PropertyFormData = {
-  name: "",
-  landSize: "",
-  latitude: "",
-  longitude: "",
+  name: '',
+  landSize: '',
+  latitude: '',
+  longitude: '',
   address: '',
   description: '',
-  price: "0",
+  price: '0',
   duration: 1,
   primaryFile: { name: '', data: '' },
   otherFiles: [],
@@ -35,7 +35,6 @@ const initialFormData: PropertyFormData = {
   errorMessage: null
 };
 
-
 export default function CreateListing() {
   const router = useRouter();
   const [formError, setFormError] = useState<{
@@ -44,7 +43,7 @@ export default function CreateListing() {
   } | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(propertyFormSchema),
@@ -78,11 +77,11 @@ export default function CreateListing() {
   }, [formValues]);
 
   // get from storage
-   useEffect(() => {
+  useEffect(() => {
     try {
-     localStorage.getItem(STORAGE_KEY);
+      localStorage.getItem(STORAGE_KEY);
     } catch (error) {
-      console.error("Error retrieving draft:", error);
+      console.error('Error retrieving draft:', error);
     }
   }, []);
 
@@ -127,7 +126,6 @@ export default function CreateListing() {
   const handleSaveDraft = () => {
     try {
       // localStorage.setItem(STORAGE_KEY, JSON.stringify(formValues));
-      const createdListing = 
       toast.success('Draft saved successfully');
     } catch (error) {
       console.error('Error saving draft:', error);
@@ -150,85 +148,88 @@ export default function CreateListing() {
     }
   };
 
-// submit form
+  // submit form
   const onSubmit = async (data: PropertyFormData) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(formValues));
-  setIsLoading(true);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(formValues));
+    setIsLoading(true);
 
-  if (!data.primaryFile || !data.primaryFile.data) {
-    setFormError({
-      field: 'primaryFile',
-      message: 'Primary image is required',
-    });
-    setIsLoading(false);
-    return;
-  }
-
-  try {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      toast.error('Please log in to continue.');
+    if (!data.primaryFile || !data.primaryFile.data) {
+      setFormError({
+        field: 'primaryFile',
+        message: 'Primary image is required'
+      });
       setIsLoading(false);
       return;
     }
 
-    const formData = new FormData();
-    // Append text fields
-    formData.append('name', data.name);
-    formData.append('address', data.address);
-    formData.append('price', data.price.toString());
-    formData.append('description', data.description);
-    formData.append('beds', data.beds);
-    formData.append('bathrooms', data.baths);
-    formData.append('landSize', data.landSize || '');
-    formData.append('longitude', data.longitude || '');
-    formData.append('latitude', data.latitude || '');
-    formData.append('amenities', JSON.stringify(data.amenities));
-
-    // Append main image
-    formData.append('mainImage', data.primaryFile.data);
-
-    // Append other images
-    if (data.otherFiles) {
-      data.otherFiles.forEach((file, index) => {
-        formData.append('otherImages', file.data);
-      });
-    }
-
-    // Remove stored data from localStorage
-    localStorage.removeItem(STORAGE_KEY);
-
-    // Make the API request
-    const response = await axios.post(`${baseUrl}/api/v1/properties`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`, // Pass the token
-      },
-    });
-
-    console.log('Response:', response);
-    if (response?.data?.success) {
-      toast.success('Property created successfully');
-      router.push('/admin/property-management'); // Redirect
-    }
-  } catch (error) {
-    setIsLoading(false);
-
-    // axios error
-    if (axios.isAxiosError(error)) {
-      if (error.response?.status === 401) {
-        toast.error('You are not authorized to create listing');
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        toast.error('Please log in to continue.');
+        setIsLoading(false);
         return;
       }
+
+      const formData = new FormData();
+      // Append text fields
+      formData.append('name', data.name);
+      formData.append('address', data.address);
+      formData.append('price', data.price.toString());
+      formData.append('description', data.description);
+      formData.append('beds', data.beds);
+      formData.append('bathrooms', data.baths);
+      formData.append('landSize', data.landSize || '');
+      formData.append('longitude', data.longitude || '');
+      formData.append('latitude', data.latitude || '');
+      formData.append('amenities', JSON.stringify(data.amenities));
+
+      // Append main image
+      formData.append('mainImage', data.primaryFile.data);
+
+      // Append other images
+      if (data.otherFiles) {
+        data.otherFiles.forEach((file) => {
+          formData.append('otherImages', file.data);
+        });
+      }
+
+      // Remove stored data from localStorage
+      localStorage.removeItem(STORAGE_KEY);
+
+      // Make the API request
+      const response = await axios.post(
+        `${baseUrl}/api/v1/properties`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}` // Pass the token
+          }
+        }
+      );
+
+      console.log('Response:', response);
+      if (response?.data?.success) {
+        toast.success('Property created successfully');
+        router.push('/admin/property-management'); // Redirect
+      }
+    } catch (error) {
+      setIsLoading(false);
+
+      // axios error
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 401) {
+          toast.error('You are not authorized to create listing');
+          return;
+        }
+      }
+
+      console.error('Error submitting form:', error);
+      setFormError({ field: 'submit', message: 'Failed to submit the form' });
+    } finally {
+      setIsLoading(false);
     }
-
-    console.error('Error submitting form:', error);
-    setFormError({ field: 'submit', message: 'Failed to submit the form' });
-  } finally {
-    setIsLoading(false);
-  }
-};
-
+  };
 
   return (
     <DashboardLayout title="Create Listing">
