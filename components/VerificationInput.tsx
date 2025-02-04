@@ -21,7 +21,7 @@ const VerificationInput = forwardRef<HTMLInputElement, VerificationInputProps>(
     <Input
       ref={ref}
       type="text"
-      inputMode="numeric"
+      inputMode="text"
       maxLength={1}
       disabled={disabled}
       value={value}
