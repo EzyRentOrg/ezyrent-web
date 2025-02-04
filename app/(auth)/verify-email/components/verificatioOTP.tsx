@@ -1,14 +1,15 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Loader2, Mail } from 'lucide-react';
-import useDelay from '@/hooks/useDelay';
+// import useDelay from '@/hooks/useDelay';
 import CountdownButton from '@/components/CountdownButton';
 import VerificationInput from '@/components/VerificationInput';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
+import axios from 'axios';
 
 interface VerificationState {
   code: string[];
@@ -31,18 +32,38 @@ export default function VerificationOTP() {
     isResendDisabled: true
   };
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL; // URL
   const [state, setState] = useState<VerificationState>(initialState);
+  const [adminEmail, setAdminEmail] = useState<string>(''); // Ensure type safety here
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const searchParams = useSearchParams();
   const router = useRouter();
-  const delay = useDelay();
+  // const delay = useDelay();
   const callbackUrl = searchParams.get('callbackUrl'); // Get the callback URL from the query
 
-  const updateState = (updates: Partial<VerificationState>) => {
+  const updateState = useCallback((updates: Partial<VerificationState>) => {
     setState((prev) => ({ ...prev, ...updates }));
-  };
+  }, []);
 
-  // get code from url
+  // Focus on the first input
+  useEffect(() => {
+    inputRefs.current[0]?.focus();
+  }, []);
+
+  // check if all are filled
+  const areAllCharactersFilled = useCallback((codeArray: string[]): boolean => {
+    return codeArray.every((code) => code !== '');
+  }, []);
+
+  // Get email from local storage
+  useEffect(() => {
+    const storedEmail = localStorage.getItem('adminEmail');
+    if (storedEmail) {
+      setAdminEmail(storedEmail);
+    }
+  }, []);
+
+  // Get code from URL
   useEffect(() => {
     const urlCode = searchParams.get('code');
     if (urlCode?.length === 6) {
@@ -50,27 +71,51 @@ export default function VerificationOTP() {
     }
   }, [searchParams]);
 
-  // timeout
+  // Retrieve the start time and calculate remaining time on refresh
+  useEffect(() => {
+    const startTime = localStorage.getItem('countdownStartTime');
+    if (startTime) {
+      const elapsedTime = Math.floor(
+        (Date.now() - parseInt(startTime, 10)) / 1000
+      );
+      const remainingTime = 60 - elapsedTime;
+
+      if (remainingTime > 0) {
+        setState((prevState) => ({
+          ...prevState,
+          timeLeft: remainingTime
+        }));
+      } else {
+        setState((prevState) => ({
+          ...prevState,
+          timeLeft: 0,
+          isResendDisabled: false
+        }));
+      }
+    }
+  }, []);
+
+  // Timeout for resend button
   useEffect(() => {
     let timer: NodeJS.Timeout;
+
     if (state.timeLeft > 0 && state.isResendDisabled) {
+      localStorage.setItem('countdownStartTime', Date.now().toString());
+
       timer = setInterval(() => {
         updateState({ timeLeft: state.timeLeft - 1 });
+        localStorage.setItem('timeLeft', (state.timeLeft - 1).toString());
       }, 1000);
     } else if (state.timeLeft === 0) {
       updateState({ isResendDisabled: false });
+      localStorage.removeItem('countdownStartTime');
     }
+
     return () => clearInterval(timer);
   }, [state.timeLeft, state.isResendDisabled]);
 
-  const areAllDigitsFilled = (codeArray: string[]): boolean => {
-    return codeArray.every((digit) => digit !== '');
-  };
-
-  // handle change
+  // Handle change for input
   const handleChange = (value: string, index: number): void => {
-    if (!/^\d*$/.test(value)) return;
-
     const newCode = [...state.code];
     newCode[index] = value;
 
@@ -79,7 +124,7 @@ export default function VerificationOTP() {
       error:
         value && index === 5
           ? ''
-          : !areAllDigitsFilled(newCode)
+          : !areAllCharactersFilled(newCode)
             ? 'Please enter all 6 digits'
             : ''
     });
@@ -88,12 +133,12 @@ export default function VerificationOTP() {
       inputRefs.current[index + 1]?.focus();
     }
 
-    if (index === 5 && value && areAllDigitsFilled(newCode)) {
+    if (index === 5 && value && areAllCharactersFilled(newCode)) {
       handleVerification();
     }
   };
 
-  // if keystroke
+  // Handle keydown events
   const handleKeyDown = (
     e: React.KeyboardEvent<HTMLInputElement>,
     index: number
@@ -125,17 +170,14 @@ export default function VerificationOTP() {
 
     updateState({
       code: newCode,
-      error: areAllDigitsFilled(newCode) ? '' : 'Please enter all 6 digits'
+      error: areAllCharactersFilled(newCode) ? '' : 'Please enter all 6 digits'
     });
   };
 
-  // handle paste
+  // Handle paste
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>): void => {
     e.preventDefault();
-    const pastedData = e.clipboardData
-      .getData('text')
-      .replace(/\D/g, '')
-      .slice(0, 6);
+    const pastedData = e.clipboardData.getData('text').slice(0, 6);
 
     if (pastedData.length === 6) {
       updateState({
@@ -148,13 +190,19 @@ export default function VerificationOTP() {
     }
   };
 
-  // handle verification
-  const handleVerification = async (): Promise<void> => {
+  // Handle verification
+  const handleVerification = useCallback(async (): Promise<void> => {
     const enteredCode = state.code.join('');
+
     if (!enteredCode || enteredCode.length !== 6) {
       updateState({ error: 'Please enter all 6 digits' });
       return;
     }
+
+    const data = {
+      email: adminEmail,
+      password: enteredCode
+    };
 
     updateState({
       error: '',
@@ -164,61 +212,131 @@ export default function VerificationOTP() {
     });
 
     try {
-      await delay(2000);
-      if (enteredCode === '123456') {
+      const response = await axios.post('/api/auth/verifyOtp', data, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
+      });
+
+      if (response?.data?.success) {
+        toast.success('Login successful');
         updateState({ isSuccess: true });
-        // Redirect to the callbackUrl if it exists; otherwise, go to a default page
+
         if (callbackUrl) {
-          router.push(callbackUrl as string); // Cast `callbackUrl` to string
+          router.push(callbackUrl);
         } else {
-          router.push('/dashboard'); // Default redirect if callbackUrl is missing
+          router.replace('/admin/dashboard');
         }
-        router.replace('/admin/dashboard');
       } else {
-        toast.error('Invalid verification code. Please try again.');
-        updateState({
-          isError: true,
-          isSuccess: false
-        });
+        toast.error(
+          response?.data?.message ||
+            'Invalid verification code. Please try again.'
+        );
+        updateState({ isError: true, isSuccess: false });
       }
     } catch (err) {
-      const errorMessage =
-        err instanceof Error
-          ? err.message
-          : 'Verification failed. Please try again.';
-      toast.error(errorMessage);
-      updateState({
-        error: errorMessage,
-        isError: true,
-        isSuccess: false
-      });
+      console.error('Error:', err);
+      if (axios.isAxiosError(err) && err.response) {
+        toast.error(
+          err.response.data.message || 'Verification failed. Please try again.'
+        );
+      } else {
+        toast.error('Verification failed. Please try again.');
+      }
+      updateState({ isError: true, isSuccess: false });
     } finally {
       updateState({ isVerifying: false });
     }
-  };
+  }, [state.code, adminEmail, callbackUrl, router, updateState]);
 
-  // resend code
+  // Trigger verification automatically when all digits are filled
+  useEffect(() => {
+    if (areAllCharactersFilled(state.code)) {
+      handleVerification();
+    }
+  }, [state.code, handleVerification]);
+
+  // Resend code
   const handleResendCode = async (): Promise<void> => {
-    if (state.isResendDisabled) return;
+    if (state.isResendDisabled) {
+      toast.error(
+        `Please wait ${state.timeLeft} seconds before requesting a new code`
+      );
+      return;
+    }
+
+    if (!adminEmail) {
+      toast.error('No admin email found');
+      return;
+    }
 
     try {
+      // Update state before making the request
       updateState({
         timeLeft: 60,
         isResendDisabled: true,
         code: Array(6).fill(''),
         error: ''
       });
+
+      // Focus on first input
       inputRefs.current[0]?.focus();
+
+      const response = await axios.post(
+        `${baseUrl}/api/v1/admin/auth/create-access-password`,
+        { email: adminEmail },
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          timeout: 10000 // 10 second timeout
+        }
+      );
+
+      if (response?.data?.success) {
+        toast.success('Check your email for a new code');
+        // Start the countdown timer
+        localStorage.setItem('countdownStartTime', Date.now().toString());
+      } else {
+        toast.error(
+          response?.data?.message || 'Failed to send verification code'
+        );
+        // Reset the disabled state if the request failed
+        updateState({
+          isResendDisabled: false,
+          timeLeft: 0
+        });
+      }
     } catch (err) {
-      const errorMessage =
-        err instanceof Error
-          ? err.message
-          : 'Failed to resend code. Please try again.';
-      updateState({ error: errorMessage });
+      console.error('Resend Error:', err);
+
+      // Type guard for AxiosError
+      if (axios.isAxiosError(err)) {
+        console.error('API Error Details:', {
+          status: err.response?.status,
+          data: err.response?.data,
+          message: err.message
+        });
+
+        const errorMessage =
+          err.response?.data?.message ||
+          err.message ||
+          'Failed to resend code. Please try again.';
+
+        toast.error(errorMessage);
+      } else {
+        toast.error('An unexpected error occurred. Please try again.');
+      }
+
+      // Reset the disabled state on error
+      updateState({
+        isResendDisabled: false,
+        timeLeft: 0,
+        error: 'Failed to resend code'
+      });
     }
   };
 
-  // set input ref
+  // Set input ref
   const setInputRef = (index: number) => (el: HTMLInputElement | null) => {
     inputRefs.current[index] = el;
   };
@@ -233,17 +351,20 @@ export default function VerificationOTP() {
           <h2 className="capitalize text-[#344054] text-[1.5rem] font-extrabold leading-[33.6px] -tracking-[2%]">
             Check your email
           </h2>
-          <form className="w-full ">
-            <p className="my-1px text-[#475467] text-[0.875rem] leading-[28px] font-medium -tracking-[2%] w-[80%]">
+          <form className="w-full flex flex-col items-center">
+            <p className="my-1px text-[#475467] text-[0.875rem] leading-[28px] font-medium -tracking-[2%] w-[85%] ">
               Input the
-              <span className="text-[#4036af] font-medium mx-2">6-digit</span>
-              code sent to your email to complete registration
+              <span className="text-[#4036af] font-medium mx-1">
+                6-character code
+              </span>
+              sent to your email to complete registration
             </p>
             {/* input */}
-            <div className="flex items-center justify-between">
+            <div className="w-full mt-5 flex items-center justify-between">
               {state.code.map((digit, index) => (
                 <VerificationInput
                   key={index}
+                  disabled={state.isVerifying}
                   value={digit}
                   index={index}
                   isError={state.isError}
@@ -256,7 +377,7 @@ export default function VerificationOTP() {
               ))}
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4 w-full lg:w-[85%]">
               <Button
                 onClick={handleVerification}
                 disabled={

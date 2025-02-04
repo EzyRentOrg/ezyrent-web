@@ -11,9 +11,9 @@ export default function HouseListingCard({
   title,
   address,
   image,
-  bedrooms,
+  beds,
   bathrooms,
-  sqrFt,
+  landSize,
   description,
   price,
   popular
@@ -29,9 +29,9 @@ export default function HouseListingCard({
       title,
       address,
       image,
-      bedrooms,
+      beds,
       bathrooms,
-      sqrFt,
+      landSize,
       price,
       popular,
       description
@@ -43,7 +43,7 @@ export default function HouseListingCard({
     <Link
       href={`/product-details/${id}`}
       passHref
-      className="w-full rounded-lg shadow-md relative cursor-pointer group"
+      className="w-full max-w-[320px] rounded-lg shadow-md relative cursor-pointer group"
       onClick={handleCardClick}
     >
       {popular && (
@@ -63,10 +63,10 @@ export default function HouseListingCard({
       </div>
       <CardContent className="mt-5 p-4 flex flex-col space-y-2">
         <div className="flex items-center">
-          <p className="text-2xl text-[#7065F0] font-[800] leading-9 -tracking-[1px]">
+          <p className="flex items-center text-2xl text-[#7065F0] font-[800] leading-9">
             ${price.toLocaleString()}
-            <span className="ml-1 text-[#000929] leading-6 text-[1rem] font-[400]">
-              / month
+            <span className="ml-1 text-[#000929]  text-[1rem] font-[400]">
+              / year
             </span>
           </p>
           {/* favorite */}
@@ -94,7 +94,7 @@ export default function HouseListingCard({
           <div className="flex items-center space-x-1">
             <BedDouble className="w-5 h-5 text-[#7065F0]" />
             <span className="capitalize">
-              {bedrooms} {bedrooms > 1 ? 'Beds' : 'Bed'}
+              {beds} {beds > 1 ? 'Beds' : 'Bed'}
             </span>
           </div>
           <div className="flex items-center space-x-1">
@@ -105,7 +105,7 @@ export default function HouseListingCard({
           </div>
           <div className="flex items-center space-x-1">
             <Diamond className="w-5 h-5 text-[#7065F0]" />
-            <span>{sqrFt} m²</span>
+            <span>{landSize} m²</span>
           </div>
         </div>
       </CardFooter>

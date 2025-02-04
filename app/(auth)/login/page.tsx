@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import {
   Form,
   FormControl,
@@ -14,7 +13,6 @@ import { Button } from '@/components/ui/button';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useDelay from '@/hooks/useDelay';
-import { loginSchema } from '@/lib/validations';
 import { cn } from '@/lib/utils';
 import { Loader, Mail } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -23,16 +21,29 @@ import OAuth from '@/components/OAuth';
 import { useRouter } from 'next/navigation';
 import RightHandAuthPage from '@/components/RightHandAuthPage';
 import LappedImages from '@/components/LappedImages';
+import { toast } from 'sonner';
+import axios from 'axios';
+import MaxWidthWrapper from '@/app/maxWidthWrapper';
 
-// Infer the type from the schema
+// validation
+const loginSchema = z.object({
+  email: z
+    .string()
+    .min(1, 'Email is required')
+    .email('Please enter a valid email address')
+    .transform((val) => val.toLowerCase().trim())
+});
+
 type FormValues = z.infer<typeof loginSchema>;
 
 export default function Login() {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const delay = useDelay();
   const router = useRouter();
+
   const form = useForm<FormValues>({
     resolver: zodResolver(loginSchema),
-    mode: 'all',
+    mode: 'onChange',
     defaultValues: {
       email: ''
     }
@@ -40,26 +51,54 @@ export default function Login() {
 
   const {
     handleSubmit,
-    formState: { isSubmitting }
+    formState: { isSubmitting, errors, isDirty }
   } = form;
 
   const onSubmit = async (data: FormValues) => {
-    await delay(2000);
-    router.push('/verify-email');
-    console.log(data);
+    try {
+      if (!data.email) {
+        toast.error('Please enter your email address');
+        return;
+      }
+
+      // Simulate network delay for better UX
+      await delay(2000);
+
+      const response = await axios.post(
+        `${baseUrl}/api/v1/admin/auth/create-access-password`,
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+      );
+
+      if (response?.data?.success) {
+        localStorage.setItem('adminEmail', data.email);
+        toast.success('Check your email for a code');
+        router.push('/verify-email');
+      } else {
+        toast.error(response?.data?.message || 'Something went wrong');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+    }
   };
+
+  const disabled = isSubmitting || !isDirty || Object.keys(errors).length > 0;
 
   return (
     <MaxWidthWrapper className="px-0 w-full">
       <section className="min-h-[984px] w-full mx-auto mb-10 flex items-center space-x-10">
-        {/* left side */}
-
-        <main className="h-[964px] w-full flex flex-col ">
+        {/* Left Side */}
+        <main className="h-[964px] w-full flex flex-col">
           <div className="bg-[#F8F8F8] h-full mb-10 rounded-[20px] px-5 lg:px-0 flex flex-col items-center justify-center">
             <div className="md:w-[80%] mx-auto pb-10">
+              {/* Header Section */}
               <div>
                 <h2 className="capitalize text-[#7F56D9] text-[1.5rem] font-extrabold leading-[33.6px] -tracking-[2%]">
-                  <em>welcome to ezyRent</em>
+                  <em>Welcome to EzyRent</em>
                 </h2>
                 <p className="my-[2px] text-[#475467] text-[1.25rem] leading-[28px] font-bold -tracking-[2%]">
                   Find, Rent, and Manage Properties Seamlessly
@@ -70,18 +109,18 @@ export default function Login() {
                   renting or buying homes stress-free.
                 </p>
               </div>
+
+              {/* Form Section */}
               <Form {...form}>
-                <form onSubmit={handleSubmit(onSubmit)} className=" mt-6">
+                <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
                   <div className="grid gap-4">
-                    {/* full name */}
                     <FormField
                       control={form.control}
                       name="email"
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <div className="relative flex items-center ">
-                              {/* Icon Container */}
+                            <div className="relative flex items-center">
                               <div className="absolute left-5 flex items-center space-x-4">
                                 <Mail size={20} stroke="#9E77ED" />
                                 <Separator
@@ -89,60 +128,60 @@ export default function Login() {
                                   className="bg-[#9E77ED] h-6 w-[1px]"
                                 />
                               </div>
-                              {/* Input Field */}
                               <Input
                                 type="email"
-                                className="bg-[#FFFFFF] h-[64px] pl-[70px] pr-[48px] border-[#EAECF0] rounded-full placeholder:text-[#D0D5DD] focus:ring-[#EAECF0] ring-[#EAECF0] focus:outline-[#EAECF0] outline-[#EAECF0] focus:border-[#EAECF0] leading-[22.4px] text-black !text-[1.1rem]"
+                                className={cn(
+                                  'bg-[#FFFFFF] h-[64px] pl-[70px] pr-[48px]',
+                                  'border-[#EAECF0] rounded-full',
+                                  'placeholder:text-[#D0D5DD]',
+                                  'focus:ring-[#EAECF0] ring-[#EAECF0]',
+                                  'focus:outline-[#EAECF0] outline-[#EAECF0]',
+                                  'focus:border-[#EAECF0]',
+                                  'leading-[22.4px] text-black !text-[1.1rem]'
+                                )}
                                 placeholder="example@gmail.com"
                                 {...field}
                               />
                             </div>
                           </FormControl>
-                          <FormMessage />
+                          <FormMessage className="text-red-500 mt-2" />
                         </FormItem>
                       )}
                     />
                   </div>
-                  {/* submit */}
+
                   <Button
                     type="submit"
+                    disabled={disabled}
                     className={cn(
-                      'bg-[#000929] h-[72px] !mt-10 w-full capitalize text-[1.25rem] font-medium leading-[28px] mx-auto rounded-[80px] hover:bg-opacity-85 transition-colors duration-150',
-                      {
-                        'bg-opacity-75 transition-colors duration-150 ease-in-out':
-                          isSubmitting
-                      }
+                      'bg-[#000929] h-[72px] !mt-10 w-full',
+                      'capitalize text-[1.25rem] font-medium leading-[28px]',
+                      'mx-auto rounded-[80px]',
+                      disabled
+                        ? 'cursor-not-allowed bg-opacity-85'
+                        : 'hover:bg-opacity-85 transition-colors duration-150'
                     )}
                   >
                     {isSubmitting ? (
-                      <>
-                        <Loader /> submitting...
-                      </>
+                      <div className="flex items-center justify-center space-x-2">
+                        <Loader className="animate-spin" />
+                        <span>Submitting...</span>
+                      </div>
                     ) : (
                       'Submit'
                     )}
                   </Button>
                 </form>
-                {/* OAuth  */}
-                <OAuth />
 
-                {/* not registered registered */}
-                {/* <div className="mt-5 text-[1rem] font-medium leading-[22.4px] flex items-center justify-center space-x-2">
-                <p>Don`&apos;t have an account? </p>
-                <Link
-                  href={'/register'}
-                  className="capitalize text-[#6941C6] hover:text-opacity-85 transition-colors duration-100"
-                >
-                  Register
-                </Link>
-              </div> */}
+                <OAuth />
               </Form>
             </div>
           </div>
-          {/* lapped images */}
+
           <LappedImages />
         </main>
-        {/* right side */}
+
+        {/* Right Side */}
         <RightHandAuthPage />
       </section>
     </MaxWidthWrapper>

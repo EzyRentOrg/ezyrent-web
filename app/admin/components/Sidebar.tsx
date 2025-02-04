@@ -8,6 +8,8 @@ import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Settings, LogOut, X } from 'lucide-react';
 import { useWindowResizer } from '@/hooks/useWindowResizer';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 interface SidebarPropsType {
   setIsMobileMenuOpen: (isOpen: boolean) => void;
@@ -23,6 +25,7 @@ export default function Sidebar({
   const menuRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const [isSidebarHovered, setIsSidebarHovered] = useState(false);
   const { windowWidth } = useWindowResizer();
+  const router = useRouter();
 
   useEffect(() => {
     menuRefs.current = new Array(siderbarItems.length + 2).fill(null);
@@ -65,6 +68,33 @@ export default function Sidebar({
       ${windowWidth < 1024 || isSidebarHovered ? 'rounded-[8px]' : ''} 
       my-5 flex items-center font-medium text-[1.125rem] px-4 py-3 w-fit transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#7065F0] focus:ring-offset-2
     `;
+  };
+
+  // logout
+  const handleLogout = async () => {
+    try {
+      // Ask for confirmation before logging out
+      const userConfirmed = confirm('Do you want to logout?');
+
+      if (userConfirmed) {
+        const response = await fetch('/api/logout', { method: 'GET' });
+
+        if (response.ok) {
+          // Show a success message
+          toast.success('You have logged out successfully.');
+
+          // Redirect the user to the home or login page
+          router.push('/');
+        } else {
+          const data = await response.json();
+          console.error('Logout failed:', data.message);
+          toast.error('Failed to log out. Please try again.');
+        }
+      }
+    } catch (error) {
+      console.error('Error logging out:', error);
+      toast.error('Something went wrong. Please try again.');
+    }
   };
 
   return (
@@ -226,7 +256,7 @@ export default function Sidebar({
               variant="ghost"
               className={`text-red-500 hover:bg-red-50 my-5 flex items-center font-medium text-[1.125rem] px-4 py-3 w-fit transition-colors duration-200 focus:outline-none focus:ring-1 focus:ring-red-500 focus:ring-offset-1`}
               aria-label="Logout"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={handleLogout}
               ref={(el) => {
                 if (el) {
                   menuRefs.current[siderbarItems.length + 1] =

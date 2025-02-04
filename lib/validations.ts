@@ -61,59 +61,122 @@ export const contactSchema = z.object({
   message: z.string({ required_error: 'Please enter a message' })
 });
 
-//  property form validation
+const AMENITY_OPTIONS = [
+  'Gym',
+  'POP Ceiling',
+  'Water Treatment',
+  'Security',
+  'Parking Space',
+  'Spacious Compound',
+  '24/7 Electricity',
+  'Supermarket Nearby',
+  'Swimming Pool',
+  'Fast Internet',
+  'Restaurants Nearby',
+  'Free WiFi'
+] as const;
+
+// Helper function to validate file type
+const isValidFileType = (file: File) => {
+  const validImageTypes = [
+    'image/jpeg',
+    'image/png',
+    'image/gif',
+    'image/webp'
+  ];
+  const validVideoTypes = ['video/mp4', 'video/webm', 'video/ogg'];
+
+  return (
+    validImageTypes.includes(file.type) || validVideoTypes.includes(file.type)
+  );
+};
+
 export const propertyFormSchema = z.object({
+  name: z
+    .string()
+    .min(1, 'Property name is required')
+    .max(150, 'Name must be less than 150 characters'),
+
   address: z
     .string()
     .min(1, 'Address is required')
     .max(150, 'Address must be less than 150 characters'),
+
   description: z
     .string()
     .min(1, 'Description is required')
     .max(1500, 'Description must be less than 1500 characters'),
+
   price: z
     .string()
     .min(1, 'Price is required')
     .refine((val) => !isNaN(Number(val)), 'Price must be a valid number')
     .refine((val) => !val.startsWith('0'), 'Price cannot start with 0')
     .refine((val) => Number(val) !== 0, 'Price cannot be 0'),
-  duration: z.number({
-    required_error: 'Please select a duration'
-  }),
-  primaryFile: z.object({
-    name: z.string().min(1, 'Main image is required'),
-    data: z.string().min(1, 'Main image data is required')
-  }),
-  otherFiles: z
-    .array(
-      z.object({
-        name: z.string(),
-        data: z.string()
-      })
+
+  landSize: z.string().min(1, 'Room size is required'),
+
+  location: z.string().min(1, 'Location is required'),
+
+  latitude: z.string().optional(),
+  longitude: z.string().optional(),
+
+  rentDuration: z
+    .string()
+    .refine(
+      (val) => !isNaN(Number(val)),
+      'Rent duration must be a valid number'
     )
-    .min(1, 'At least one image is required for other images')
-    .max(7, 'Maximum 6 images allowed'),
-  beds: z.enum(['1', '2', '3', '4', '5+ '], {
+    .transform((val) => Number(val))
+    .refine(
+      (val) => val >= 1 && val <= 3,
+      'Rent duration must be between 1 and 3 years'
+    ),
+
+  // Updated to handle both image and video files
+  primaryFile: z
+    .custom<File | null>()
+    .refine((file) => file !== null, 'Primary media file is required')
+    .refine((file) => {
+      if (!file) return false;
+      return isValidFileType(file);
+    }, 'File must be an image (JPEG, PNG, GIF, WEBP) or video (MP4, WEBM, OGG)')
+    .refine((file) => {
+      if (!file) return false;
+      return file.size <= 25 * 1024 * 1024; // 25MB limit
+    }, 'File size must be less than 25MB'),
+
+  // Updated to handle both image and video files
+  otherFiles: z
+    .array(z.custom<File>())
+    .max(7, 'Maximum 7 files allowed')
+    .refine(
+      (files) => files.every((file) => isValidFileType(file)),
+      'All files must be either images (JPEG, PNG, GIF, WEBP) or videos (MP4, WEBM, OGG)'
+    )
+    .refine(
+      (files) => files.every((file) => file.size <= 25 * 1024 * 1024),
+      'All files must be less than 25MB'
+    ),
+
+  propertyType: z.enum(['apartment', 'shortlet', 'flat', 'hotel', 'condo'], {
+    required_error: 'Please select property type'
+  }),
+
+  beds: z.enum(['1', '2', '3', '4', '5+'], {
     required_error: 'Please select number of beds'
   }),
+
   baths: z.enum(['1', '2', '3', '4', '5+'], {
     required_error: 'Please select number of baths'
   }),
-  amenities: z.array(
-    z.enum([
-      'Gym',
-      'POP Ceiling',
-      'Water Treatment',
-      'Security',
-      'Parking Space',
-      'Spacious Compound',
-      '24/7 Electricity',
-      'Supermarket Nearby',
-      'Swimming Pool',
-      'Fast Internet',
-      'Restaurants Nearby',
-      'Free WiFi'
-    ])
-  ),
-  error: z.string().nullable()
+
+  amenities: z
+    .array(z.enum(AMENITY_OPTIONS))
+    .min(1, 'Please select at least one amenity'),
+
+  error: z.null().optional(),
+  errorMessage: z.null().optional()
 });
+
+export type PropertyFormData = z.infer<typeof propertyFormSchema>;

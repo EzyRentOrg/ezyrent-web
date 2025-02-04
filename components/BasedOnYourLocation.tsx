@@ -95,9 +95,9 @@ export default function BasedOnYourLocation() {
               title={house.title}
               address={house.address}
               image={house.image}
-              bedrooms={house.bedrooms}
+              beds={house.beds}
               bathrooms={house.bathrooms}
-              sqrFt={house.sqrFt}
+              landSize={house.landSize}
               price={house.price}
               popular={house.popular}
               description={house.description}

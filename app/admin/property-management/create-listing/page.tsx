@@ -8,13 +8,11 @@ import { MoveLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import DashboardLayout from '../../components/Layouts';
 import { propertyFormSchema } from '@/lib/validations';
-import { toast } from 'sonner';
 import { handleFileUploadOrDrop } from '@/lib/handleFileUploadOrDrop';
+import { handleLocalStorage } from '@/lib/handleLocalStorage';
 import Preview from './components/Preview';
 import ListingForm from './components/ListingForm';
-import axios from 'axios';
-
-const STORAGE_KEY = 'property_listing_draft';
+import { toast } from 'sonner';
 
 const initialFormData: PropertyFormData = {
   name: '',
@@ -23,11 +21,12 @@ const initialFormData: PropertyFormData = {
   longitude: '',
   address: '',
   description: '',
+  location: '',
   price: '0',
-  duration: 1,
-  primaryFile: { name: '', data: '' },
+  rentDuration: 1,
+  primaryFile: null,
   otherFiles: [],
-  buildingType: 'flat',
+  propertyType: 'flat',
   beds: '2',
   baths: '3',
   amenities: [],
@@ -43,7 +42,6 @@ export default function CreateListing() {
   } | null>(null);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(propertyFormSchema),
@@ -56,34 +54,21 @@ export default function CreateListing() {
     watch,
     setValue,
     control,
-    formState: { errors }
+    formState: { errors, isSubmitting }
   } = form;
 
   const formValues = watch();
 
-  // save to storage
+  // save to storage on values change
   useEffect(() => {
-    const saveTimeout = setTimeout(() => {
-      try {
-        // Deep clone to handle base64 data
-        const saveData = JSON.parse(JSON.stringify(formValues));
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
-      } catch (error) {
-        console.error('Error saving draft:', error);
-      }
-    }, 1000);
-
-    return () => clearTimeout(saveTimeout);
+    const cleanup = handleLocalStorage.save(formValues);
+    return () => cleanup();
   }, [formValues]);
 
-  // get from storage
+  // Load from localStorage on component mount
   useEffect(() => {
-    try {
-      localStorage.getItem(STORAGE_KEY);
-    } catch (error) {
-      console.error('Error retrieving draft:', error);
-    }
-  }, []);
+    handleLocalStorage.load(setValue);
+  }, [setValue]);
 
   // upload file
   const handleFileUpload = (
@@ -122,10 +107,22 @@ export default function CreateListing() {
     }
   };
 
+  //clear draft: feature thing
+  // const clearDraft = () => {
+  //   try {
+  //     localStorage.removeItem(STORAGE_KEY);
+  //     form.reset(initialFormData);
+  //     toast.success('Draft cleared successfully');
+  //   } catch (error) {
+  //     console.error('Error clearing draft:', error);
+  //     toast.error('Failed to clear draft');
+  //   }
+  // };
+
   // handle draft
   const handleSaveDraft = () => {
     try {
-      // localStorage.setItem(STORAGE_KEY, JSON.stringify(formValues));
+      handleLocalStorage.save(formValues);
       toast.success('Draft saved successfully');
     } catch (error) {
       console.error('Error saving draft:', error);
@@ -137,7 +134,7 @@ export default function CreateListing() {
   const handleImageDelete = (type: 'primary' | 'other', index?: number) => {
     if (confirm('Are you sure you want to delete this file?')) {
       if (type === 'primary') {
-        setValue('primaryFile', { name: '', data: '' });
+        setValue('primaryFile', null);
         toast.success('Primary file removed');
       } else if (type === 'other' && index !== undefined) {
         const currentOtherFiles = watch('otherFiles') || [];
@@ -148,84 +145,75 @@ export default function CreateListing() {
     }
   };
 
-  // submit form
+  // submit data
   const onSubmit = async (data: PropertyFormData) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(formValues));
-    setIsLoading(true);
-
-    if (!data.primaryFile || !data.primaryFile.data) {
-      setFormError({
-        field: 'primaryFile',
-        message: 'Primary image is required'
-      });
-      setIsLoading(false);
-      return;
-    }
-
     try {
-      const token = localStorage.getItem('authToken');
-      if (!token) {
-        toast.error('Please log in to continue.');
+      setIsLoading(true);
+      setFormError(null);
+
+      if (!data.primaryFile) {
+        setFormError({
+          field: 'primaryFile',
+          message: 'Primary image is required'
+        });
         setIsLoading(false);
         return;
       }
 
       const formData = new FormData();
-      // Append text fields
+
+      // Append other form fields
       formData.append('name', data.name);
       formData.append('address', data.address);
       formData.append('price', data.price.toString());
       formData.append('description', data.description);
       formData.append('beds', data.beds);
+      formData.append('location', data.location);
+      formData.append('rentDuration', data.rentDuration.toString());
+      formData.append('propertyType', data.propertyType);
       formData.append('bathrooms', data.baths);
-      formData.append('landSize', data.landSize || '');
-      formData.append('longitude', data.longitude || '');
-      formData.append('latitude', data.latitude || '');
-      formData.append('amenities', JSON.stringify(data.amenities));
+      formData.append('landSize', data.landSize.toString());
+      if (data.longitude)
+        formData.append('longitude', data.longitude.toString());
+      if (data.latitude) formData.append('latitude', data.latitude.toString());
 
-      // Append main image
-      formData.append('mainImage', data.primaryFile.data);
-
-      // Append other images
-      if (data.otherFiles) {
-        data.otherFiles.forEach((file) => {
-          formData.append('otherImages', file.data);
-        });
-      }
-
-      // Remove stored data from localStorage
-      localStorage.removeItem(STORAGE_KEY);
-
-      // Make the API request
-      const response = await axios.post(
-        `${baseUrl}/api/v1/properties`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}` // Pass the token
-          }
-        }
+      // Append amenities as array
+      data.amenities.forEach((amenity) =>
+        formData.append('amenities[]', amenity)
       );
 
-      console.log('Response:', response);
-      if (response?.data?.success) {
-        toast.success('Property created successfully');
-        router.push('/admin/property-management'); // Redirect
-      }
-    } catch (error) {
-      setIsLoading(false);
+      // Append images directly as files
+      formData.append('mainImage', data.primaryFile);
 
-      // axios error
-      if (axios.isAxiosError(error)) {
-        if (error.response?.status === 401) {
-          toast.error('You are not authorized to create listing');
+      data.otherFiles?.forEach((file) => {
+        formData.append('additionalImages', file);
+      });
+
+      // Call the API endpoint
+      const response = await fetch('/api/create-listing', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        toast.success('Property created successfully');
+        router.replace('/admin/property-management');
+      } else {
+        if (response.status === 401 || response.status === 403) {
+          toast.error('Please log in again to continue');
           return;
         }
+        throw new Error(result.message || 'Failed to create property listing');
       }
-
-      console.error('Error submitting form:', error);
-      setFormError({ field: 'submit', message: 'Failed to submit the form' });
+    } catch (error: unknown) {
+      setFormError({
+        field: 'submit',
+        message:
+          error instanceof Error ? error.message : 'Failed to submit form'
+      });
+      toast.error('Failed to create property listing');
     } finally {
       setIsLoading(false);
     }
@@ -265,6 +253,7 @@ export default function CreateListing() {
             isDragging={isDragging}
             onDrop={handleDrop}
             isLoading={isLoading}
+            isSubmitting={isSubmitting}
             onSubmit={handleSubmit(onSubmit)}
           />
           <Preview
@@ -272,6 +261,7 @@ export default function CreateListing() {
             primaryFile={watch('primaryFile')}
             otherFiles={watch('otherFiles')}
             onImageDelete={handleImageDelete}
+            isSubmitting={isSubmitting}
           />
         </section>
       </main>

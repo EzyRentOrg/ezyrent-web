@@ -167,8 +167,8 @@ export default function ProductDetails() {
               <div className="flex items-center space-x-1">
                 <BedDouble className="w-5 h-5 text-[#7065F0]" />
                 <span className="capitalize">
-                  {houseDetails?.bedrooms ?? 0}{' '}
-                  {(houseDetails?.bedrooms ?? 0) > 1 ? 'Beds' : 'Bed'}
+                  {houseDetails?.beds ?? 0}{' '}
+                  {(houseDetails?.beds ?? 0) > 1 ? 'Beds' : 'Bed'}
                 </span>
               </div>
               <div className="flex items-center space-x-1">
@@ -180,7 +180,7 @@ export default function ProductDetails() {
               </div>
               <div className="flex items-center space-x-1">
                 <Diamond className="w-5 h-5 text-[#7065F0]" />
-                <span>{houseDetails?.sqrFt} m²</span>
+                <span>{houseDetails?.landSize} m²</span>
               </div>
             </div>
           </>

@@ -5,6 +5,7 @@ interface MediaPreviewProps {
   src: string;
   onClick: () => void;
   onDelete: () => void;
+  isSubmitting?: boolean;
 }
 
 export default function MediaPreview({
@@ -29,7 +30,7 @@ export default function MediaPreview({
             <video
               src={src}
               controls={false}
-              className="object-cover h-full max-h-[200px] w-full transition-transform duration-300 group-hover:scale-110"
+              className="object-cover max-h-[200px] w-full transition-transform duration-300 group-hover:scale-110"
               onMouseEnter={(e) => (e.currentTarget as HTMLVideoElement).play()}
               onMouseLeave={(e) =>
                 (e.currentTarget as HTMLVideoElement).pause()

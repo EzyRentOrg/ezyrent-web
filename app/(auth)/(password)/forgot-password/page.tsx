@@ -13,7 +13,6 @@ import { Button } from '@/components/ui/button';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useDelay from '@/hooks/useDelay';
-import { forgotPasswordSchema } from '@/lib/validations';
 import { cn } from '@/lib/utils';
 import { ArrowLeft, Loader, Mail } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -23,6 +22,10 @@ import MaxWidthWrapper from '@/app/maxWidthWrapper';
 import { useRouter } from 'next/navigation';
 
 import LappedImages from '@/components/LappedImages';
+
+const forgotPasswordSchema = z.object({
+  email: z.string()
+});
 
 // Infer the type from the schema
 type FormValues = z.infer<typeof forgotPasswordSchema>;

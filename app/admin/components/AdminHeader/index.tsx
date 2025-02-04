@@ -24,7 +24,6 @@ export default function AdminHeader({
     alert('Profile clicked!');
   };
   const { windowWidth } = useWindowResizer();
-
   const hideTitle = windowWidth <= 768 && handleClick;
 
   return (

@@ -13,8 +13,8 @@ import {
   amenityOptions,
   bathOptions,
   bedOptions,
-  buildingTypes,
-  durations,
+  propertyTypes,
+  rentDurations,
   MAX_ADDRESS_LENGTH,
   MAX_DESCRIPTION_LENGTH
 } from '@/app/admin/constants/property-form';
@@ -53,6 +53,7 @@ interface ListingFormProps {
   onSubmit: (e: React.FormEvent) => void;
   isDragging: boolean;
   isLoading: boolean;
+  isSubmitting: boolean;
 }
 
 export default function ListingForm({
@@ -70,14 +71,13 @@ export default function ListingForm({
   onInputChange,
   onSubmit,
   isDragging,
-  isLoading
+  isLoading,
+  isSubmitting
 }: ListingFormProps) {
-  // Remove a primary file
   const removePrimaryFile = () => {
-    setValue('primaryFile', { name: '', data: '' });
+    setValue('primaryFile', null);
   };
 
-  // Remove an other file
   const removeOtherFile = (index: number) => {
     const currentOtherFiles = watch('otherFiles') || [];
     const updatedFiles = currentOtherFiles.filter((_, i) => i !== index);
@@ -89,6 +89,13 @@ export default function ListingForm({
     onSubmit(e);
   };
 
+  // Common input styles based on submission state
+  const getInputStyles = () => {
+    return `bg-[#F7F7F7] border border-[#E6E6E6] focus-visible:ring-1 focus-visible:ring-[#7065F0] ${
+      isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+    }`;
+  };
+
   return (
     <aside className="mx-auto flex flex-col space-y-8 bg-gradient-to-b from-neutral-50 to-white/70 rounded-lg">
       <h2 className="text-[#000929] text-[1.25rem] font-medium capitalize">
@@ -98,9 +105,9 @@ export default function ListingForm({
       <ErrorSummary errors={errors} />
       <form
         onSubmit={handleSubmit}
-        className="w-full ! flex flex-col !mt-10 space-y-10"
+        className="w-full flex flex-col !mt-10 space-y-10"
       >
-        {/* property name */}
+        {/* Property name */}
         <section>
           <h2 className="text-[#000929] text-xl font-medium mb-3">Name</h2>
           <div className="relative">
@@ -114,9 +121,10 @@ export default function ListingForm({
                     field.onChange(e);
                     onInputChange('name', e.target.value);
                   }}
-                  className="bg-[#F7F7F7] border border-[#E6E6E6] pr-14 focus-visible:ring-1 focus-visible:ring-[#7065F0]"
+                  className={`${getInputStyles()} pr-14`}
                   placeholder="Enter property name"
                   aria-label="Property name"
+                  disabled={isSubmitting}
                 />
               )}
             />
@@ -126,20 +134,17 @@ export default function ListingForm({
                 maxValue={MAX_ADDRESS_LENGTH}
                 className="bg-[#F7F7F7] text-xs w-fit"
               />
-
               <FormError message={errors.address?.message} />
             </div>
           </div>
         </section>
 
-        {/* property images */}
+        {/* Property images */}
         <section aria-label="Image Upload">
           <h2 className="text-[#000929] text-xl font-medium mb-3">
             Add Images
           </h2>
-
           <div className="grid md:grid-cols-2 gap-10">
-            {/* primary image */}
             <MediaUploadField
               label="Primary file"
               type="primary"
@@ -149,11 +154,16 @@ export default function ListingForm({
               onDragLeave={onDragLeave}
               onDragOver={onDragOver}
               onDrop={(e) => onDrop(e, 'primary')}
-              files={watch('primaryFile') ? [watch('primaryFile')] : []}
+              files={
+                watch('primaryFile')
+                  ? [watch('primaryFile')].filter(
+                      (file): file is File => file !== null
+                    )
+                  : []
+              }
               removeFile={removePrimaryFile}
+              isSubmitting={isSubmitting}
             />
-
-            {/* other files */}
             <MediaUploadField
               label="Other files"
               type="other"
@@ -165,6 +175,7 @@ export default function ListingForm({
               onDrop={(e) => onDrop(e, 'other')}
               files={watch('otherFiles') || []}
               removeFile={removeOtherFile}
+              isSubmitting={isSubmitting}
             />
           </div>
         </section>
@@ -191,64 +202,88 @@ export default function ListingForm({
                 type="number"
                 min={0}
                 step={0.01}
-                className="focus-visible:ring-1 focus-visible:ring-[#7065F0] bg-[#F7F7F7] border border-[#E6E6E6]"
+                className={getInputStyles()}
                 placeholder="Enter property price"
+                disabled={isSubmitting}
               />
             )}
           />
           <FormError message={errors.price?.message} />
         </div>
 
-        {/* Duration */}
-        <div className="w-full  md:w-[200px] h-auto">
-          <h2 className="text-[#000929] text-xl font-medium mb-3">Duration</h2>
+        {/* Land size */}
+        <div className="w-full md:w-[250px] h-auto">
+          <h2 className="text-[#000929] text-xl font-medium mb-3">Room Size</h2>
           <Controller
-            name="duration"
+            name="landSize"
+            control={control}
+            render={({ field }) => (
+              <Input
+                {...field}
+                type="text"
+                className={getInputStyles()}
+                placeholder="Enter room size e.g 152x152"
+                disabled={isSubmitting}
+              />
+            )}
+          />
+          <FormError message={errors.landSize?.message} />
+        </div>
+
+        {/* rentDuration */}
+        <div className="w-full md:w-[200px] h-auto">
+          <h2 className="text-[#000929] text-xl font-medium mb-3">
+            Rent duration
+          </h2>
+          <Controller
+            name="rentDuration"
             control={control}
             render={({ field }) => (
               <select
                 {...field}
-                className="w-full rounded-md border border-gray-300 bg-[#F7F7F7] py-2 px-3 shadow-sm focus:border-[#7065F0] focus:outline-none focus:ring-1 focus:ring-[#7065F0]"
+                className={`w-full rounded-md border border-gray-300 bg-[#F7F7F7] py-2 px-3 shadow-sm focus:border-[#7065F0] focus:outline-none focus:ring-1 focus:ring-[#7065F0] ${
+                  isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                disabled={isSubmitting}
               >
-                {durations.map((duration) => (
-                  <option key={duration} value={duration}>
-                    {duration}
+                {rentDurations.map((rentDuration) => (
+                  <option key={rentDuration} value={rentDuration}>
+                    {rentDuration}
                   </option>
                 ))}
               </select>
             )}
           />
-          <FormError message={errors.duration?.message} />
+          <FormError message={errors.rentDuration?.message} />
         </div>
 
-        {/* building type */}
-        <div className=" ">
+        {/* Building type */}
+        <div>
           <h2 className="text-[#000929] text-xl font-medium mb-3">
             Building Type
           </h2>
           <Controller
-            name="buildingType"
+            name="propertyType"
             control={control}
             render={({ field }) => (
               <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 mt-2">
-                {buildingTypes.map((type) => (
+                {propertyTypes.map((type) => (
                   <SelectionButton
                     {...field}
                     key={type}
                     label={type}
                     selected={field.value === type}
-                    onClick={() => {
-                      field.onChange(type);
-                    }}
+                    onClick={() => field.onChange(type)}
+                    isSubmitting={isSubmitting}
                   />
                 ))}
               </div>
             )}
           />
-          <FormError message={errors.buildingType?.message} />
+          <FormError message={errors.propertyType?.message} />
         </div>
 
-        {/* beds and baths */}
+        {/* Beds and baths */}
         {[
           {
             label: 'No. of Beds',
@@ -267,14 +302,14 @@ export default function ListingForm({
               control,
               label,
               options,
-              fieldName
+              fieldName,
+              isSubmitting
             })}
           </React.Fragment>
         ))}
 
-        {/* amenities */}
-
-        <div className="">
+        {/* Amenities */}
+        <div>
           <h2 className="text-[#000929] text-xl font-medium mb-3">Amenities</h2>
           <Controller
             name="amenities"
@@ -295,8 +330,19 @@ export default function ListingForm({
                             );
                         field.onChange(newValue);
                       }}
+                      disabled={isSubmitting}
+                      className={
+                        isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                      }
                     />
-                    <Label htmlFor={`preview-${amenity}`}>{amenity}</Label>
+                    <Label
+                      htmlFor={`preview-${amenity}`}
+                      className={
+                        isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                      }
+                    >
+                      {amenity}
+                    </Label>
                   </div>
                 ))}
               </div>
@@ -305,7 +351,7 @@ export default function ListingForm({
           <FormError message={errors.amenities?.message} />
         </div>
 
-        {/* address */}
+        {/* Address */}
         <section>
           <h2 className="text-[#000929] text-xl font-medium mb-3">Address</h2>
           <div className="relative">
@@ -319,9 +365,10 @@ export default function ListingForm({
                     field.onChange(e);
                     onInputChange('address', e.target.value);
                   }}
-                  className="bg-[#F7F7F7] border border-[#E6E6E6] pr-14 focus-visible:ring-1 focus-visible:ring-[#7065F0]"
+                  className={`${getInputStyles()} pr-14`}
                   placeholder="Enter property address"
                   aria-label="Property address"
+                  disabled={isSubmitting}
                 />
               )}
             />
@@ -331,13 +378,44 @@ export default function ListingForm({
                 maxValue={MAX_ADDRESS_LENGTH}
                 className="bg-[#F7F7F7] text-xs w-fit"
               />
-
               <FormError message={errors.address?.message} />
             </div>
           </div>
         </section>
 
-        {/* description */}
+        {/* location */}
+        <section>
+          <h2 className="text-[#000929] text-xl font-medium mb-3">location</h2>
+          <div className="relative">
+            <Controller
+              name="location"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                    onInputChange('location', e.target.value);
+                  }}
+                  className={`${getInputStyles()} pr-14`}
+                  placeholder="Enter property location"
+                  aria-label="Property location"
+                  disabled={isSubmitting}
+                />
+              )}
+            />
+            <div className="mt-2 flex items-center space-x-5">
+              <NumberLabel
+                minValue={watch('location')?.length || 0}
+                maxValue={MAX_ADDRESS_LENGTH}
+                className="bg-[#F7F7F7] text-xs w-fit"
+              />
+              <FormError message={errors.location?.message} />
+            </div>
+          </div>
+        </section>
+
+        {/* Description */}
         <section>
           <h2 className="text-[#000929] text-xl font-medium mb-3">
             Description
@@ -353,9 +431,10 @@ export default function ListingForm({
                     field.onChange(e);
                     onInputChange('description', e.target.value);
                   }}
-                  className="bg-[#F7F7F7] border border-[#E6E6E6] pr-14 focus-visible:ring-1 focus-visible:ring-[#7065F0] min-h-[150px]"
+                  className={`${getInputStyles()} pr-14 min-h-[150px]`}
                   placeholder="Describe the property"
                   aria-label="Property description"
+                  disabled={isSubmitting}
                 />
               )}
             />
@@ -365,18 +444,21 @@ export default function ListingForm({
                 maxValue={MAX_DESCRIPTION_LENGTH}
                 className="bg-[#F7F7F7] text-xs w-fit"
               />
-
               <FormError message={errors.description?.message} />
             </div>
           </div>
         </section>
 
+        {/* Action buttons */}
         <section className="flex items-center justify-center gap-6 pt-4">
           <Button
             type="button"
             onClick={handleSaveDraft}
-            className="flex items-center gap-2 h-12 lg:text-[1.1rem] bg-white text-[#037F4A] shadow-sm hover:bg-[#F5FFF9] border border-[#037F4A] transition-colors"
+            className={`flex items-center gap-2 h-12 lg:text-[1.1rem] bg-white text-[#037F4A] shadow-sm hover:bg-[#F5FFF9] border border-[#037F4A] transition-colors ${
+              isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
             aria-label="Save draft"
+            disabled={isLoading || isSubmitting}
           >
             <span>Save</span>
             <Save size={18} />
@@ -385,8 +467,12 @@ export default function ListingForm({
           {/* save */}
           <Button
             type="submit"
-            className="capitalize flex items-center gap-2 h-12 lg:text-[1.1rem] bg-[#7065F0] hover:bg-[#5B52C5] transition-colors"
-            aria-label="Upload listing"
+            className={`capitalize flex items-center gap-2 h-12 lg:text-[1.1rem] bg-[#7065F0] hover:bg-[#5B52C5] transition-colors disabled:cursor-not-allowed"
+            aria-label="Upload listing ${
+              isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+            aria-label="Submit form"
+            disabled={isLoading || isSubmitting}
           >
             <span>{isLoading ? 'Uploading...' : 'upload'}</span>
             <CloudUpload size={18} />

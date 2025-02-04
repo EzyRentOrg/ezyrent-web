@@ -5,7 +5,9 @@ export default function Home() {
   return (
     <main>
       <DashboardLayout>
-        <div>dfddf</div>
+        <div className="flex-1 h-screen flex items-center justify-center">
+          Welcome, this page is still under construction
+        </div>
       </DashboardLayout>
     </main>
   );
