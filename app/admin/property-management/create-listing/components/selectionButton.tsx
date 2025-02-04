@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 interface SelectionButtonProps {
   label: string;
   selected: boolean;
+  isSubmitting: boolean;
   onClick: () => void;
   className?: string;
 }
@@ -10,6 +11,7 @@ interface SelectionButtonProps {
 export default function SelectionButton({
   label,
   selected,
+  isSubmitting,
   onClick,
   className = ''
 }: SelectionButtonProps) {
@@ -17,6 +19,7 @@ export default function SelectionButton({
     <Button
       variant="outline"
       type="button"
+      disabled={isSubmitting}
       onClick={(e) => {
         e.preventDefault();
         onClick();

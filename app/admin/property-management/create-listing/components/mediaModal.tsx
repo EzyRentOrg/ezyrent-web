@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button';
 import { CircleChevronLeft, CircleChevronRight, X } from 'lucide-react';
 
 interface MediaModalPropType {
-  setExpandedOtherFile: (file: string | null) => void;
-  expandedOtherFile: string;
+  setExpandedOtherFile: (url: string | null) => void;
+  expandedOtherFile: string | null;
   files: string[];
 }
 
@@ -18,7 +18,7 @@ export default function MediaModal({
   const modalRef = useRef<HTMLDivElement>(null);
 
   const navigateFile = (direction: number) => {
-    const currentIndex = files.indexOf(expandedOtherFile);
+    const currentIndex = files.indexOf(expandedOtherFile!);
     const newIndex = currentIndex + direction;
 
     if (newIndex >= 0 && newIndex < files.length) {
@@ -26,14 +26,16 @@ export default function MediaModal({
     }
   };
 
-  const isVideo = (file: string): boolean => {
-    const lowercase = file.toLowerCase();
+  const isVideo = (url: string): boolean => {
+    if (!url) return false;
+    const lowercase = url.toLowerCase();
     return lowercase.endsWith('.mp4') || lowercase.endsWith('.webm');
   };
 
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.load();
+      videoRef.current.pause();
     }
   }, [expandedOtherFile]);
 
@@ -43,8 +45,9 @@ export default function MediaModal({
     }
   };
 
-  const getVideoType = (file: string): string => {
-    const extension = file.toLowerCase().split('.').pop();
+  const getVideoType = (url: string): string => {
+    if (!url) return 'video/mp4';
+    const extension = url.toLowerCase().split('.').pop();
     switch (extension) {
       case 'mp4':
         return 'video/mp4';
@@ -55,6 +58,14 @@ export default function MediaModal({
     }
   };
 
+  useEffect(() => {
+    if (expandedOtherFile) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  }, [expandedOtherFile]);
+
   if (!expandedOtherFile) return null;
 
   return (
@@ -64,21 +75,19 @@ export default function MediaModal({
       onClick={handleBackdropClick}
     >
       <div
-        className="relative bg-white p-4 rounded-lg min-w-[40vw] max-w-[80vw]  max-h-[90vh] flex flex-col items-center"
+        className="relative bg-white p-4 rounded-lg min-w-[60vw] max-w-[90vw] max-h-[85vh] sm:max-w-[70vw] md:max-w-[60vw]"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Close Button */}
         <Button
           variant="default"
           className="absolute top-2 right-2 bg-[#7065F0] hover:bg-[#5A4DE6] text-white size-8 p-2 z-[9999]"
           onClick={() => setExpandedOtherFile(null)}
+          aria-label="Close media modal"
         >
           <X className="w-full h-full" />
         </Button>
 
-        {/* Content Container */}
         <div className="w-full h-full mt-8">
-          {/* File Preview */}
           <div className="relative flex items-center justify-center min-h-[300px]">
             {isVideo(expandedOtherFile) ? (
               <video
@@ -106,7 +115,6 @@ export default function MediaModal({
             )}
           </div>
 
-          {/* Navigation */}
           {files.length > 1 && (
             <div className="flex items-center justify-between w-full px-5 py-2 mt-1">
               <Button

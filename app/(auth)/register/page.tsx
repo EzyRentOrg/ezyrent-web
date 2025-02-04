@@ -14,7 +14,6 @@ import { Button } from '@/components/ui/button';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useDelay from '@/hooks/useDelay';
-import { signUpSchema } from '@/lib/validations';
 import { cn } from '@/lib/utils';
 import { Eye, EyeOffIcon, Loader, Lock, Mail } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -24,6 +23,12 @@ import Link from 'next/link';
 import RightHandAuthPage from '@/components/RightHandAuthPage';
 import { toast } from 'sonner';
 import LappedImages from '@/components/LappedImages';
+
+const signUpSchema = z.object({
+  email: z.string(),
+  password: z.string(),
+  confirmPassword: z.string()
+})
 
 // Infer the type from the schema
 type FormValues = z.infer<typeof signUpSchema>;

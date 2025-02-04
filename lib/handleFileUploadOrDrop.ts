@@ -8,12 +8,12 @@ export const handleFileUploadOrDrop = (
   setValue: UseFormSetValue<PropertyFormData>,
   watch: UseFormWatch<PropertyFormData>
 ) => {
-  const validFiles = Array.from(files).filter(
-    (file) => file.type.startsWith('image/') || file.type.startsWith('video/')
+  const validFiles = Array.from(files).filter((file) =>
+    file.type.startsWith('image/')
   );
 
   if (validFiles.length === 0) {
-    toast.error('Invalid file type. Please upload images or videos.');
+    toast.error('Invalid file type. Please upload only images.');
     return;
   }
 
@@ -23,30 +23,15 @@ export const handleFileUploadOrDrop = (
       return;
     }
 
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64String = reader.result as string;
-
-      if (type === 'primary') {
-        setValue('primaryFile', {
-          name: file.name,
-          data: base64String
-        });
+    if (type === 'primary') {
+      setValue('primaryFile', file);
+    } else {
+      const currentOtherFiles = watch('otherFiles') || [];
+      if (currentOtherFiles.length < 7) {
+        setValue('otherFiles', [...currentOtherFiles, file]);
       } else {
-        const currentOtherFiles = watch('otherFiles') || [];
-        if (currentOtherFiles.length < 7) {
-          setValue('otherFiles', [
-            ...currentOtherFiles,
-            {
-              name: file.name,
-              data: base64String
-            }
-          ]);
-        } else {
-          toast.error('Maximum of 7 additional files allowed');
-        }
+        toast.error('Maximum of 7 additional files allowed');
       }
-    };
-    reader.readAsDataURL(file);
+    }
   });
 };

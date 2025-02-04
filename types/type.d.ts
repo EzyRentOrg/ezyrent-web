@@ -3,9 +3,9 @@ declare interface HouseListing {
   title: string;
   address: string;
   image: string;
-  bedrooms: number;
+  beds: number;
   bathrooms: number;
-  sqrFt: string;
+  landSize: string;
   price: number;
   popular?: string;
   description?: string;

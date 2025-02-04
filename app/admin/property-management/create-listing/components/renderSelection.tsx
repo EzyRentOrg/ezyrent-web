@@ -8,10 +8,12 @@ export default function RenderSelectionSection({
   label,
   options,
   fieldName,
+  isSubmitting,
   errors
 }: {
   control: Control<PropertyFormData>;
   label: string;
+  isSubmitting: boolean;
   options: string[];
   fieldName: keyof PropertyFormData;
   errors: FieldErrors<PropertyFormData>;
@@ -29,6 +31,7 @@ export default function RenderSelectionSection({
                 {...field}
                 key={option}
                 label={option}
+                isSubmitting={isSubmitting}
                 selected={field.value === option}
                 onClick={() => field.onChange(option)}
               />

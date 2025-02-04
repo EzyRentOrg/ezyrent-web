@@ -5,7 +5,7 @@ declare interface SidebarItemType {
 }
 
 // Building type options
-declare type BuildingType =
+declare type propertyType =
   | 'flat'
   | 'apartment'
   | 'shortlet'
@@ -18,8 +18,8 @@ declare type BedOption = '1' | '2' | '3' | '4' | '5+';
 // Bath options
 declare type BathOption = '1' | '2' | '3' | '4' | '5+';
 
-// Duration options
-declare type DurationType = 1 | 2 | 3;
+// rentDuration options
+declare type rentDurationType = 1 | 2 | 3;
 
 // Amenity options
 declare type AmenityType =
@@ -36,25 +36,27 @@ declare type AmenityType =
   | 'Restaurants Nearby'
   | 'Free WiFi';
 
-declare type FileData = {
-  name: string;
-  data: string;
-};
+// declare type FileData = {
+//   name: string;
+//   data: string;
+// };
 
 // Main interface for property form data
 declare interface PropertyFormData {
-  primaryFile: FileData;
-  otherFiles: FileData[];
+  primaryFile: File | null;
+  otherFiles: File[];
   name: string;
   price: string;
   address: string;
-  duration: DurationType;
+  landSize: string;
+  rentDuration: rentDurationType;
   address: string;
   description: string;
+  location: string;
   latitude?: string;
   longitude?: string;
   landSize?: string;
-  buildingType: BuildingType;
+  propertyType: propertyType;
   beds: BedOption;
   baths: BathOption;
   amenities: AmenityType[];

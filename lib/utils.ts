@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { TokenResponse, useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -36,4 +37,24 @@ export const useGoogleAuthHandler = () => {
   });
 
   return googleLogin;
+};
+
+// get token
+export const getAuthTokenFromCookie = (): string | null => {
+  const cookieString = document.cookie;
+  const match = cookieString.match(/(^| )token=([^;]+)/);
+  return match ? match[2] : null;
+};
+
+// Utility function to check if server is available
+export const checkServerHealth = async () => {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/properties/health`
+    );
+    return response.status === 200;
+  } catch (error) {
+    console.log('err: ', error);
+    return false;
+  }
 };
