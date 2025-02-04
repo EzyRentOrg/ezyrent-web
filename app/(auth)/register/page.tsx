@@ -28,7 +28,7 @@ const signUpSchema = z.object({
   email: z.string(),
   password: z.string(),
   confirmPassword: z.string()
-})
+});
 
 // Infer the type from the schema
 type FormValues = z.infer<typeof signUpSchema>;
