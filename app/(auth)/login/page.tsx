@@ -64,9 +64,9 @@ export default function Login() {
       // Simulate network delay for better UX
       await delay(2000);
 
-      const response = await axios.post(
+      const createResponse = await axios.post(
         `${baseUrl}/api/v1/admin/auth/create-access-password`,
-        data,
+        { email: data.email },
         {
           headers: {
             'Content-Type': 'application/json'
@@ -74,15 +74,30 @@ export default function Login() {
         }
       );
 
-      if (response?.data?.success) {
+      if (createResponse.data?.success) {
         localStorage.setItem('adminEmail', data.email);
-        toast.success('Check your email for a code');
+        toast.success('Check your email for a verification code');
         router.push('/verify-email');
       } else {
-        toast.error(response?.data?.message || 'Something went wrong');
+        toast.error(createResponse.data?.message || 'Failed to create access');
       }
     } catch (error) {
-      console.error('Login error:', error);
+      console.error('Full error object:', error);
+
+      if (axios.isAxiosError(error)) {
+        const errorMessage =
+          error.response?.data?.message || error.message || 'An error occurred';
+
+        if (error.response?.status === 401) {
+          toast.error('Unauthorized access. Please contact support.');
+        } else if (error.response?.status === 403) {
+          toast.error('Access forbidden. Please contact support.');
+        } else {
+          toast.error(errorMessage);
+        }
+      } else {
+        toast.error('An unexpected error occurred');
+      }
     }
   };
 
