@@ -32,9 +32,9 @@ export default function VerificationOTP() {
     isResendDisabled: true
   };
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL; // URL
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL; // apiURL
   const [state, setState] = useState<VerificationState>(initialState);
-  const [adminEmail, setAdminEmail] = useState<string>(''); // Ensure type safety here
+  const [adminEmail, setAdminEmail] = useState<string>('');
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -69,7 +69,7 @@ export default function VerificationOTP() {
     if (urlCode?.length === 6) {
       updateState({ code: urlCode.split('') });
     }
-  }, [searchParams]);
+  }, [updateState, searchParams]);
 
   // Retrieve the start time and calculate remaining time on refresh
   useEffect(() => {
@@ -112,7 +112,7 @@ export default function VerificationOTP() {
     }
 
     return () => clearInterval(timer);
-  }, [state.timeLeft, state.isResendDisabled]);
+  }, [state.timeLeft, state.isResendDisabled, updateState]);
 
   // Handle change for input
   const handleChange = (value: string, index: number): void => {
@@ -219,6 +219,7 @@ export default function VerificationOTP() {
 
       if (response?.data?.success) {
         toast.success('Login successful');
+        localStorage.removeItem('adminEmail');
         updateState({ isSuccess: true });
 
         if (callbackUrl) {
@@ -253,7 +254,7 @@ export default function VerificationOTP() {
     if (areAllCharactersFilled(state.code)) {
       handleVerification();
     }
-  }, [state.code, handleVerification]);
+  }, [state.code, handleVerification, areAllCharactersFilled]);
 
   // Resend code
   const handleResendCode = async (): Promise<void> => {

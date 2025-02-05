@@ -37,5 +37,13 @@ export const handleLocalStorage = {
     } catch (error) {
       console.error('Error retrieving draft:', error);
     }
+  },
+
+  remove: () => {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch (error) {
+      console.error('Error removing draft:', error);
+    }
   }
 };

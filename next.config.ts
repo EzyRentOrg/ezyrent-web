@@ -1,9 +1,13 @@
 import type { NextConfig } from 'next';
 
+const allowedOrigin =
+  process.env.NODE_ENV === 'production'
+    ? "https://ezyrent-web.vercel.app"
+    : "http://localhost:3000";
+
 const nextConfig: NextConfig = {
-  /* config options here */
   webpack: (config) => {
-    config.devtool = 'source-map'; // Avoid 'eval-source-map'
+    config.devtool = 'source-map';
     return config;
   },
   images: {
@@ -14,7 +18,40 @@ const nextConfig: NextConfig = {
     LOCATION_HQTRS_API_KEY: process.env.NEXT_PUBLIC_LOCATION_HQTRS_API_KEY,
     BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
   },
+
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          { key: "Access-Control-Allow-Origin", value: allowedOrigin },
+          { key: "Access-Control-Allow-Methods", value: "GET, POST, PUT, DELETE, OPTIONS" },
+          { key: "Access-Control-Allow-Headers", value: "Content-Type, Authorization, X-Requested-With" },
+          { key: "Access-Control-Allow-Credentials", value: "true" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains; preload" },
+          { key: "Permissions-Policy", value: "geolocation=(), microphone=(), camera=(), interest-cohort=()" },
+        ],
+      },
+      {
+        source: "/api/(.*)",
+        headers: [
+          { key: "Access-Control-Allow-Origin", value: allowedOrigin },
+          { key: "Access-Control-Allow-Methods", value: "OPTIONS, GET, POST, PUT, DELETE" },
+          { key: "Access-Control-Allow-Headers", value: "Content-Type, Authorization" },
+          { key: "Access-Control-Allow-Credentials", value: "true" },
+        ],
+      },
+    ];
+  },
+
   async rewrites() {
+    if (!process.env.NEXT_PUBLIC_BASE_URL) {
+      throw new Error("Environment variable NEXT_PUBLIC_BASE_URL is missing");
+    }
+    
     return [
       {
         source: '/api/:path*',
@@ -22,72 +59,7 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  async headers() {
-    return [
-      {
-        source: "/(.*)",
-        headers: [
-           {
-            key: "Access-Control-Allow-Origin",
-            value: "http://localhost:3000", // change in prod
-          },
-          {
-            key: "Access-Control-Allow-Methods",
-            value: "GET, POST, PUT, DELETE, OPTIONS",
-          },
-          {
-            key: "Access-Control-Allow-Headers",
-            value: "true",
-          },
-          {
-            key: "X-Content-Type-Options",
-            value: "nosniff",
-          },
-          {
-            key: "X-Frame-Options",
-            value: "DENY",
-          },
-          {
-            key: "Referrer-Policy",
-            value: "strict-origin-when-cross-origin",
-          },
-          {
-            key: "Strict-Transport-Security",
-            value: "max-age=31536000; includeSubDomains; preload",
-          },
-          {
-            key: "Set-Cookie",
-            value: "sessionId=abc123; HttpOnly; Secure; SameSite=Strict",
-          },
-          {
-            key: "Permissions-Policy",
-            value:
-              "geolocation=(self), microphone=(), camera=(), interest-cohort=()",
-          },
-        ],
-      },
-      {
-        source: "/sw.js",
-        headers: [
-          {
-            key: "Content-Type",
-            value: "application/javascript; charset=utf-8",
-          },
-          {
-            key: "Cache-Control",
-            value: "no-cache, no-store, must-revalidate",
-          },
-          {
-            key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self'",
-          },
-        ],
-      },
-    ];
-  },
-};
 
-const experimentalConfig = {
   experimental: {
     serverActions: {
       bodySizeLimit: "2mb",
@@ -95,13 +67,13 @@ const experimentalConfig = {
   },
 };
 
-// Validate required environment variables
-const requiredEnvVars = ["NEXT_PUBLIC_LOCATION_HQTRS_API_KEY", "NEXT_PUBLIC_BASE_URL"];
+// Validate required environment variables (only during runtime)
+if (process.env.NODE_ENV !== 'test') {
+  ["NEXT_PUBLIC_LOCATION_HQTRS_API_KEY", "NEXT_PUBLIC_BASE_URL"].forEach((key) => {
+    if (!process.env[key]) {
+      console.warn(`Warning: Environment variable ${key} is missing.`);
+    }
+  });
+}
 
-requiredEnvVars.forEach((key) => {
-  if (!process.env[key]) {
-    throw new Error(`Environment variable ${key} is missing`);
-  }
-});
-
-export default { ...nextConfig, ...experimentalConfig };
+export default nextConfig;

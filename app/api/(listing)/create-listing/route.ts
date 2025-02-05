@@ -7,8 +7,6 @@ export async function POST(req: Request) {
     const cookieStore = await cookies();
     const token = cookieStore.get('ezyrent_auth_token')?.value;
 
-    // console.log('token: ', token);
-
     if (!token) {
       return NextResponse.json(
         { success: false, message: 'Authentication required' },
@@ -19,40 +17,37 @@ export async function POST(req: Request) {
     // Parse the incoming FormData
     const formData = await req.formData();
 
-    // Extract data from FormData
-    const name = formData.get('name');
-    const address = formData.get('address');
-    const price = formData.get('price');
-    const description = formData.get('description');
-    const beds = formData.get('beds');
-    const rentDuration = formData.get('rentDuration');
-    const propertyType = formData.get('propertyType');
-    const bathrooms = formData.get('bathrooms');
-    const landSize = formData.get('landSize');
-    const location = formData.get('location');
-    const amenities = formData.get('amenities');
-    const mainImage = formData.get('mainImage');
-    const additionalImages = formData.getAll('additionalImages');
+    const requiredFields = [
+      'name',
+      'address',
+      'price',
+      'description',
+      'beds',
+      'bathrooms',
+      'mainImage',
+      'rentDuration',
+      'propertyType',
+      'landSize',
+      'location'
+    ];
 
-    // Validate required fields
-    if (
-      !name ||
-      !address ||
-      !price ||
-      !description ||
-      !mainImage ||
-      !beds ||
-      !bathrooms ||
-      !additionalImages ||
-      !mainImage ||
-      !rentDuration ||
-      !propertyType ||
-      !landSize ||
-      !location ||
-      !amenities
-    ) {
+    const missingFields = requiredFields.filter((field) => {
+      const value = formData.get(field);
+      return !value || (Array.isArray(value) && value.length === 0);
+    });
+
+    // Check amenities since it's an array
+    const amenities = formData.getAll('amenities[]');
+    if (!amenities || amenities.length === 0) {
+      missingFields.push('amenities');
+    }
+
+    if (missingFields.length > 0) {
       return NextResponse.json(
-        { success: false, message: 'Missing required fields' },
+        {
+          success: false,
+          message: `Missing required fields: ${missingFields.join(', ')}`
+        },
         { status: 400 }
       );
     }

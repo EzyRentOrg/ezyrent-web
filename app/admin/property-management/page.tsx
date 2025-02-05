@@ -6,6 +6,7 @@ import HouseListingCard from '@/components/ui/house-listing-card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { getCleanImageUrl } from '@/lib/getCleanImageUrl';
+import { useDebounce } from '@/hooks/useDebounce';
 
 export default function PropertyManagement() {
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function PropertyManagement() {
   const [search, setSearch] = useState('');
   const [sortBy, setSortBy] = useState('createdAt');
   const [sortOrder, setSortOrder] = useState('desc');
+  const debouncedSearch = useDebounce(search, 2000);
 
   // Fix: Use useCallback properly
   const fetchProperties = useCallback(async () => {
@@ -29,7 +31,7 @@ export default function PropertyManagement() {
       const queryParams = new URLSearchParams({
         page: page.toString(),
         limit: '10',
-        ...(search && { search }),
+        ...(debouncedSearch && { debouncedSearch }),
         sortBy,
         sortOrder
       });
@@ -46,7 +48,7 @@ export default function PropertyManagement() {
     } finally {
       setLoading(false);
     }
-  }, [page, search, sortBy, sortOrder]);
+  }, [page, sortBy, sortOrder, debouncedSearch]);
 
   useEffect(() => {
     fetchProperties();

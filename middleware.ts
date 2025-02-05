@@ -4,58 +4,57 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
   const url = request.nextUrl;
   const isHttps = request.headers.get('x-forwarded-proto') === 'https';
-  // const origin = request.headers.get('origin'); // Get origin dynamically
   const allowedOrigin =
     process.env.NODE_ENV === 'production'
       ? 'https://ezyrent-web.vercel.app'
       : 'http://localhost:3000';
 
-  // Get auth token from cookies
+  // Get auth token and password status from cookies
   const authToken = request.cookies.get('ezyrent_auth_token')?.value;
-  const freshLogin = request.cookies.get('fresh_login')?.value === 'true';
 
   if (!isHttps && process.env.NODE_ENV === 'production') {
     return NextResponse.redirect(`https://${url.host}${url.pathname}`);
   }
 
-  // Handle CORS for API requests
+  // Handle CORS preflight
   if (request.method === 'OPTIONS') {
     const response = new NextResponse(null, { status: 204 });
-    response.headers.append('Access-Control-Allow-Origin', allowedOrigin);
-    response.headers.append(
+    response.headers.set('Access-Control-Allow-Origin', allowedOrigin);
+    response.headers.set(
       'Access-Control-Allow-Methods',
       'GET, POST, PUT, DELETE, OPTIONS'
     );
-    response.headers.append(
+    response.headers.set(
       'Access-Control-Allow-Headers',
-      'Content-Type, Authorization'
+      'Content-Type, Authorization, X-Requested-With'
     );
-    response.headers.append('Access-Control-Allow-Credentials', 'true'); // Required for cookies
+    response.headers.set('Access-Control-Allow-Credentials', 'true');
     return response;
   }
 
-  // Protect /admin routes
-  if (url.pathname.startsWith('/admin') && !authToken && !freshLogin) {
-    const callbackUrl = encodeURIComponent(url.href);
-    return NextResponse.redirect(
-      new URL(`/login?callbackUrl=${callbackUrl}`, request.url)
-    );
-  }
-
-  // If this is a fresh login, allow the request but clear the fresh_login cookie
-  if (freshLogin) {
-    const response = NextResponse.next();
-    response.cookies.delete('fresh_login');
-    return response;
+  // Protect admin routes
+  if (url.pathname.startsWith('/admin')) {
+    // If no auth token, redirect to login page
+    if (!authToken) {
+      const callbackUrl = encodeURIComponent(url.href);
+      return NextResponse.redirect(
+        new URL(`/login?callbackUrl=${callbackUrl}`, request.url)
+      );
+    }
   }
 
   // Add CORS headers to all responses
   const response = NextResponse.next();
-  response.headers.append(
-    'Access-Control-Allow-Origin',
-    'http://localhost:3000' //change in prod
+  response.headers.set('Access-Control-Allow-Origin', allowedOrigin);
+  response.headers.set('Access-Control-Allow-Credentials', 'true');
+  response.headers.set(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, DELETE, OPTIONS'
   );
-  response.headers.append('Access-Control-Allow-Credentials', 'true'); // Required for cookies
+  response.headers.set(
+    'Access-Control-Allow-Headers',
+    'Content-Type, Authorization, X-Requested-With'
+  );
   return response;
 }
 

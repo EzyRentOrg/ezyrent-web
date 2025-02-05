@@ -177,14 +177,13 @@ export default function CreateListing() {
         formData.append('longitude', data.longitude.toString());
       if (data.latitude) formData.append('latitude', data.latitude.toString());
 
-      // Append amenities as array
+      // Append amenities as an array
       data.amenities.forEach((amenity) =>
         formData.append('amenities[]', amenity)
       );
 
-      // Append images directly as files
+      // Append images as files
       formData.append('mainImage', data.primaryFile);
-
       data.otherFiles?.forEach((file) => {
         formData.append('additionalImages', file);
       });
@@ -199,6 +198,7 @@ export default function CreateListing() {
 
       if (result.success) {
         toast.success('Property created successfully');
+        handleLocalStorage.remove();
         router.replace('/admin/property-management');
       } else {
         if (response.status === 401 || response.status === 403) {
@@ -207,13 +207,16 @@ export default function CreateListing() {
         }
         throw new Error(result.message || 'Failed to create property listing');
       }
-    } catch (error: unknown) {
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Failed to submit form';
+
       setFormError({
         field: 'submit',
-        message:
-          error instanceof Error ? error.message : 'Failed to submit form'
+        message: errorMessage
       });
-      toast.error('Failed to create property listing');
+
+      toast.error(errorMessage);
     } finally {
       setIsLoading(false);
     }
