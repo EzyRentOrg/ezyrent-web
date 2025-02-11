@@ -14,11 +14,13 @@ import { toast } from 'sonner';
 interface SidebarPropsType {
   setIsMobileMenuOpen: (isOpen: boolean) => void;
   isMobileMenuOpen: boolean;
+  onSidebarHoverChange?: (isHovered: boolean) => void;
 }
 
 export default function Sidebar({
   setIsMobileMenuOpen,
-  isMobileMenuOpen
+  isMobileMenuOpen,
+  onSidebarHoverChange
 }: SidebarPropsType) {
   const pathname = usePathname();
   const [hoveredItem, setHoveredItem] = useState<number | null>(null);
@@ -57,33 +59,31 @@ export default function Sidebar({
     }
   };
 
-  // Custom link styles
   const getItemStyles = (
     isActive: boolean,
     isLinkHovered: boolean,
-    isSidebarHovered?: boolean
+    isSidebarVisible: boolean
   ) => {
     return `
-      ${isActive || isLinkHovered ? 'bg-[#7065F0] text-white' : 'text-[#000929] hover:text-[#7065F0]'} 
-      ${windowWidth < 1024 || isSidebarHovered ? 'rounded-[8px]' : ''} 
-      my-5 flex items-center font-medium text-[1.125rem] px-4 py-3 w-fit transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#7065F0] focus:ring-offset-2
+      ${
+        isActive || isLinkHovered
+          ? 'bg-[#7065F0] text-white'
+          : 'text-[#000929] hover:text-[#7065F0]'
+      } 
+      ${isSidebarVisible ? 'rounded-[8px]' : ''} 
+      my-5 flex items-center font-medium text-[1.125rem] px-4 py-3 w-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#7065F0] focus:ring-offset-2
     `;
   };
 
-  // logout
   const handleLogout = async () => {
     try {
-      // Ask for confirmation before logging out
       const userConfirmed = confirm('Do you want to logout?');
 
       if (userConfirmed) {
         const response = await fetch('/api/logout', { method: 'GET' });
 
         if (response.ok) {
-          // Show a success message
           toast.success('You have logged out successfully.');
-
-          // Redirect the user to the home or login page
           router.push('/');
         } else {
           const data = await response.json();
@@ -94,6 +94,20 @@ export default function Sidebar({
     } catch (error) {
       console.error('Error logging out:', error);
       toast.error('Something went wrong. Please try again.');
+    }
+  };
+
+  const handleMouseEnter = () => {
+    if (windowWidth >= 1024) {
+      setIsSidebarHovered(true);
+      onSidebarHoverChange?.(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (windowWidth >= 1024) {
+      setIsSidebarHovered(false);
+      onSidebarHoverChange?.(false);
     }
   };
 
@@ -109,13 +123,13 @@ export default function Sidebar({
 
       {/* Sidebar */}
       <aside
-        onMouseEnter={() => windowWidth >= 1024 && setIsSidebarHovered(true)}
-        onMouseLeave={() => windowWidth >= 1024 && setIsSidebarHovered(false)}
-        className={`fixed lg:sticky flex flex-col items-center top-0 z-20 h-screen bg-white border-r shadow-md
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className={`fixed lg:sticky top-0 z-20 h-screen bg-white border-r shadow-md
           transition-all duration-300 ease-in-out
           ${isMobileMenuOpen ? 'left-0' : '-left-full'}
           lg:left-0
-          ${windowWidth < 1024 || isSidebarHovered ? 'w-60' : 'w-16'}
+          ${isMobileMenuOpen || isSidebarHovered ? 'w-60' : 'w-16'}
           flex flex-col overflow-y-auto custom-scrollbar`}
         role="navigation"
         aria-label="Main Sidebar"
@@ -132,27 +146,19 @@ export default function Sidebar({
 
         {/* Logo Section */}
         <div
-          className={`${windowWidth < 1024 || isSidebarHovered ? 'pl-8' : 'pl-5'} sticky top-0 w-full flex items-center bg-white py-12 z-40`}
+          className={`${
+            isSidebarHovered || isMobileMenuOpen ? 'pl-8' : 'pl-5'
+          } sticky top-0 w-full flex items-center bg-white py-12 z-40`}
         >
           <div className="w-fit">
             <Link href="/admin/dashboard" aria-label="Go to homepage">
-              {windowWidth < 1024 || isSidebarHovered ? (
-                windowWidth >= 1024 ? (
-                  <Image
-                    src="/logo/LeftNav.png"
-                    width={117}
-                    height={32}
-                    alt="EzyRent Logo"
-                  />
-                ) : (
-                  <Image
-                    src="/logo/LeftNav.png"
-                    width={117}
-                    height={32}
-                    alt="EzyRent Logo"
-                    className="!w-[120px]"
-                  />
-                )
+              {isSidebarHovered || isMobileMenuOpen ? (
+                <Image
+                  src="/logo/LeftNav.png"
+                  width={200}
+                  height={32}
+                  alt="EzyRent Logo"
+                />
               ) : (
                 <Image
                   src="/logo/Logo.png"
@@ -166,12 +172,14 @@ export default function Sidebar({
         </div>
 
         {/* Navigation Links */}
-        <nav className="w-[200px] mx-auto flex-1">
+        <nav className="w-full flex-1">
           <ul role="menu">
             {siderbarItems.map((item, index) => {
               const Icon = item.icon;
               const isActive = pathname.startsWith(item.href);
               const isLinkHovered = hoveredItem === index;
+              const isSidebarVisible =
+                isMobileMenuOpen || windowWidth < 1024 || isSidebarHovered;
 
               return (
                 <li key={item.title} role="menuitem">
@@ -180,7 +188,7 @@ export default function Sidebar({
                     className={getItemStyles(
                       isActive,
                       isLinkHovered,
-                      windowWidth < 1024 || isSidebarHovered
+                      isSidebarVisible
                     )}
                     aria-label={`Navigate to ${item.title}`}
                     aria-current={isActive ? 'page' : undefined}
@@ -192,17 +200,11 @@ export default function Sidebar({
                     onKeyDown={(e) => handleKeyDown(e, index)}
                   >
                     <div className="w-10">
-                      <Icon
-                        className={`size-6 transition-transform duration-300 ${
-                          windowWidth < 1024 || isSidebarHovered
-                            ? 'scale-100'
-                            : 'scale-100'
-                        }`}
-                      />
+                      <Icon className="size-6" />
                     </div>
                     <span
                       className={`capitalize whitespace-nowrap overflow-hidden transition-all duration-300 ${
-                        windowWidth < 1024 || isSidebarHovered
+                        isSidebarVisible
                           ? 'w-auto opacity-100'
                           : 'w-0 opacity-0'
                       }`}

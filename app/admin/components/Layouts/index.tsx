@@ -4,36 +4,41 @@ import React, { useState } from 'react';
 import Sidebar from '../Sidebar';
 import AdminHeader from '../../components/AdminHeader';
 
+interface DashboardLayoutProps {
+  children: React.ReactNode;
+  title?: string;
+  btnTitle?: string;
+  handleClick?: () => void;
+  sidebarProps?: {
+    onSidebarHoverChange?: (isHovered: boolean) => void;
+  };
+}
+
 export default function DashboardLayout({
   children,
   title,
   btnTitle,
-  handleClick
-}: {
-  children: React.ReactNode;
-  title?: string | undefined;
-  btnTitle?: string;
-  handleClick?: () => void;
-}) {
+  handleClick,
+  sidebarProps
+}: DashboardLayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
-    <main className="flex min-h-screen">
+    <main className="flex">
       {/* Sidebar */}
-      <div>
-        <Sidebar
-          setIsMobileMenuOpen={setIsMobileMenuOpen}
-          isMobileMenuOpen={isMobileMenuOpen}
-        />
-      </div>
+      <Sidebar
+        setIsMobileMenuOpen={setIsMobileMenuOpen}
+        isMobileMenuOpen={isMobileMenuOpen}
+        onSidebarHoverChange={sidebarProps?.onSidebarHoverChange}
+      />
       {/* Contents */}
-      <section className="w-full flex flex-col">
+      <section className="w-full flex flex-col transition-all duration-300">
         <AdminHeader
           title={title}
           setIsMobileMenuOpen={setIsMobileMenuOpen}
           btnTitle={btnTitle}
           handleClick={handleClick}
         />
-        <div className="w-full bg-neutral-50">{children}</div>
+        <div className="w-full bg-neutral-50 flex-1 relative">{children}</div>
       </section>
     </main>
   );

@@ -14,10 +14,15 @@ interface BreadcrumbItem {
 export default function Breadcrumb() {
   const pathname = usePathname();
 
-  // Split the path into segments, excluding empty and ID-like segments
-  const pathSegments = pathname
-    .split('/')
-    .filter((segment) => segment && !/^\d+(\[.+\])?$/.test(segment)); // Exclude numeric or [id]-like segments
+  //match numeric IDs and UUID patterns
+  const pathSegments = pathname.split('/').filter(
+    (segment) =>
+      segment &&
+      !/^\d+(\[.+\])?$/.test(segment) && // Numeric IDs
+      !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+        segment
+      ) // UUIDs
+  );
 
   const breadcrumbs: BreadcrumbItem[] = [
     { label: 'Home', href: '/', isActive: pathname === '/' },

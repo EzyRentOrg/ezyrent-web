@@ -28,7 +28,7 @@ export default function AdminHeader({
 
   return (
     <header
-      className="bg-white py-8 border-b w-full flex items-center justify-between sticky top-0 z-10 px-5"
+      className="bg-white py-8 border-b w-full flex items-center justify-between sticky top-0 z-10 px-2 lg:px-5"
       role="banner"
       aria-label={`${title} Header`}
     >
@@ -67,21 +67,21 @@ export default function AdminHeader({
       </div>
 
       {/* Action Button */}
-      <div className="flex  items-center justify-between">
+      <div className="flex items-center justify-between">
         {handleClick && (
           <Button
             variant="default"
-            className="bg-[#7065F0] first-letter:capitalize h-12 rounded-[30px] capitalize mr-10"
+            className="bg-[#7065F0] first-letter:capitalize h-10 md:h-12 rounded-[30px] capitalize w-36 lg:w-40 mr-3"
             aria-label={btnTitle}
             onClick={handleClick}
           >
-            <span>{btnTitle}</span>
+            <span className="text-xs md:text-sm">{btnTitle}</span>
             <Plus aria-hidden="true" />
           </Button>
         )}
         {/* Profile */}
         <Avatar
-          className="size-12 cursor-pointer"
+          className="size-10 md:size-12 cursor-pointer"
           role="button"
           aria-label="User profile"
           tabIndex={0}

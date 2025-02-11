@@ -1,14 +1,24 @@
 declare interface HouseListing {
   id: string;
-  title: string;
+  name: string;
   address: string;
-  image: string;
+  mainImage: string;
+  additionalImages?: string[];
+  rentDuration?: number;
   beds: number;
   bathrooms: number;
+  latitude?: number | null;
+  longitude?: number | null;
   landSize: string;
   price: number;
   popular?: string;
   description?: string;
+  createdAt?: string;
+  location?: string;
+  propertyType?: string;
+  amenities?: string[];
+  postedBy?: string;
+  updatedAt?: string;
 }
 
 declare interface NavbarMenuItem {

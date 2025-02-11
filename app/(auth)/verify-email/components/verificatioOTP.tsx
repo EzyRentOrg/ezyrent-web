@@ -71,49 +71,6 @@ export default function VerificationOTP() {
     }
   }, [updateState, searchParams]);
 
-  // Retrieve the start time and calculate remaining time on refresh
-  useEffect(() => {
-    const startTime = localStorage.getItem('countdownStartTime');
-    if (startTime) {
-      const elapsedTime = Math.floor(
-        (Date.now() - parseInt(startTime, 10)) / 1000
-      );
-      const remainingTime = 60 - elapsedTime;
-
-      if (remainingTime > 0) {
-        setState((prevState) => ({
-          ...prevState,
-          timeLeft: remainingTime
-        }));
-      } else {
-        setState((prevState) => ({
-          ...prevState,
-          timeLeft: 0,
-          isResendDisabled: false
-        }));
-      }
-    }
-  }, []);
-
-  // Timeout for resend button
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-
-    if (state.timeLeft > 0 && state.isResendDisabled) {
-      localStorage.setItem('countdownStartTime', Date.now().toString());
-
-      timer = setInterval(() => {
-        updateState({ timeLeft: state.timeLeft - 1 });
-        localStorage.setItem('timeLeft', (state.timeLeft - 1).toString());
-      }, 1000);
-    } else if (state.timeLeft === 0) {
-      updateState({ isResendDisabled: false });
-      localStorage.removeItem('countdownStartTime');
-    }
-
-    return () => clearInterval(timer);
-  }, [state.timeLeft, state.isResendDisabled, updateState]);
-
   // Handle change for input
   const handleChange = (value: string, index: number): void => {
     const newCode = [...state.code];
@@ -190,83 +147,59 @@ export default function VerificationOTP() {
     }
   };
 
-  // Handle verification
-  const handleVerification = useCallback(async (): Promise<void> => {
-    const enteredCode = state.code.join('');
-
-    if (!enteredCode || enteredCode.length !== 6) {
-      updateState({ error: 'Please enter all 6 digits' });
-      return;
-    }
-
-    const data = {
-      email: adminEmail,
-      password: enteredCode
-    };
-
-    updateState({
-      error: '',
-      isError: false,
-      isSuccess: false,
-      isVerifying: true
-    });
-
-    try {
-      const response = await axios.post('/api/auth/verifyOtp', data, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true
-      });
-
-      if (response?.data?.success) {
-        toast.success('Login successful');
-        localStorage.removeItem('adminEmail');
-        updateState({ isSuccess: true });
-
-        if (callbackUrl) {
-          router.push(callbackUrl);
-        } else {
-          router.replace('/admin/dashboard');
-        }
-      } else {
-        toast.error(
-          response?.data?.message ||
-            'Invalid verification code. Please try again.'
-        );
-        updateState({ isError: true, isSuccess: false });
-      }
-    } catch (err) {
-      console.error('Error:', err);
-      if (axios.isAxiosError(err) && err.response) {
-        toast.error(
-          err.response.data.message || 'Verification failed. Please try again.'
-        );
-      } else {
-        toast.error('Verification failed. Please try again.');
-      }
-      updateState({ isError: true, isSuccess: false });
-    } finally {
-      updateState({ isVerifying: false });
-    }
-  }, [state.code, adminEmail, callbackUrl, router, updateState]);
-
-  // Trigger verification automatically when all digits are filled
+  // Timeout for resend button
   useEffect(() => {
-    if (areAllCharactersFilled(state.code)) {
-      handleVerification();
+    let timer: NodeJS.Timeout;
+
+    if (state.timeLeft > 0 && state.isResendDisabled) {
+      localStorage.setItem('countdownStartTime', Date.now().toString());
+
+      timer = setInterval(() => {
+        updateState({ timeLeft: state.timeLeft - 1 });
+        localStorage.setItem('timeLeft', (state.timeLeft - 1).toString());
+      }, 1000);
+    } else if (state.timeLeft === 0) {
+      updateState({ isResendDisabled: false });
+      localStorage.removeItem('countdownStartTime');
     }
-  }, [state.code, handleVerification, areAllCharactersFilled]);
+
+    return () => clearInterval(timer);
+  }, [state.timeLeft, state.isResendDisabled, updateState]);
+
+  // Retrieve the start time and calculate remaining time on refresh
+  useEffect(() => {
+    const startTime = localStorage.getItem('countdownStartTime');
+    if (startTime) {
+      const elapsedTime = Math.floor(
+        (Date.now() - parseInt(startTime, 10)) / 1000
+      );
+      const remainingTime = 60 - elapsedTime;
+
+      if (remainingTime > 0) {
+        updateState({
+          timeLeft: remainingTime,
+          isResendDisabled: true
+        });
+      } else {
+        updateState({
+          timeLeft: 0,
+          isResendDisabled: false
+        });
+      }
+    }
+  }, [updateState]);
 
   // Resend code
   const handleResendCode = async (): Promise<void> => {
+    if (!adminEmail) {
+      toast.error('No admin email found');
+      return;
+    }
+
     if (state.isResendDisabled) {
       toast.error(
         `Please wait ${state.timeLeft} seconds before requesting a new code`
       );
-      return;
-    }
-
-    if (!adminEmail) {
-      toast.error('No admin email found');
       return;
     }
 
@@ -282,6 +215,7 @@ export default function VerificationOTP() {
       // Focus on first input
       inputRefs.current[0]?.focus();
 
+      // make api call
       const response = await axios.post(
         `${baseUrl}/api/v1/admin/auth/create-access-password`,
         { email: adminEmail },
@@ -341,6 +275,72 @@ export default function VerificationOTP() {
   const setInputRef = (index: number) => (el: HTMLInputElement | null) => {
     inputRefs.current[index] = el;
   };
+
+  // Handle verification
+  const handleVerification = useCallback(async (): Promise<void> => {
+    const enteredCode = state.code.join('');
+
+    if (!enteredCode || enteredCode.length !== 6) {
+      updateState({ error: 'Please enter all 6 digits' });
+      return;
+    }
+
+    const data = {
+      email: adminEmail,
+      password: enteredCode
+    };
+
+    updateState({
+      error: '',
+      isError: false,
+      isSuccess: false,
+      isVerifying: true
+    });
+
+    try {
+      const response = await axios.post('/api/auth/verifyOtp', data, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true
+      });
+
+      if (response?.data?.success) {
+        toast.success('Login successful');
+        localStorage.removeItem('adminEmail');
+        updateState({ isSuccess: true });
+
+        if (callbackUrl && callbackUrl.startsWith('/')) {
+          router.push(callbackUrl);
+        } else {
+          router.replace('/admin/dashboard');
+        }
+      } else {
+        toast.error(
+          response?.data?.message ||
+            'Invalid verification code. Please try again.'
+        );
+        updateState({ isError: true, isSuccess: false });
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      if (axios.isAxiosError(err) && err.response) {
+        toast.error(
+          err.response.data.message || 'Verification failed. Please try again.'
+        );
+      } else {
+        toast.error('Verification failed. Please try again.');
+      }
+      updateState({ isError: true, isSuccess: false });
+    } finally {
+      updateState({ isVerifying: false });
+    }
+  }, [state.code, adminEmail, callbackUrl, router, updateState]);
+
+  // Trigger verification automatically when all digits are filled
+  useEffect(() => {
+    if (areAllCharactersFilled(state.code)) {
+      handleVerification();
+    }
+  }, [state.code, handleVerification, areAllCharactersFilled]);
 
   return (
     <div className="px-5 lg:ml-5 pb-5">
