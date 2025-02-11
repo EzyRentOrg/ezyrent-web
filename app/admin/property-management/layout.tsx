@@ -11,5 +11,5 @@ export default function PropertyManagementLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <section className="">{children}</section>;
+  return <section className="w-full">{children}</section>;
 }

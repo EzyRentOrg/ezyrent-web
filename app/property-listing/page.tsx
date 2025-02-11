@@ -1,152 +1,165 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Breadcrumb from '@/components/breadcrumb';
 import MaxWidthWrapper from '../maxWidthWrapper';
+import { useDebounce } from '@/hooks/useDebounce';
+import HouseListingCard from '@/components/ui/house-listing-card';
+import { getCleanImageUrl } from '@/lib/getCleanImageUrl';
+import { FilterControls } from '@/components/FilterControls';
+import {
+  LoadingState,
+  ErrorState,
+  EmptyState
+} from '@/components/propertyState';
+import { ITEMS_PER_PAGE } from '../admin/constants';
+import PropertyFilterDialog from '@/components/PropertyFilterDialog';
+import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
-import { Search, SlidersHorizontal } from 'lucide-react';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select';
-import {
-  propertyType,
-  minPropertyPrice,
-  maxPropertyPrice,
-  propertyBeds,
-  extraFilters
-} from '@/config/property-listing';
-import { Button } from '@/components/ui/button';
-import Newest from '@/components/Newest';
 
 export default function PropertyListing() {
+  const [properties, setProperties] = useState<HouseListing[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [page, setPage] = useState(1);
+  // const [totalPages, setTotalPages] = useState(1);
+  const [search, setSearch] = useState('');
+  const [filterParams, setFilterParams] = useState<FilterParams>({
+    propertyType: 'all',
+    sortBy: 'createdAt',
+    sortOrder: 'desc',
+    minPrice: undefined,
+    maxPrice: undefined
+  });
+
+  const debouncedSearch = useDebounce(search, 500);
+
+  // const constructFilterObject = useCallback(() => {
+  //   const filter: Record<string, any> = {};
+
+  //   // if (filterParams.propertyType !== 'all') {
+  //   //   filter.category = filterParams.propertyType;
+  //   // }
+
+  //   if (filterParams.minPrice !== undefined) {
+  //     filter.minPrice = filterParams.minPrice;
+  //   }
+
+  //   if (filterParams.maxPrice !== undefined) {
+  //     filter.maxPrice = filterParams.maxPrice;
+  //   }
+
+  //   return filter;
+  // }, [filterParams]);
+
+  // make api call
+  const fetchProperties = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      // const filterObject = constructFilterObject();
+      const queryParams = new URLSearchParams({
+        page: page.toString(),
+        limit: ITEMS_PER_PAGE.toString(),
+        ...(debouncedSearch && { search: debouncedSearch }),
+        sortBy: filterParams.sortBy,
+        sortOrder: filterParams.sortOrder,
+        category: filterParams.propertyType
+        // filter: JSON.stringify(filterObject),
+      });
+
+      const response = await fetch(`/api/fetch-listing?${queryParams}`, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch properties: ${response.statusText}`);
+      }
+
+      const {
+        data: { data }
+      } = await response.json();
+      setProperties(data);
+      // setTotalPages(pages);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : 'Failed to fetch properties';
+      console.error('Error fetching properties:', err);
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, debouncedSearch, filterParams]);
+
+  useEffect(() => {
+    fetchProperties();
+  }, [fetchProperties]);
+
+  const handleFilterChange = (updates: Partial<FilterParams>) => {
+    setFilterParams((prev) => ({ ...prev, ...updates }));
+    setPage(1); // Reset to first page when filters change
+  };
+
+  console.log(properties);
+
   return (
     <section>
       <MaxWidthWrapper>
-        <Breadcrumb />
-        <main className="mt-10">
-          <section className="flex flex-col space-y-5 lg:flex-row lg:space-y-0 item-center lg:space-x-5 ">
-            <div className="relative w-full">
-              <Search className="absolute left-2 top-[30%] " />
-              <Input placeholder="Search by address" className="pl-10" />
+        <div className="max-w-[1440px] mx-auto pt-10 pb-5 px-5 md:px-10 lg:px-24 fixed lg:top-[75px] right-0 bg-white/80 backdrop-blur-sm shadow-sm z-10 transition-all duration-300 left-0">
+          {/* breadcrumb */}
+          <div className="w-full">
+            <Breadcrumb />
+          </div>
+          {/* filter */}
+          <div className="py-4 flex gap-5 items-center w-full">
+            {/* search */}
+            <div className="space-y-2 w-full max-w-xs">
+              <Label className="hidden md:block">Search</Label>
+              <Input
+                disabled={loading}
+                placeholder="Search properties..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="border md:mt-2"
+              />
             </div>
-            {/* type and min */}
-            <div className="grid grid-col-1 sm:grid-cols-2 gap-5 w-full">
-              {/* type */}
-              <div>
-                <Select>
-                  <SelectTrigger className="flex items-center ">
-                    <SelectValue placeholder="Select type" />
-                  </SelectTrigger>
-
-                  <SelectContent className="bg-white">
-                    {propertyType.map((type: string) => (
-                      <SelectItem
-                        key={type}
-                        value={type}
-                        className="capitalize"
-                      >
-                        {type}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              {/* min price */}
-              <div>
-                <Select>
-                  <SelectTrigger className="flex items-center ">
-                    <SelectValue placeholder="Min price" />
-                  </SelectTrigger>
-
-                  <SelectContent className="bg-white">
-                    {minPropertyPrice.map((minPrice: string) => (
-                      <SelectItem
-                        key={minPrice}
-                        value={minPrice}
-                        className="capitalize"
-                      >
-                        {minPrice}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="md:hidden ">
+              <PropertyFilterDialog
+                onFilterChange={handleFilterChange}
+                currentFilters={filterParams}
+              />
             </div>
-            {/* max and beds */}
-            <div className="grid grid-col-1 md:grid-cols-2 gap-5 w-full">
-              {/* max price */}
-              <div>
-                <Select>
-                  <SelectTrigger className="flex items-center ">
-                    <SelectValue placeholder="Max price" />
-                  </SelectTrigger>
-
-                  <SelectContent className="bg-white">
-                    {maxPropertyPrice.map((maxPrice: string) => (
-                      <SelectItem
-                        key={maxPrice}
-                        value={maxPrice}
-                        className="capitalize"
-                      >
-                        {maxPrice}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              {/* beds */}
-              <div>
-                <Select>
-                  <SelectTrigger className="flex items-center ">
-                    <SelectValue placeholder="Bed" />
-                  </SelectTrigger>
-
-                  <SelectContent className="bg-white">
-                    {propertyBeds.map((bed: string) => (
-                      <SelectItem key={bed} value={bed} className="capitalize">
-                        {bed}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+            <div className="hidden md:block">
+              <FilterControls
+                handleFilterChange={handleFilterChange}
+                filterParams={filterParams}
+              />
             </div>
-            {/* fliter and search */}
-            <div className="grid grid-col-1 md:grid-cols-2 gap-5 w-full">
-              {/* more filters */}
-              <div>
-                <Select>
-                  <SelectTrigger className="flex items-center  ">
-                    <SlidersHorizontal size={12} className="mr-2" />
-                    <SelectValue placeholder="filter more" />
-                  </SelectTrigger>
-
-                  <SelectContent className="bg-white">
-                    {extraFilters.map((filter: string) => (
-                      <SelectItem
-                        key={filter}
-                        value={filter}
-                        className="capitalize"
-                      >
-                        {filter}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              {/* search btn */}
-              <div>
-                <Button className="bg-[#7065F0]">Search</Button>
-              </div>
+          </div>
+        </div>
+        {/* Property Grid */}
+        <div className="w-full pt-40 mb-10 px-5">
+          {loading ? (
+            <LoadingState />
+          ) : error ? (
+            <ErrorState message={error} onRetry={fetchProperties} />
+          ) : properties.length === 0 ? (
+            <EmptyState />
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {properties.map((property) => (
+                <HouseListingCard
+                  key={property.id}
+                  {...property}
+                  mainImage={getCleanImageUrl(
+                    property.mainImage || '/fallback-image.jpg'
+                  )}
+                />
+              ))}
             </div>
-          </section>
-        </main>
-        {/* new houses */}
-        <Newest />
+          )}
+        </div>
       </MaxWidthWrapper>
     </section>
   );

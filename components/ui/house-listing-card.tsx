@@ -2,21 +2,32 @@
 
 import Image from 'next/image';
 import { CardContent, CardFooter, CardTitle } from './card';
-import { BedDouble, Bath, Diamond } from 'lucide-react';
+import { BedDouble, Bath } from 'lucide-react';
 import PopularLabel from '../PopularLabel';
 import Link from 'next/link';
+import Naira from './naira';
 
 export default function HouseListingCard({
   id,
-  title,
+  name,
   address,
-  image,
+  mainImage,
+  additionalImages,
+  rentDuration,
   beds,
   bathrooms,
+  latitude,
+  longitude,
   landSize,
-  description,
   price,
-  popular
+  popular,
+  description,
+  createdAt,
+  location,
+  propertyType,
+  amenities,
+  postedBy,
+  updatedAt
 }: HouseListing) {
   // const toggleFavorite = (e: React.MouseEvent) => {
   //   e.stopPropagation();
@@ -26,15 +37,25 @@ export default function HouseListingCard({
   const handleCardClick = () => {
     const cardDetails = {
       id,
-      title,
+      name,
       address,
-      image,
+      mainImage,
+      additionalImages,
+      rentDuration,
       beds,
       bathrooms,
+      latitude,
+      longitude,
       landSize,
       price,
       popular,
-      description
+      description,
+      createdAt,
+      location,
+      propertyType,
+      amenities,
+      postedBy,
+      updatedAt
     };
     localStorage.setItem('selectedHouse', JSON.stringify(cardDetails));
   };
@@ -43,7 +64,7 @@ export default function HouseListingCard({
     <Link
       href={`/product-details/${id}`}
       passHref
-      className="w-full max-w-[320px] rounded-lg shadow-md relative cursor-pointer group"
+      className="w-full max-w-[400px] rounded-lg shadow-md relative cursor-pointer group"
       onClick={handleCardClick}
     >
       {popular && (
@@ -54,7 +75,7 @@ export default function HouseListingCard({
       )}
       <div className="h-48 w-full rounded-t-lg overflow-hidden">
         <Image
-          src={image}
+          src={mainImage}
           width={352}
           height={200}
           alt={`Image of a house located at ${address}.`}
@@ -64,7 +85,7 @@ export default function HouseListingCard({
       <CardContent className="mt-5 p-4 flex flex-col space-y-2">
         <div className="flex items-center">
           <p className="flex items-center text-2xl text-[#7065F0] font-[800] leading-9">
-            ${price.toLocaleString()}
+            <Naira /> {price.toLocaleString()}
             <span className="ml-1 text-[#000929]  text-[1rem] font-[400]">
               / year
             </span>
@@ -82,7 +103,7 @@ export default function HouseListingCard({
           </div> */}
         </div>
         <CardTitle className="text-2xl font-[700] -tracking-[1px] leading-9">
-          {title}
+          {name}
         </CardTitle>
         <p className="text-gray-500 text-sm">{address}</p>
       </CardContent>
@@ -103,10 +124,10 @@ export default function HouseListingCard({
               {bathrooms} {bathrooms > 1 ? 'Baths' : 'Bath'}
             </span>
           </div>
-          <div className="flex items-center space-x-1">
+          {/* <div className="flex items-center space-x-1">
             <Diamond className="w-5 h-5 text-[#7065F0]" />
             <span>{landSize} m²</span>
-          </div>
+          </div> */}
         </div>
       </CardFooter>
     </Link>

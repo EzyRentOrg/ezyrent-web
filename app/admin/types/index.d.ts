@@ -69,3 +69,12 @@ declare interface SubmissionResponse {
   success: boolean;
   message: string;
 }
+
+// filter types
+declare interface FilterParams {
+  propertyType: string;
+  sortBy: string;
+  sortOrder: 'asc' | 'desc';
+  minPrice?: number;
+  maxPrice?: number;
+}

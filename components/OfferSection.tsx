@@ -31,7 +31,7 @@ export default function OfferSection() {
           </Button>
         </div>
         {/* left section */}
-        <div className="absolute -bottom-[20%] -right-[40%] w-[1400px] h-full">
+        <div className="hidden lg:block absolute -bottom-[20%] -right-[40%] w-[1400px] h-full">
           <Image
             src={'/offerHouse_1795x1197.png'}
             width={1795}

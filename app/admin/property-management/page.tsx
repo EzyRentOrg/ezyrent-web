@@ -1,147 +1,180 @@
 'use client';
+
 import React, { useEffect, useState, useCallback } from 'react';
-import DashboardLayout from '../components/Layouts';
 import { useRouter } from 'next/navigation';
+import DashboardLayout from '../components/Layouts';
 import HouseListingCard from '@/components/ui/house-listing-card';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import PropertyFilterDialog from '@/components/PropertyFilterDialog';
 import { getCleanImageUrl } from '@/lib/getCleanImageUrl';
 import { useDebounce } from '@/hooks/useDebounce';
+import {
+  LoadingState,
+  Pagination,
+  ErrorState,
+  EmptyState
+} from '@/components/propertyState';
+import { ITEMS_PER_PAGE } from '../constants';
+import { FilterControls } from '@/components/FilterControls';
 
 export default function PropertyManagement() {
   const router = useRouter();
-  const [properties, setProperties] = useState<
-    (HouseListing & { mainImage: string })[]
-  >([]);
+  const [properties, setProperties] = useState<HouseListing[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState('');
-  const [sortBy, setSortBy] = useState('createdAt');
-  const [sortOrder, setSortOrder] = useState('desc');
-  const debouncedSearch = useDebounce(search, 2000);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+  const [filterParams, setFilterParams] = useState<FilterParams>({
+    propertyType: 'all',
+    sortBy: 'createdAt',
+    sortOrder: 'desc',
+    minPrice: undefined,
+    maxPrice: undefined
+  });
 
-  // Fix: Use useCallback properly
+  const debouncedSearch = useDebounce(search, 500);
+
+  // const constructFilterObject = useCallback(() => {
+  //   const filter: Record<string, any> = {};
+
+  //   // if (filterParams.propertyType !== 'all') {
+  //   //   filter.category = filterParams.propertyType;
+  //   // }
+
+  //   if (filterParams.minPrice !== undefined) {
+  //     filter.minPrice = filterParams.minPrice;
+  //   }
+
+  //   if (filterParams.maxPrice !== undefined) {
+  //     filter.maxPrice = filterParams.maxPrice;
+  //   }
+
+  //   return filter;
+  // }, [filterParams]);
+
   const fetchProperties = useCallback(async () => {
     try {
       setLoading(true);
-      setError(false);
+      setError(null);
 
+      // const filterObject = constructFilterObject();
       const queryParams = new URLSearchParams({
         page: page.toString(),
-        limit: '10',
-        ...(debouncedSearch && { debouncedSearch }),
-        sortBy,
-        sortOrder
+        limit: ITEMS_PER_PAGE.toString(),
+        ...(debouncedSearch && { search: debouncedSearch }),
+        sortBy: filterParams.sortBy,
+        sortOrder: filterParams.sortOrder,
+        category: filterParams.propertyType
+        // filter: JSON.stringify(filterObject),
       });
 
-      const response = await fetch(`/api/fetch-listing?${queryParams}`);
-      if (!response.ok) throw new Error('Failed to fetch');
+      const response = await fetch(`/api/fetch-listing?${queryParams}`, {
+        headers: { 'Content-Type': 'application/json' }
+      });
 
-      const data = await response.json();
-      setProperties(data.data.data);
-      setTotalPages(data.data.totalPages);
-    } catch (error) {
-      console.error('Error:', error);
-      setError(true);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch properties: ${response.statusText}`);
+      }
+
+      const {
+        data: { data, totalPages: pages }
+      } = await response.json();
+      setProperties(data);
+      setTotalPages(pages);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : 'Failed to fetch properties';
+      console.error('Error fetching properties:', err);
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
-  }, [page, sortBy, sortOrder, debouncedSearch]);
+  }, [page, debouncedSearch, filterParams]);
 
   useEffect(() => {
     fetchProperties();
   }, [fetchProperties]);
 
-  const handleCreateListing = () => {
-    router.push('/admin/property-management/create-listing');
+  const handleFilterChange = (updates: Partial<FilterParams>) => {
+    setFilterParams((prev) => ({ ...prev, ...updates }));
+    setPage(1); // Reset to first page when filters change
   };
 
   return (
     <DashboardLayout
-      title={'Property Management'}
-      btnTitle={'Add Property'}
-      handleClick={handleCreateListing}
+      title="Property Management"
+      btnTitle="Add Property"
+      handleClick={() =>
+        router.push('/admin/property-management/create-listing')
+      }
+      sidebarProps={{ onSidebarHoverChange: setIsSidebarExpanded }}
     >
-      <div className="flex flex-col h-screen px-5">
-        {/* Search and Filter Controls */}
-        <div className="flex gap-4 items-center mt-4 mb-10">
-          <Input
-            disabled={loading}
-            placeholder="Search properties..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="max-w-xs"
-          />
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="w-40"
-          >
-            <option value="createdAt">Date Added</option>
-            <option value="price">Price</option>
-            <option value="title">Title</option>
-          </select>
-          <select
-            value={sortOrder}
-            onChange={(e) => setSortOrder(e.target.value)}
-            className="w-40"
-          >
-            <option value="desc">Descending</option>
-            <option value="asc">Ascending</option>
-          </select>
+      <div className="flex flex-1 flex-col min-h-screen">
+        {/* Search Bar */}
+        <div
+          className={`fixed top-[105px] md:top-[115px] lg:top-[125px] right-0 bg-white/80 backdrop-blur-sm shadow-sm z-10 transition-all duration-300 left-0 ${
+            isSidebarExpanded ? 'left-[205px]' : 'lg:left-[60px]'
+          }`}
+        >
+          <div className="px-5 py-4 flex gap-5 items-center w-full">
+            <div className="space-y-2 w-full max-w-xs">
+              <Label className="hidden md:block">Search</Label>
+              <Input
+                disabled={loading}
+                placeholder="Search properties..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="border md:mt-2"
+              />
+            </div>
+            <div className="md:hidden ">
+              <PropertyFilterDialog
+                onFilterChange={handleFilterChange}
+                currentFilters={filterParams}
+              />
+            </div>
+            <div className="hidden md:block">
+              <FilterControls
+                handleFilterChange={handleFilterChange}
+                filterParams={filterParams}
+              />
+            </div>
+          </div>
         </div>
 
-        {/* Properties Grid or Error */}
-        {loading ? (
-          <div className="text-center flex-1 flex items-center justify-center text-lg font-semibold">
-            Fetching properties<span className="animate-pulse">...</span>
-          </div>
-        ) : error ? (
-          <div className="text-center flex-1 flex flex-col items-center justify-center">
-            <p className="text-red-500 font-semibold">
-              Failed to fetch properties.
-            </p>
-            <Button onClick={fetchProperties} className="mt-4">
-              Retry
-            </Button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {properties.map((property) => (
-              <HouseListingCard
-                key={property.id}
-                {...property}
-                image={getCleanImageUrl(
-                  property.mainImage || '/fallback-image.jpg'
-                )}
-              />
-            ))}
-          </div>
-        )}
+        {/* Property Grid */}
+        <div className="w-full mt-28 mb-10 px-5">
+          {loading ? (
+            <LoadingState />
+          ) : error ? (
+            <ErrorState message={error} onRetry={fetchProperties} />
+          ) : properties.length === 0 ? (
+            <EmptyState />
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {properties.map((property) => (
+                <HouseListingCard
+                  key={property.id}
+                  {...property}
+                  mainImage={getCleanImageUrl(
+                    property.mainImage || '/fallback-image.jpg'
+                  )}
+                />
+              ))}
+            </div>
+          )}
+        </div>
 
-        {/* Pagination Controls */}
-        {!error && (
-          <div className="mt-auto flex justify-center gap-2">
-            <Button
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
-              disabled={page === 1}
-              variant="outline"
-            >
-              Previous
-            </Button>
-            <span className="py-2 px-4">
-              Page {page} of {totalPages}
-            </span>
-            <Button
-              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              disabled={page === totalPages}
-              variant="outline"
-            >
-              Next
-            </Button>
-          </div>
+        {/* Pagination */}
+        {!error && properties.length > 0 && (
+          <Pagination
+            page={page}
+            totalPages={totalPages}
+            onPageChange={setPage}
+          />
         )}
       </div>
     </DashboardLayout>

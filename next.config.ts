@@ -10,8 +10,14 @@ const nextConfig: NextConfig = {
     config.devtool = 'source-map';
     return config;
   },
-  images: {
-    domains: ["res.cloudinary.com"],
+   images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '**',
+      },
+    ],
   },
   reactStrictMode: true,
   env: {

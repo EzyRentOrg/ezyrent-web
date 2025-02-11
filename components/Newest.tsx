@@ -91,9 +91,9 @@ export default function Newest() {
           >
             <HouseListingCard
               id={house.id}
-              title={house.title}
+              name={house.name}
               address={house.address}
-              image={house.image}
+              mainImage={house.mainImage}
               beds={house.beds}
               bathrooms={house.bathrooms}
               landSize={house.landSize}
