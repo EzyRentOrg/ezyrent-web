@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
 
     // Fetch data from your API
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/properties?${queryParams}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/properties?${queryParams}`,
       {
         headers: {
           'Content-Type': 'application/json'

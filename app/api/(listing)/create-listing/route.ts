@@ -54,7 +54,7 @@ export async function POST(req: Request) {
 
     // Make the API call to your backend with auth token
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/properties`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/properties`,
       {
         method: 'POST',
         headers: {

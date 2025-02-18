@@ -18,7 +18,6 @@ export async function POST(req: Request) {
   try {
     // Parse and validate the request body
     const body = await req.json();
-
     const validated = loginSchema.safeParse(body);
 
     if (!validated.success) {
@@ -34,7 +33,7 @@ export async function POST(req: Request) {
 
     // Send request to backend for authentication
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/admin/auth/login`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/admin/auth/login`,
       {
         method: 'POST',
         headers: {
@@ -61,11 +60,11 @@ export async function POST(req: Request) {
       );
     }
 
-    console.log('Backend response data:', {
-      success: result.success,
-      hasToken: !!result.token,
-      message: result.message
-    });
+    // console.log('Backend response data:', {
+    //   success: result.success,
+    //   hasToken: !!result.token,
+    //   message: result.message
+    // });
 
     if (!response.ok) {
       // Enhanced error logging
@@ -108,10 +107,10 @@ export async function POST(req: Request) {
     });
 
     res.cookies.set('ezyrent_auth_token', result.token, {
-      httpOnly: true,
+      httpOnly: true, //change this to true if the token contains sensitive details to prevent XSS attack ie client script from reading cookies
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax', // Changed from 'strict' to 'lax' for better compatibility
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      maxAge: 60 * 60 * 1, // 1hr
       path: '/'
     });
 

@@ -217,7 +217,7 @@ export default function VerificationOTP() {
 
       // make api call
       const response = await axios.post(
-        `${baseUrl}/api/v1/admin/auth/create-access-password`,
+        `${baseUrl}/admin/auth/create-access-password`,
         { email: adminEmail },
         {
           headers: {
@@ -298,7 +298,7 @@ export default function VerificationOTP() {
     });
 
     try {
-      const response = await axios.post('/api/auth/verifyOtp', data, {
+      const response = await axios.post('/api/admin/verifyOTP', data, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true
       });

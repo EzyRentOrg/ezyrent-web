@@ -122,16 +122,9 @@ export const propertyFormSchema = z.object({
   longitude: z.string().optional(),
 
   rentDuration: z
-    .string()
-    .refine(
-      (val) => !isNaN(Number(val)),
-      'Rent duration must be a valid number'
-    )
-    .transform((val) => Number(val))
-    .refine(
-      (val) => val >= 1 && val <= 3,
-      'Rent duration must be between 1 and 3 years'
-    ),
+    .number()
+    .min(1, 'Rent duration must be between 1 and 3 years')
+    .max(3, 'Rent duration must be between 1 and 3 years'),
 
   // Updated to handle both image and video files
   primaryFile: z

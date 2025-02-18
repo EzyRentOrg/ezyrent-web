@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface CountdownButtonProps {
   onClick: () => Promise<void> | void;
@@ -13,38 +13,37 @@ export default function CountdownButton({
   timeLeft
 }: CountdownButtonProps) {
   const [remainingTime, setRemainingTime] = useState(timeLeft);
-  const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     // Reset countdown when timeLeft changes
     setRemainingTime(timeLeft);
 
     // Clear existing interval
-    if (intervalId) {
-      clearInterval(intervalId);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
     }
 
-    // Start new countdown if disabled
+    // Start countdown if disabled and timeLeft is greater than 0
     if (isDisabled && timeLeft > 0) {
-      const id = setInterval(() => {
+      intervalRef.current = setInterval(() => {
         setRemainingTime((prev) => {
           if (prev <= 1) {
-            clearInterval(id);
+            clearInterval(intervalRef.current!);
             return 0;
           }
           return prev - 1;
         });
       }, 1000);
-
-      setIntervalId(id);
     }
 
+    // Cleanup on unmount
     return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
       }
     };
-  }, [timeLeft, isDisabled, intervalId]);
+  }, [timeLeft, isDisabled]);
 
   if (remainingTime === 0 || !isDisabled) {
     return (
