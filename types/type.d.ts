@@ -1,4 +1,5 @@
 declare interface HouseListing {
+  isAdmin?: boolean;
   id: string;
   name: string;
   address: string;

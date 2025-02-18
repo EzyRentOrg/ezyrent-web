@@ -158,6 +158,7 @@ export default function PropertyManagement() {
               {properties.map((property) => (
                 <HouseListingCard
                   key={property.id}
+                  isAdmin={true}
                   {...property}
                   mainImage={getCleanImageUrl(
                     property.mainImage || '/fallback-image.jpg'

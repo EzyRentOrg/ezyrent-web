@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -7,6 +8,7 @@ import {
   UseFormWatch,
   FieldErrors,
   Controller,
+  UseFormReset,
   UseFormSetValue
 } from 'react-hook-form';
 import {
@@ -26,7 +28,7 @@ import FormError from './FormError';
 import NumberLabel from './label';
 import ErrorSummary from './ErrorSummary';
 import RenderSelectionSection from './renderSelection';
-import React from 'react';
+import AddressAutocomplete from '@/components/LocationSearchInput';
 
 interface ListingFormProps {
   control: Control<PropertyFormData>;
@@ -41,7 +43,7 @@ interface ListingFormProps {
     e: React.ChangeEvent<HTMLInputElement>,
     type: 'primary' | 'other'
   ) => void;
-  handleSaveDraft: () => void;
+  handleSaveDraft?: () => void;
   onInputChange: (field: keyof PropertyFormData, value: string) => void;
   onDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
   onDragEnter: (e: React.DragEvent<HTMLDivElement>) => void;
@@ -54,6 +56,7 @@ interface ListingFormProps {
   isDragging: boolean;
   isLoading: boolean;
   isSubmitting: boolean;
+  reset?: UseFormReset<PropertyFormData>;
 }
 
 export default function ListingForm({
@@ -97,7 +100,7 @@ export default function ListingForm({
   };
 
   return (
-    <aside className="mx-auto flex flex-col space-y-8 bg-gradient-to-b from-neutral-50 to-white/70 rounded-lg">
+    <aside className="max-w-lg flex flex-col space-y-8 bg-gradient-to-b from-neutral-50 to-white/70 rounded-lg">
       <h2 className="text-[#000929] text-[1.25rem] font-medium capitalize">
         Property Listing Form
       </h2>
@@ -134,7 +137,7 @@ export default function ListingForm({
                 maxValue={MAX_ADDRESS_LENGTH}
                 className="bg-[#F7F7F7] text-xs w-fit"
               />
-              <FormError message={errors.address?.message} />
+              <FormError message={errors.name?.message} />
             </div>
           </div>
         </section>
@@ -145,38 +148,50 @@ export default function ListingForm({
             Add Images
           </h2>
           <div className="grid md:grid-cols-2 gap-10">
-            <MediaUploadField
-              label="Primary file"
-              type="primary"
-              handleFileUpload={(e) => handlePrimaryFileUpload(e, 'primary')}
-              isDragging={isDragging}
-              onDragEnter={onDragEnter}
-              onDragLeave={onDragLeave}
-              onDragOver={onDragOver}
-              onDrop={(e) => onDrop(e, 'primary')}
-              files={
-                watch('primaryFile')
-                  ? [watch('primaryFile')].filter(
-                      (file): file is File => file !== null
-                    )
-                  : []
-              }
-              removeFile={removePrimaryFile}
-              isSubmitting={isSubmitting}
-            />
-            <MediaUploadField
-              label="Other files"
-              type="other"
-              handleFileUpload={(e) => handleOtherFileUpload(e, 'other')}
-              isDragging={isDragging}
-              onDragEnter={onDragEnter}
-              onDragLeave={onDragLeave}
-              onDragOver={onDragOver}
-              onDrop={(e) => onDrop(e, 'other')}
-              files={watch('otherFiles') || []}
-              removeFile={removeOtherFile}
-              isSubmitting={isSubmitting}
-            />
+            {/* primary file */}
+            <div>
+              <MediaUploadField
+                label="Primary file"
+                type="primary"
+                handleFileUpload={(e) => handlePrimaryFileUpload(e, 'primary')}
+                isDragging={isDragging}
+                onDragEnter={onDragEnter}
+                onDragLeave={onDragLeave}
+                onDragOver={onDragOver}
+                onDrop={(e) => onDrop(e, 'primary')}
+                files={
+                  watch('primaryFile')
+                    ? [watch('primaryFile')].filter(
+                        (file): file is File => file !== null
+                      )
+                    : []
+                }
+                removeFile={removePrimaryFile}
+                isSubmitting={isSubmitting}
+              />
+              <div className="mt-2 flex items-center space-x-5">
+                <FormError message={errors.otherFiles?.message} />
+              </div>
+            </div>
+            {/* other files */}
+            <div>
+              <MediaUploadField
+                label="Other files"
+                type="other"
+                handleFileUpload={(e) => handleOtherFileUpload(e, 'other')}
+                isDragging={isDragging}
+                onDragEnter={onDragEnter}
+                onDragLeave={onDragLeave}
+                onDragOver={onDragOver}
+                onDrop={(e) => onDrop(e, 'other')}
+                files={watch('otherFiles') || []}
+                removeFile={removeOtherFile}
+                isSubmitting={isSubmitting}
+              />
+              <div className="mt-2 flex items-center space-x-5">
+                <FormError message={errors.otherFiles?.message} />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -208,7 +223,9 @@ export default function ListingForm({
               />
             )}
           />
-          <FormError message={errors.price?.message} />
+          <div className="mt-2">
+            <FormError message={errors.price?.message} />
+          </div>
         </div>
 
         {/* Land size */}
@@ -227,7 +244,9 @@ export default function ListingForm({
               />
             )}
           />
-          <FormError message={errors.landSize?.message} />
+          <div className="mt-2">
+            <FormError message={errors.landSize?.message} />
+          </div>
         </div>
 
         {/* rentDuration */}
@@ -254,7 +273,9 @@ export default function ListingForm({
               </select>
             )}
           />
-          <FormError message={errors.rentDuration?.message} />
+          <div className="mt-2">
+            <FormError message={errors.rentDuration?.message} />
+          </div>
         </div>
 
         {/* Building type */}
@@ -280,7 +301,9 @@ export default function ListingForm({
               </div>
             )}
           />
-          <FormError message={errors.propertyType?.message} />
+          <div className="mt-2">
+            <FormError message={errors.propertyType?.message} />
+          </div>
         </div>
 
         {/* Beds and baths */}
@@ -348,7 +371,9 @@ export default function ListingForm({
               </div>
             )}
           />
-          <FormError message={errors.amenities?.message} />
+          <div className="mt-2">
+            <FormError message={errors.amenities?.message} />
+          </div>
         </div>
 
         {/* Address */}
@@ -359,23 +384,18 @@ export default function ListingForm({
               name="address"
               control={control}
               render={({ field }) => (
-                <Input
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e);
-                    onInputChange('address', e.target.value);
-                  }}
-                  className={`${getInputStyles()} pr-14`}
-                  placeholder="Enter property address"
-                  aria-label="Property address"
-                  disabled={isSubmitting}
+                <AddressAutocomplete
+                  field={field}
+                  onInputChange={onInputChange}
+                  getInputStyles={getInputStyles}
+                  isSubmitting={isSubmitting}
                 />
               )}
             />
             <div className="mt-2 flex items-center space-x-5">
               <NumberLabel
                 minValue={watch('address')?.length || 0}
-                maxValue={MAX_ADDRESS_LENGTH}
+                maxValue={100}
                 className="bg-[#F7F7F7] text-xs w-fit"
               />
               <FormError message={errors.address?.message} />
@@ -451,23 +471,25 @@ export default function ListingForm({
 
         {/* Action buttons */}
         <section className="flex items-center justify-center gap-6 pt-4">
-          <Button
-            type="button"
-            onClick={handleSaveDraft}
-            className={`flex items-center gap-2 h-12 lg:text-[1.1rem] bg-white text-[#037F4A] shadow-sm hover:bg-[#F5FFF9] border border-[#037F4A] transition-colors ${
-              isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
-            aria-label="Save draft"
-            disabled={isLoading || isSubmitting}
-          >
-            <span>Save</span>
-            <Save size={18} />
-          </Button>
+          {handleSaveDraft && (
+            <Button
+              type="button"
+              onClick={handleSaveDraft}
+              className={`w-full flex items-center gap-2 h-12 lg:text-[1.1rem] bg-white text-[#037F4A] shadow-sm hover:bg-[#F5FFF9] border border-[#037F4A] transition-colors ${
+                isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+              aria-label="Save draft"
+              disabled={isLoading || isSubmitting}
+            >
+              <span>Save</span>
+              <Save size={18} />
+            </Button>
+          )}
 
           {/* save */}
           <Button
             type="submit"
-            className={`capitalize flex items-center gap-2 h-12 lg:text-[1.1rem] bg-[#7065F0] hover:bg-[#5B52C5] transition-colors disabled:cursor-not-allowed"
+            className={`w-full capitalize flex items-center gap-2 h-12 lg:text-[1.1rem] bg-[#7065F0] hover:bg-[#5B52C5] transition-colors disabled:cursor-not-allowed"
             aria-label="Upload listing ${
               isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
             }`}
@@ -475,7 +497,10 @@ export default function ListingForm({
             disabled={isLoading || isSubmitting}
           >
             <span>{isLoading ? 'Uploading...' : 'upload'}</span>
-            <CloudUpload size={18} />
+            <CloudUpload
+              size={18}
+              className={`${isLoading ? 'animate-smoothBounce' : ''}`}
+            />
           </Button>
         </section>
       </form>

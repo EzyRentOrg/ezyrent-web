@@ -1,7 +1,6 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { TokenResponse, useGoogleLogin } from '@react-oauth/google';
-import axios from 'axios';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -39,22 +38,22 @@ export const useGoogleAuthHandler = () => {
   return googleLogin;
 };
 
-// get token
-export const getAuthTokenFromCookie = (): string | null => {
-  const cookieString = document.cookie;
-  const match = cookieString.match(/(^| )token=([^;]+)/);
-  return match ? match[2] : null;
-};
-
-// Utility function to check if server is available
-export const checkServerHealth = async () => {
+//  Function to fetch location coordinates
+export const fetchLocationCoordinates = async (address: string) => {
   try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/properties/health`
+    const response = await fetch(
+      `https://api.locationiq.com/v1/search?key=${process.env.NEXT_PUBLIC_GEOLOCATION_API_KEY}&q=${address}&format=json`
     );
-    return response.status === 200;
+    const data = await response.json();
+    if (data && data[0]) {
+      return {
+        latitude: data[0].lat,
+        longitude: data[0].lon
+      };
+    }
+    return null;
   } catch (error) {
-    console.log('err: ', error);
-    return false;
+    console.error('Error fetching location coordinates:', error);
+    return null;
   }
 };

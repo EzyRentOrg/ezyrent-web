@@ -51,7 +51,7 @@ export default function Preview({
   useEffect(() => {
     const urls: string[] = [];
 
-    otherFiles.forEach((file) => {
+    otherFiles?.forEach((file) => {
       try {
         const url = URL.createObjectURL(file);
         urls.push(url);
@@ -129,7 +129,7 @@ export default function Preview({
         </h3>
         <div className="relative w-full min-h-[200px] max-h-[350px] overflow-y-auto rounded-[16px] bg-white shadow-md shadow-[#000000]/35 p-4">
           <div className="grid grid-cols-[repeat(3,_minmax(0,_150px))] gap-4">
-            {otherFiles.length > 0 ? (
+            {otherFiles && otherFiles.length > 0 ? (
               otherFiles.map((file, index) => (
                 <MediaPreview
                   key={index}
@@ -147,7 +147,7 @@ export default function Preview({
           </div>
         </div>
         <NumberLabel
-          minValue={otherFiles.length}
+          minValue={otherFiles && otherFiles.length}
           maxValue={7}
           className="w-fit text-[0.75rem] ml-auto mt-2"
         />
@@ -224,7 +224,7 @@ export default function Preview({
           amenities
         </h3>
         <div className="flex items-center flex-wrap gap-2 text-sm">
-          {formValues.amenities.map((amenity) => (
+          {formValues.amenities?.map((amenity) => (
             <span
               key={amenity}
               className="mt-1 rounded-md border border-[#E6E6E6] bg-[#F7F7F7] py-2 px-3"

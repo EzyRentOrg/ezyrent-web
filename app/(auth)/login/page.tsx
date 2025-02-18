@@ -65,7 +65,7 @@ export default function Login() {
       await delay(2000);
 
       const createResponse = await axios.post(
-        `${baseUrl}/api/v1/admin/auth/create-access-password`,
+        `${baseUrl}/admin/auth/create-access-password`,
         { email: data.email },
         {
           headers: {

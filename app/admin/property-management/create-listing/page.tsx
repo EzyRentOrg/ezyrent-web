@@ -6,13 +6,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { MoveLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import DashboardLayout from '../../components/Layouts';
+import DashboardLayout from '@/app/admin/components/Layouts';
 import { propertyFormSchema } from '@/lib/validations';
 import { handleFileUploadOrDrop } from '@/lib/handleFileUploadOrDrop';
 import { handleLocalStorage } from '@/lib/handleLocalStorage';
 import Preview from './components/Preview';
 import ListingForm from './components/ListingForm';
 import { toast } from 'sonner';
+import { fetchLocationCoordinates } from '@/lib/utils';
 
 const initialFormData: PropertyFormData = {
   name: '',
@@ -29,9 +30,7 @@ const initialFormData: PropertyFormData = {
   propertyType: 'flat',
   beds: '2',
   baths: '3',
-  amenities: [],
-  error: null,
-  errorMessage: null
+  amenities: []
 };
 
 export default function CreateListing() {
@@ -145,6 +144,22 @@ export default function CreateListing() {
     }
   };
 
+  // Fetch location coordinates when address changes
+  useEffect(() => {
+    const fetchCoordinates = async () => {
+      if (formValues.address) {
+        const coordinates = await fetchLocationCoordinates(formValues.address);
+        console.log('cords: ', coordinates);
+        if (coordinates) {
+          setValue('latitude', coordinates.latitude);
+          setValue('longitude', coordinates.longitude);
+        }
+      }
+    };
+
+    fetchCoordinates();
+  }, [formValues.address, setValue]);
+
   // submit data
   const onSubmit = async (data: PropertyFormData) => {
     try {
@@ -199,7 +214,7 @@ export default function CreateListing() {
       if (result.success) {
         toast.success('Property created successfully');
         handleLocalStorage.remove();
-        router.replace('/admin/property-management');
+        router.push('/admin/property-management');
       } else {
         if (response.status === 401 || response.status === 403) {
           toast.error('Please log in again to continue');

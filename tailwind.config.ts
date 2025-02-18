@@ -58,6 +58,14 @@ const config: Config = {
         successPulse: {
           '0%, 100%': { borderColor: '#00ff00', transform: 'scale(1)' },
           '50%': { borderColor: '#80ff80', transform: 'scale(1.05)' }
+        },
+        smoothBounce: {
+          '0%': {
+            transform: 'translateY(40px)'
+          },
+          '100%': {
+            transform: 'translateY(-40px)'
+          }
         }
       },
       animation: {
@@ -66,7 +74,9 @@ const config: Config = {
         shake: 'shake 0.5s ease-in-out infinite',
         slideRight: 'slideRight 0.5s ',
         slideLeft: 'slideLeft 0.5s ease-in-out',
-        pulldown: 'pulldown 0.3s ease-out'
+        pulldown: 'pulldown 0.3s ease-out',
+        smoothBounce:
+          'smoothBounce 2.5s cubic-bezier(0.45, 0, 0.55, 1) infinite'
       }
     }
   },

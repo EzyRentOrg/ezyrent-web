@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Sidebar from '../Sidebar';
 import AdminHeader from '../../components/AdminHeader';
+import ClientCheckForToken from '../CheckForToken';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -22,8 +23,11 @@ export default function DashboardLayout({
   sidebarProps
 }: DashboardLayoutProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <main className="flex">
+      {/* check session */}
+      <ClientCheckForToken />
       {/* Sidebar */}
       <Sidebar
         setIsMobileMenuOpen={setIsMobileMenuOpen}
