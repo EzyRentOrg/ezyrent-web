@@ -13,9 +13,16 @@ export const FAQsContent: FAQType[] = [
   },
   {
     index: 3,
-    question: 'How does one earn as a property manager?',
+    question: 'How can I upload my houses as a landlord?',
+    answer: `For now, landlords who want to upload their properties should send us a message and contact our team. We will verify the property and list it on EzyRent for them. Once the app is ready, landlords will be able to handle property uploads themselves directly from their dashboard.
+      `
+  },
+  {
+    index: 4,
+    question:
+      'Do I have to pay an agency fee? If not, what fee am I paying then?',
     answer:
-      'You earn by seamlessly renting your property out to potential tenants.'
+      'No, you don’t have to pay any agency fee, commission, or agreement charges! 🎉. The only fee tenants pay is a small inspection fee to schedule a tour and see the property. The fee is based on the location of the property, and that’s it—no extra hidden costs! 🎊'
   }
 ];
 

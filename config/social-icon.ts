@@ -1,12 +1,12 @@
 export const socialIcons: socialIcon[] = [
   {
     label: 'instagram',
-    href: 'https://www.instagram.com/ezyrent50/?igsh=YXUxOXR1OGN3bHk2',
+    href: 'https://www.instagram.com/ezy_rent_hq?igsh=MWN3cXBtNHY1dzFvZA==',
     icon: 'instagram.svg'
   },
   {
     label: 'facebook',
-    href: 'https://web.facebook.com/profile.php?id=61569899852261&mibextid=ZbWKwL&_rdc=1&_rdr',
+    href: 'https://www.facebook.com/share/15rpMS6FDE/',
     icon: 'facebook.svg'
   },
   // { label: 'linkedIn', href: '#', icon: 'linkedIn.svg' },
