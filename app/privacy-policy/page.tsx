@@ -54,7 +54,7 @@ export default function PrivacyPolicy() {
 
   return (
     <MaxWidthWrapper>
-      <div className="px-20 max-w-[1050px]">
+      <div className="px-2 md:px-20 max-w-[1050px]">
         <Breadcrumb />
         <main className="">
           <section className="mt-10">
