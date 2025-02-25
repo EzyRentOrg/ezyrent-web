@@ -15,8 +15,13 @@ const ContactItems: Contact[] = [
     icon: MapPin
   },
   {
-    title: 'phone',
+    title: 'phone 1',
     name: '+234-8127-518-838',
+    icon: Phone
+  },
+  {
+    title: 'phone 2',
+    name: '+234-7067-456-475',
     icon: Phone
   },
   {
