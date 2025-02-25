@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { useWindowResizer } from '@/hooks/useWindowResizer';
 import Link from 'next/link';
 import { LoadingState, ErrorState, EmptyState } from './propertyState';
+import GetUserLocation from './GetUserLocation';
 
 export default function BasedOnYourLocation() {
   const [houseListing, setHouseListing] = useState<HouseListing[]>([]);
@@ -114,6 +115,7 @@ export default function BasedOnYourLocation() {
       </div>
 
       <div className="flex flex-col justify-center">
+        <GetUserLocation />
         {loading ? (
           <LoadingState />
         ) : error ? (
