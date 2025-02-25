@@ -54,12 +54,20 @@ export default function Login() {
     formState: { isSubmitting, errors, isDirty }
   } = form;
 
+  // call api to submit
   const onSubmit = async (data: FormValues) => {
     try {
       if (!data.email) {
         toast.error('Please enter your email address');
+        router.push('/login');
         return;
       }
+
+      // Get callback URL from query params
+      const searchParams = new URLSearchParams(window.location.search);
+      const callbackUrl = searchParams.get('callbackUrl') || '';
+      // Store callbackUrl in local storage
+      localStorage.setItem('callbackUrl', callbackUrl); //use server for efficenecy
 
       // Simulate network delay for better UX
       await delay(2000);
@@ -77,7 +85,13 @@ export default function Login() {
       if (createResponse.data?.success) {
         localStorage.setItem('adminEmail', data.email);
         toast.success('Check your email for a verification code');
-        router.push('/verify-email');
+
+        // Construct the new URL with callbackUrl
+        const verifyUrl = callbackUrl
+          ? `/verify-email?callbackUrl=${encodeURIComponent(callbackUrl)}`
+          : '/verify-email';
+
+        router.push(verifyUrl);
       } else {
         toast.error(createResponse.data?.message || 'Failed to create access');
       }

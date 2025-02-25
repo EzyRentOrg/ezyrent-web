@@ -39,7 +39,9 @@ export default function VerificationOTP() {
   const searchParams = useSearchParams();
   const router = useRouter();
   // const delay = useDelay();
-  const callbackUrl = searchParams.get('callbackUrl'); // Get the callback URL from the query
+  // const callbackUrl = searchParams.get('callbackUrl'); // Get the callback URL from the query
+  // Retrieve callbackUrl from local storage
+  const callbackUrl = localStorage.getItem('callbackUrl') || '/';
 
   const updateState = useCallback((updates: Partial<VerificationState>) => {
     setState((prev) => ({ ...prev, ...updates }));
@@ -308,8 +310,11 @@ export default function VerificationOTP() {
         localStorage.removeItem('adminEmail');
         updateState({ isSuccess: true });
 
+        //callbackUrl.startsWith('/') ensure it redirects to within the app to avoid malicious attack
         if (callbackUrl && callbackUrl.startsWith('/')) {
           router.push(callbackUrl);
+          // Clean up local storage
+          localStorage.removeItem('callbackUrl');
         } else {
           router.replace('/admin/dashboard');
         }
