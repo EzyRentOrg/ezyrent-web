@@ -5,9 +5,19 @@ import { cn } from '@/lib/utils';
 import { useWindowResizer } from '@/hooks/useWindowResizer';
 import Link from 'next/link';
 import { LoadingState, ErrorState, EmptyState } from './propertyState';
-import GetUserLocation from './GetUserLocation';
 
-export default function BasedOnYourLocation() {
+interface Location {
+  latitude: number;
+  longitude: number;
+}
+
+interface BasedOnYourLocationProps {
+  location: Location | null;
+}
+
+export default function BasedOnYourLocation({
+  location
+}: BasedOnYourLocationProps) {
   const [houseListing, setHouseListing] = useState<HouseListing[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -18,15 +28,20 @@ export default function BasedOnYourLocation() {
 
   const { isLargeScreen } = useWindowResizer();
 
-  // make api call
+  // Fetch properties using user's location
   const fetchProperties = useCallback(async () => {
+    if (!location) return; // Wait until location is available
+
     try {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(`/api/fetch-listing`, {
-        headers: { 'Content-Type': 'application/json' }
-      });
+      const response = await fetch(
+        `/api/fetch-listing?userLatitude=${location.latitude}&userLongitude=${location.longitude}`,
+        {
+          headers: { 'Content-Type': 'application/json' }
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`Failed to fetch properties: ${response.statusText}`);
@@ -44,11 +59,13 @@ export default function BasedOnYourLocation() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [location]);
 
   useEffect(() => {
-    fetchProperties();
-  }, [fetchProperties]);
+    if (location) {
+      fetchProperties();
+    }
+  }, [location, fetchProperties]);
 
   const itemsPerPage = isLargeScreen ? 6 : 3;
   const isAtStart = currentIndex === 0;
@@ -115,7 +132,6 @@ export default function BasedOnYourLocation() {
       </div>
 
       <div className="flex flex-col justify-center">
-        <GetUserLocation />
         {loading ? (
           <LoadingState />
         ) : error ? (
@@ -156,9 +172,7 @@ export default function BasedOnYourLocation() {
         <Link
           href="/property-listing"
           aria-label="View more listings"
-          className={cn(
-            'flex items-center justify-center text-white bg-black hover:bg-opacity-85 transition-colors duration-100 ease-in-out px-6 py-3 h-[72px] text-xl mt-10 w-[299px] mx-auto capitalize rounded-[40px]'
-          )}
+          className="flex items-center justify-center text-white bg-black hover:bg-opacity-85 transition-colors duration-100 ease-in-out px-6 py-3 h-[72px] text-xl mt-10 w-[299px] mx-auto capitalize rounded-[40px]"
         >
           View more <ArrowRight size={32} className="h-8 w-8" />
         </Link>

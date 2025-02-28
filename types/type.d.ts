@@ -1,3 +1,13 @@
+declare interface User {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  profilePicture: string | null;
+  role?: string;
+  listings?: number;
+}
+
 declare interface HouseListing {
   isAdmin?: boolean;
   id: string;
@@ -20,6 +30,7 @@ declare interface HouseListing {
   amenities?: string[];
   postedBy?: string;
   updatedAt?: string;
+  user?: User;
 }
 
 declare interface NavbarMenuItem {

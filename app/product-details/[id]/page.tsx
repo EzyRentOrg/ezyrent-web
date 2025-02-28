@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, use } from 'react';
 import MaxWidthWrapper from '../../maxWidthWrapper';
 import Breadcrumb from '@/components/breadcrumb';
 import Image from 'next/image';
@@ -11,31 +11,45 @@ import { toast } from 'sonner';
 import { plusJakartaSans } from '@/lib/font';
 import SecurityTips from '@/components/SecurityTips';
 import RecommendedProperties from '@/components/Recommended';
-
 import { getCleanImageUrl } from '@/lib/getCleanImageUrl';
 import Naira from '@/components/ui/naira';
 import { RenderActiveTabContent } from '../components/activeTab';
 
 type TabType = 'details' | 'location' | 'contact';
 
-export default function ProductDetails() {
+interface ProductDetailsProp {
+  params: Promise<{ id: string }>;
+}
+export default function ProductDetails({ params }: ProductDetailsProp) {
   const [houseDetails, setHouseDetails] = useState<HouseListing | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>('details');
+  const { id } = use(params);
 
-  console.log('addi image: ', houseDetails?.additionalImages);
-
-  useEffect(() => {
+  //fetch property by id, useCallback to prevent re-rendering
+  const fetchPropertiesById = useCallback(async () => {
     try {
-      const storedHouse = localStorage.getItem('selectedHouse');
-      if (storedHouse) {
-        const house = JSON.parse(storedHouse);
-        setHouseDetails(house);
+      const response = await fetch(`/api/fetch-one-listing?id=${id}`, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch properties: ${response.statusText}`);
       }
-    } catch (error) {
-      console.error('Failed to parse house data:', error);
-      toast.error('Failed to load property details');
+
+      const { data } = await response.json();
+      setHouseDetails(data);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : 'Failed to fetch properties';
+      toast.error(errorMessage);
     }
   }, []);
+
+  useEffect(() => {
+    fetchPropertiesById();
+  }, [fetchPropertiesById]);
+
+  console.log('houseDetails: ', houseDetails);
 
   const Tab = () => (
     <div className="flex items-center justify-between lg:space-x-[150px] w-full lg:w-fit border-b-2 border-[#FAFAFA]">
@@ -161,22 +175,20 @@ export default function ProductDetails() {
             <h2 className="text-[1.3rem] md:text-[2rem] font-bold text-[#7065F0] lg:leading-[50.4px]">
               Amenities
             </h2>
-            <ul className="grid grid-cols-2 sm:grid-cols-3 gap-5 md:gap-20 mt-10">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 mt-10">
               {houseDetails.amenities?.map((amenity, index) => {
                 // const Icon = amenity?.icon;
                 return (
-                  <li
+                  <div
                     key={`${amenity}-${index}`}
                     className="w-fit flex items-center gap-2 text-[#000929]"
                   >
                     {/* <Icon className="flex-shrink-0 size-[14px] md:size-8" /> */}
-                    <span className="text-sm md:text-base lg:text-[1.25rem] lg:leading-[30px]">
-                      {amenity}
-                    </span>
-                  </li>
+                    <span className="text-sm md:text-base">{amenity}</span>
+                  </div>
                 );
               })}
-            </ul>
+            </div>
           </section>
         )}
         <SecurityTips />
