@@ -51,7 +51,7 @@ export default function NewsletterForm() {
       if (!response.ok) {
         throw new Error(`Failed to subscribe: ${result.error}`);
       }
-      toast.success(result.message);
+      toast.success('Successfully subscribed to our newsletter!');
     } catch (error) {
       if (error instanceof Error) {
         toast.error(error.message);
@@ -105,7 +105,7 @@ export default function NewsletterForm() {
             className={`bg-[#7F56D9] flex items-center rounded-[64px] text-[#f1f1f1] h-[52px] w-full max-w-[133px] leading-[14.52px] first-letter:capitalize disabled:cursor-not-allowed`}
             disabled={loading || hasErrors || !emailValue} // Disable button if loading, has errors, or email is empty
           >
-            {loading ? 'Subscribing' : 'Subscribe'}
+            {loading ? 'Subscribing...' : 'Subscribe'}
             <Send
               size={12}
               stroke={'#f1f1f1'}

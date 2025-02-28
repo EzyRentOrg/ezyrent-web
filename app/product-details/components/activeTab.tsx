@@ -88,8 +88,8 @@ export const RenderActiveTabContent = ({
               <div className="w-full flex items-center justify-between">
                 <p className="flex items-center space-x-2">
                   <Mail size={16} stroke="#344054" />
-                  {/* <span className="ml-2 text-base">{userInfo.email}</span> */}
-                  <span className="ml-2 text-base">ezyrent50@gmail.com</span>
+                  {/* <a href="mailto:ezyrent50@gmail.com" className="ml-2 text-base">{userInfo.email}</a> */}
+                  <a href="mailto:ezyrent50@gmail.com" className="ml-2 text-base">ezyrent50@gmail.com</a>
                 </p>
                 {/* <CopyToClipboard textToCopy={userInfo.email} type="email" /> */}
                 <CopyToClipboard
