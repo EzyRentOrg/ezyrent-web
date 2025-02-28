@@ -54,7 +54,8 @@ export const contactSchema = z.object({
   email: z
     .string({
       required_error: 'Please enter a valid email address.'
-    }).email(),
+    })
+    .email(),
   subject: z.string({ required_error: 'Please enter a subject.' }),
   message: z.string({ required_error: 'Please enter a message' })
 });

@@ -10,7 +10,12 @@ interface Payload {
 export async function POST(req: NextRequest) {
   try {
     const { name, email, subject, message } = await req.json();
-    const payload: { [key: string]: Payload } = { name, email,subject, message };
+    const payload: { [key: string]: Payload } = {
+      name,
+      email,
+      subject,
+      message
+    };
 
     const requiredFields: (keyof typeof payload)[] = [
       'name',

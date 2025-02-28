@@ -191,7 +191,12 @@ export default function Contact() {
               }
             )}
             disabled={
-              loading || !nameValue || !emailValue || !subjectValue || !messageValue || hasErrors
+              loading ||
+              !nameValue ||
+              !emailValue ||
+              !subjectValue ||
+              !messageValue ||
+              hasErrors
             }
           >
             {isSubmitting ? (
