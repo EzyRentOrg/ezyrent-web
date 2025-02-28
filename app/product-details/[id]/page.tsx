@@ -108,8 +108,9 @@ export default function ProductDetails({ params }: ProductDetailsProp) {
       </div>
       <main className="mt-10">
         <div className="flex flex-col space-y-10 lg:space-y-0 lg:flex-row items-start lg:space-x-20 h-auto px-5 md:px-0">
-          <section className="border relative w-full lg:w-[554px] h-[400px] md:h-[600px]">
-            <div className="h-[400px] md:h-[600px]">
+          <section className="flex flex-col w-full lg:w-[554px] h-[400px] md:h-[600px]">
+            {/* main image */}
+            <div className="relative h-full mb-4">
               <Image
                 src={getCleanImageUrl(houseDetails.mainImage)}
                 fill
@@ -117,6 +118,7 @@ export default function ProductDetails({ params }: ProductDetailsProp) {
                 className="rounded-lg object-cover"
               />
             </div>
+            {/* share btn */}
             <div className="absolute top-10 right-5 max-w-[429px] w-fit px-3 py-[10px] flex flex-col space-y-5 items-center">
               <button
                 onClick={handleShare}
@@ -125,18 +127,19 @@ export default function ProductDetails({ params }: ProductDetailsProp) {
                 <Share2 stroke="#7065F0" />
               </button>
             </div>
-            <div className="absolute bottom-5 md:right-5 bg-white rounded-[90px] max-w-[429px] w-full h-20 px-3 py-[10px] flex justify-between items-center">
-              {houseDetails.additionalImages?.map((image, index) => (
-                <Image
-                  key={index}
-                  src={getCleanImageUrl(image)}
-                  width={60}
-                  height={60}
-                  alt={`Additional image ${index + 1} of ${houseDetails.name}`}
-                  className="hidden md:block object-cover size-[60px] rounded-tl-[39px] rounded-[8.94px] rounded-bl-[39px]"
-                />
-              ))}
-            </div>
+            {/* other images */}
+              <div className=" bg-neutral-50 mt-auto rounded-[90px]  w-full z-5 h-20 px-3 py-[10px] flex justify-between items-center">
+                {houseDetails.additionalImages?.map((image, index) => (
+                  <Image
+                    key={index}
+                    src={getCleanImageUrl(image)}
+                    width={60}
+                    height={60}
+                    alt={`Additional image ${index + 1} of ${houseDetails.name}`}
+                    className="object-cover size-[60px] rounded-tl-[39px] rounded-[8.94px] rounded-bl-[39px]"
+                  />
+                ))}
+              </div>
           </section>
           <section className="w-full flex flex-col space-y-5 h-full lg:w-[560px]">
             {(activeTab === 'details' || activeTab === 'contact') && (
