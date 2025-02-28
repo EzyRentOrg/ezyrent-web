@@ -66,6 +66,10 @@ const config: Config = {
           '100%': {
             transform: 'translateY(-40px)'
           }
+        },
+        sendZ: {
+          '0%, 100%': { transform: 'translate(0, 0)' },
+          '50%': { transform: 'translate(2px, -2px)' }
         }
       },
       animation: {
@@ -76,7 +80,8 @@ const config: Config = {
         slideLeft: 'slideLeft 0.5s ease-in-out',
         pulldown: 'pulldown 0.3s ease-out',
         smoothBounce:
-          'smoothBounce 2.5s cubic-bezier(0.45, 0, 0.55, 1) infinite'
+          'smoothBounce 2.5s cubic-bezier(0.45, 0, 0.55, 1) infinite',
+        sendZ: 'sendZ 2.5s cubic-bezier(0.45, 0, 0.55, 1) infinite'
       }
     }
   },

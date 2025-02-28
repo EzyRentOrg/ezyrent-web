@@ -6,10 +6,12 @@ const allowedOrigin =
     : "http://localhost:3000";
 
 const nextConfig: NextConfig = {
-  webpack: (config) => {
-    config.devtool = 'source-map';
-    return config;
-  },
+  // webpack(config, { dev }) {
+  //   if (dev) {
+  //     config.devtool = 'eval-source-map'; // for development
+  //   }
+  //   return config;
+  // },
    images: {
     remotePatterns: [
       {

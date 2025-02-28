@@ -311,13 +311,13 @@ export default function VerificationOTP() {
         updateState({ isSuccess: true });
 
         //callbackUrl.startsWith('/') ensure it redirects to within the app to avoid malicious attack
-        if (callbackUrl && callbackUrl.startsWith('/')) {
-          router.push(callbackUrl);
-          // Clean up local storage
-          localStorage.removeItem('callbackUrl');
-        } else {
-          router.replace('/admin/dashboard');
-        }
+        // if (callbackUrl && callbackUrl.startsWith('/')) {
+        //   router.push(callbackUrl);
+        //   // Clean up local storage
+        //   localStorage.removeItem('callbackUrl');
+        // } else {
+        router.replace('/admin/dashboard');
+        // }
       } else {
         toast.error(
           response?.data?.message ||

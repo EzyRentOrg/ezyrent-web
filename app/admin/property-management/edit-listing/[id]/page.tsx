@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, use } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { MoveLeft } from 'lucide-react';
@@ -48,7 +47,7 @@ export default function EditListing({ params }: EditListingProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   // Get the id using React.use()
-  const { id } = React.use(params);
+  const { id } = use(params);
 
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(propertyFormSchema),
