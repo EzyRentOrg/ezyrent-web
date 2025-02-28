@@ -50,14 +50,12 @@ export const resetPasswordSchema = z
   });
 
 export const contactSchema = z.object({
-  name: z.string({
-    required_error: 'Please enter your full name'
-  }),
+  name: z.string({ required_error: 'Please enter your full name' }),
   email: z
     .string({
       required_error: 'Please enter a valid email address.'
-    })
-    .email(),
+    }).email(),
+  subject: z.string({ required_error: 'Please enter a subject.' }),
   message: z.string({ required_error: 'Please enter a message' })
 });
 

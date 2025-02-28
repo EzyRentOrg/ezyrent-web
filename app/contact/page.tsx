@@ -15,7 +15,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { contactSchema } from '@/lib/validations';
 import { cn } from '@/lib/utils';
-import { Loader, Mail, User } from 'lucide-react';
+import { Loader, Mail, User, ScanEye } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';
@@ -28,7 +28,7 @@ export default function Contact() {
   const form = useForm<FormValues>({
     resolver: zodResolver(contactSchema),
     mode: 'onChange',
-    defaultValues: { name: '', email: '', message: '' }
+    defaultValues: { name: '', email: '', subject: '', message: '' }
   });
 
   const {
@@ -40,6 +40,7 @@ export default function Contact() {
 
   const nameValue = watch('name');
   const emailValue = watch('email');
+  const subjectValue = watch('subject');
   const messageValue = watch('message');
   const hasErrors = Object.keys(errors).length > 0;
 
@@ -132,6 +133,34 @@ export default function Contact() {
             )}
           />
 
+          {/* subject */}
+          <FormField
+            control={control}
+            name="subject"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="relative flex items-center">
+                    <div className="absolute left-5 flex items-center space-x-4">
+                      <ScanEye size={20} stroke="#9E77ED" />
+                      <Separator
+                        orientation="vertical"
+                        className="bg-[#9E77ED] h-6 w-[1px]"
+                      />
+                    </div>
+                    <Input
+                      type="subject"
+                      className="bg-white h-[64px] pl-[70px] pr-[48px] border-[#EAECF0] rounded-full placeholder:text-[#D0D5DD] focus:ring-[#EAECF0] text-black !text-[1.1rem]"
+                      placeholder="Looking for a 3 bedroom apartment"
+                      {...field}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           {/* Message */}
           <FormField
             control={control}
@@ -162,7 +191,7 @@ export default function Contact() {
               }
             )}
             disabled={
-              loading || !nameValue || !emailValue || !messageValue || hasErrors
+              loading || !nameValue || !emailValue || !subjectValue || !messageValue || hasErrors
             }
           >
             {isSubmitting ? (

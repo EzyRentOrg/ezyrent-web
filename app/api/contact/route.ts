@@ -3,17 +3,19 @@ import { NextResponse, NextRequest } from 'next/server';
 interface Payload {
   name: string;
   email: string;
+  subject: string;
   message: string;
 }
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, message } = await req.json();
-    const payload: { [key: string]: Payload } = { name, email, message };
+    const { name, email, subject, message } = await req.json();
+    const payload: { [key: string]: Payload } = { name, email,subject, message };
 
     const requiredFields: (keyof typeof payload)[] = [
       'name',
       'email',
+      'subject',
       'message'
     ];
 
