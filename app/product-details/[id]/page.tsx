@@ -108,9 +108,9 @@ export default function ProductDetails({ params }: ProductDetailsProp) {
       </div>
       <main className="mt-10">
         <div className="flex flex-col space-y-10 lg:space-y-0 lg:flex-row items-start lg:space-x-20 h-auto px-5 md:px-0">
-          <section className="flex flex-col w-full lg:w-[554px] h-[400px] md:h-[600px]">
+          <section className="relative flex flex-col w-full lg:w-[554px] h-[400px] md:h-[600px]">
             {/* main image */}
-            <div className="relative h-full mb-4">
+            <div className="h-full mb-4">
               <Image
                 src={getCleanImageUrl(houseDetails.mainImage)}
                 fill
