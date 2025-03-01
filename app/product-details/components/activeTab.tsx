@@ -90,11 +90,12 @@ export const RenderActiveTabContent = ({
                   <Mail size={16} stroke="#344054" />
                   {/* <a href="mailto:ezyrent50@gmail.com" className="ml-2 text-base">{userInfo.email}</a> */}
                   <a
-                    href="mailto:ezyrent50@gmail.com"
+                    href={`mailto:ezyrent50@gmail.com?subject=Inquiry about ${houseDetails.name} at ${houseDetails.address}`}
                     className="ml-2 text-base"
                   >
-                    ezyrent50@gmail.com
+                    <u>ezyrent50@gmail.com</u>
                   </a>
+
                 </p>
                 {/* <CopyToClipboard textToCopy={userInfo.email} type="email" /> */}
                 <CopyToClipboard
