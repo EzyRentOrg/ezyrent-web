@@ -2,6 +2,10 @@ import React from 'react';
 import MaxWidthWrapper from '../maxWidthWrapper';
 import Breadcrumb from '@/components/breadcrumb';
 import { serviceFeatures } from '@/config/about';
+import { cn } from '@/lib/utils';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { ArrowRight } from 'lucide-react';
 
 export default function About() {
   return (
@@ -73,8 +77,22 @@ export default function About() {
             ))}
           </div>
         </section>
-
-        {/* Team Members Section */}
+        {/* send us message */}
+        <div>
+          <p className="max-w-[632px] mx-auto capitalize text-2xl md:text-[3rem] font-semibold md:leading-[67.2px] text-[#000929] text-center">
+            Let’s Start Your Real Estate Journey Today
+          </p>
+          <div className="flex items-center justify-center w-full my-10">
+            <Link href={'/contact'}>
+              <Button
+                variant="default"
+                className={cn('h-[72px] text-xl bg-[#000929]')}
+              >
+                Send us a Message <ArrowRight size={32} className="h-8 w-8" />
+              </Button>
+            </Link>
+          </div>
+        </div>
       </main>
     </MaxWidthWrapper>
   );

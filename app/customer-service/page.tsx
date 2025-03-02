@@ -66,24 +66,29 @@ export default function ContactModal() {
 
   return (
     <div className="bg-black bg-opacity-70 flex justify-center items-center z-50 inset-0 p-4">
-      <MaxWidthWrapper className="w-[880px] h-[600px] bg-[#FFFFFF] p-[80px] mb-10 rounded-[60px]">
+      <MaxWidthWrapper className="w-full  md:max-w-[880px] h-[600px] bg-[#FFFFFF] p-6 md:p-[80px] mb-10 rounded-[60px]">
         <div className="text-center flex flex-col justify-between mb-16">
-          <h1 className="text-[#000929] text-[32px]  font-bold">
+          <h1 className="text-[#000929] text-[20px]  md:text-[32px]  font-bold">
             Customer Service!
           </h1>
-          <p className="text-[#667085] text-[20px]">
+          <p className="text-[#667085] md:text-[20px]">
             You can get in touch with us through below platforms.
           </p>
-          <p className="text-[#667085] text-[20px]">
+          <p className="text-[#667085] md:text-[20px]">
             Our Team will reach out to you as soon as possible!
           </p>
         </div>
-        <div className="flex justify-between px-10">
+        <div className="flex justify-between gap-4 md:px-10">
           <div>
-            <h2 className="text-[#475467] text-[16px] mb-3">Customer Care</h2>
+            <h2 className="text-[#475467] text-[14px] md:text-[16px] mb-3">
+              Customer Care
+            </h2>
             {costumerCare.map((item, index) => (
-              <div key={index} className="flex items-center gap-10 mb-4">
-                <div className="flex items-center gap-4 mr-4">
+              <div
+                key={index}
+                className="flex items-center gap-2 md:gap-10 mb-4"
+              >
+                <div className="flex items-center md:gap-4 mr-4">
                   <Image
                     className="w-8 h-8 object-contain"
                     src={`/social-icon/modal/${item.icon}`}
@@ -91,7 +96,7 @@ export default function ContactModal() {
                     height={24}
                     alt={`${item.label} svg`}
                   />
-                  <div className="text-[14px]">
+                  <div className="text-[10px] md:text-[14px]">
                     <p className="text-[#98A2B3]">{item.title}</p>
                     <p className="text-[#101828] font-semibold">
                       {item.placeholder}
@@ -110,18 +115,20 @@ export default function ContactModal() {
             ))}
           </div>
           <div>
-            <h2 className="text-[#475467] text-[16px] mb-3">Social Media</h2>
+            <h2 className="text-[#475467] text-[14px] md:text-[16px]  mb-3">
+              Social Media
+            </h2>
             {socialMedia.map((item, index) => (
-              <div key={index} className="flex items-center gap-10 mb-4">
-                <div className="flex items-center gap-4 mr-4">
+              <div key={index} className="flex items-center md:gap-10 mb-4">
+                <div className="flex items-center md:gap-4 mr-4">
                   <Image
-                    className="w-8 h-8 object-contain"
+                    className="w-6 h-6 md:w-8 md:h-8 object-contain"
                     src={`/social-icon/modal/${item.icon}`}
                     width={24}
                     height={24}
                     alt={`${item.label} svg`}
                   />
-                  <div className="text-[14px]">
+                  <div className="text-[10px] md:text-[14px]">
                     <p className="text-[#98A2B3]">{item.title}</p>
                     <p className="text-[#101828] font-semibold">
                       {item.placeholder}
