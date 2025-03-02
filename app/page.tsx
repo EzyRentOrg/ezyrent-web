@@ -12,8 +12,8 @@ import Header from '@/components/nav/Header';
 import Footer from '@/components/footer/Footer';
 import GetStarted from '@/components/GetStarted';
 import AboutUsCarousel from '@/components/carousel/about-us-carousel';
-import StartYourJourney from '@/components/StartYourJourney';
 import AboutUsVideo from '@/components/AboutUsVideo';
+import StartYourJourney from '@/components/StartYourJourney';
 
 interface Location {
   latitude: number;
@@ -54,11 +54,10 @@ export default function Home() {
       <AboutUsVideo />
       <OfferSection />
       <Testimonial />
-      <FAQs />
       <AboutUsCarousel />
       <GetStarted />
       <StartYourJourney />
-
+      <FAQs />
       {/* <StartYourJourney /> */}
       <Footer />
     </div>
