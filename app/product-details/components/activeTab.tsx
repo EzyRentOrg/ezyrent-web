@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
 import CopyToClipboard from '@/components/CopyToClipboard';
 import Image from 'next/image';
+import Link from 'next/link';
 import {
   ArrowUp,
   BadgeCheck,
@@ -95,7 +96,6 @@ export const RenderActiveTabContent = ({
                   >
                     <u>ezyrent50@gmail.com</u>
                   </a>
-
                 </p>
                 {/* <CopyToClipboard textToCopy={userInfo.email} type="email" /> */}
                 <CopyToClipboard
@@ -110,12 +110,12 @@ export const RenderActiveTabContent = ({
 
           {/* Actions */}
           <div className="!mt-10 lg:!mt-5 flex flex-col space-y-4 md:flex-row md:space-y-0 md:items-center md:justify-between">
-            <a href="#">
+            <Link href="/customer-service">
               <Button className="bg-[#7065F0] h-[67px] rounded-[40px] py-3 px-12">
                 Book Now
                 <ArrowUp className="rotate-[30deg]" />
               </Button>
-            </a>
+            </Link>
             <a href="#">
               <Button
                 variant="outline"
