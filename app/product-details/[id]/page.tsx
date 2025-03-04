@@ -103,7 +103,7 @@ export default function ProductDetails({ params }: ProductDetailsProp) {
   }
 
   if (openModal) {
-    return <ContactModal openModal={openModal} setOpenModal={setOpenModal}  />;
+    return <ContactModal openModal={openModal} setOpenModal={setOpenModal} />;
   }
   return (
     <MaxWidthWrapper className="px-0 mx-0 lg:mx-auto lg:w-full">
