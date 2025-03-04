@@ -65,7 +65,7 @@ export default function ContactModal() {
   };
 
   return (
-    <div className="bg-black bg-opacity-70 flex justify-center items-center z-50 inset-0 p-4">
+    <section className="bg-black bg-opacity-70 flex justify-center items-center z-50 inset-0 p-4">
       <MaxWidthWrapper className="w-full  md:max-w-[880px] h-[600px] bg-[#FFFFFF] p-6 md:p-[80px] mb-10 rounded-[60px]">
         <div className="text-center flex flex-col justify-between mb-16">
           <h1 className="text-[#000929] text-[20px]  md:text-[32px]  font-bold">
@@ -78,7 +78,7 @@ export default function ContactModal() {
             Our Team will reach out to you as soon as possible!
           </p>
         </div>
-        <div className="flex justify-between gap-4 md:px-10">
+        <div className=" flex-col md:flex md:justify-between gap-4 md:px-10">
           <div>
             <h2 className="text-[#475467] text-[14px] md:text-[16px] mb-3">
               Customer Care
@@ -149,6 +149,6 @@ export default function ContactModal() {
           </div>
         </div>
       </MaxWidthWrapper>
-    </div>
+    </section>
   );
 }

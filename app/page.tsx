@@ -53,10 +53,10 @@ export default function Home() {
       <BestDeal />
       <AboutUsVideo />
       <OfferSection />
-      <Testimonial />
       <AboutUsCarousel />
       <GetStarted />
       <StartYourJourney />
+      <Testimonial />
       <FAQs />
       {/* <StartYourJourney /> */}
       <Footer />
