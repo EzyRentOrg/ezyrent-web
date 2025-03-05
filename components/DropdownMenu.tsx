@@ -1,4 +1,3 @@
-import { NavbarMenuItem } from '@/types/navbarMenu';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
@@ -10,7 +9,6 @@ interface DropdownMenuProps {
 
 export default function DropdownMenu({ items, label }: DropdownMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
-
 
   return (
     <div className="relative">

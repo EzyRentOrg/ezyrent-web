@@ -1,28 +1,65 @@
 'use client';
 
+import React, { useEffect, useState } from 'react';
 import AboutUs from '@/components/AboutUs';
 import BasedOnYourLocation from '@/components/BasedOnYourLocation';
-import DesktopHeroView from '@/components/hero-page/DesktopHeroView';
-import MobileHeroView from '@/components/hero-page/MobileHeroView';
 import Testimonial from '@/components/testimonial/Testimonial';
 import OfferSection from '@/components/OfferSection';
 import BestDeal from '@/components/BestDeal';
-import FAQ from '@/components/FAQ';
+import FAQs from '@/components/FAQs/FAQs';
+import HeroPage from '@/components/hero-page/HeroPage';
+import Header from '@/components/nav/Header';
+import Footer from '@/components/footer/Footer';
+import GetStarted from '@/components/GetStarted';
+import AboutUsCarousel from '@/components/carousel/about-us-carousel';
+import AboutUsVideo from '@/components/AboutUsVideo';
+import StartYourJourney from '@/components/StartYourJourney';
+
+interface Location {
+  latitude: number;
+  longitude: number;
+}
 
 export default function Home() {
+  const [location, setLocation] = useState<Location | null>(null);
+
+  useEffect(() => {
+    const fetchLocation = async () => {
+      try {
+        const response = await fetch('https://ipapi.co/json/');
+        if (!response.ok) {
+          throw new Error('Failed to fetch location data');
+        }
+        const data = await response.json();
+        setLocation({
+          latitude: data.latitude,
+          longitude: data.longitude
+        });
+      } catch (error) {
+        console.error('Error fetching location:', error);
+      }
+    };
+
+    fetchLocation();
+  }, []);
   return (
     <div>
+      <Header />
       <div>
-        <DesktopHeroView />
-        <MobileHeroView />
+        <HeroPage />
       </div>
       <AboutUs />
-      <BasedOnYourLocation />
-      <OfferSection />
+      <BasedOnYourLocation location={location} />
       <BestDeal />
+      <AboutUsVideo />
+      <OfferSection />
+      <AboutUsCarousel />
+      <GetStarted />
+      <StartYourJourney />
       <Testimonial />
-      <FAQ />
+      <FAQs />
       {/* <StartYourJourney /> */}
+      <Footer />
     </div>
   );
 }

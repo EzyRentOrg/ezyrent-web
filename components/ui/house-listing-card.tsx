@@ -1,91 +1,160 @@
 'use client';
 
-import React, { useState } from 'react';
 import Image from 'next/image';
 import { CardContent, CardFooter, CardTitle } from './card';
-import { BedDouble, Bath, Diamond, Heart } from 'lucide-react';
-import { HouseListing as HouseListingType } from '@/types/houseListing';
+import { BedDouble, Bath, Trash2, Pencil } from 'lucide-react';
 import PopularLabel from '../PopularLabel';
 import Link from 'next/link';
+import Naira from './naira';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 export default function HouseListingCard({
+  isAdmin,
   id,
-  title,
+  name,
   address,
-  image,
-  bedrooms,
+  mainImage,
+  additionalImages,
+  rentDuration,
+  beds,
   bathrooms,
-  sqrFt,
+  latitude,
+  longitude,
+  landSize,
   price,
-  popular
-}: HouseListingType) {
-  const [isFavorite, setIsFavorite] = useState(false);
+  popular,
+  description,
+  createdAt,
+  location,
+  propertyType,
+  amenities,
+  postedBy,
+  updatedAt
+}: HouseListing) {
+  const router = useRouter();
 
-  const toggleFavorite = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setIsFavorite(!isFavorite);
+  const handleCardClick = () => {
+    const cardDetails = {
+      isAdmin,
+      id,
+      name,
+      address,
+      mainImage,
+      additionalImages,
+      rentDuration,
+      beds,
+      bathrooms,
+      latitude,
+      longitude,
+      landSize,
+      price,
+      popular,
+      description,
+      createdAt,
+      location,
+      propertyType,
+      amenities,
+      postedBy,
+      updatedAt
+    };
+    localStorage.setItem('selectedHouse', JSON.stringify(cardDetails));
+  };
+
+  const handleEdit = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent Link navigation
+    e.stopPropagation(); // Prevent card click
+    router.push(`/admin/property-management/edit-listing/${id}`);
+  };
+
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent Link navigation
+    e.stopPropagation(); // Prevent card click
+
+    const confirmDelete = window.confirm(
+      'Are you sure you want to delete this listing?'
+    );
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch('/api/delete-listing', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete the listing');
+      }
+
+      toast.success('Listing deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting listing:', error);
+      toast.error('Error deleting listing. Please try again.');
+    }
   };
 
   return (
     <Link
-      href={`/house-details/${id}`}
+      href={`/product-details/${id}`}
       passHref
-      className="w-full rounded-lg shadow-md relative cursor-pointer group"
+      className="w-full max-w-[400px] rounded-lg shadow-md relative cursor-pointer group"
+      onClick={handleCardClick}
     >
-      {/* Popular Badge */}
       {popular && (
         <PopularLabel
           text={popular}
           className="-ml-3 absolute z-[3] top-[40%]"
         />
       )}
-
-      {/* Image Section */}
       <div className="h-48 w-full rounded-t-lg overflow-hidden">
         <Image
-          src={image}
+          src={mainImage}
           width={352}
           height={200}
           alt={`Image of a house located at ${address}.`}
           className="w-full object-cover h-full transition duration-150 ease-in-out group-hover:scale-[1.05]"
         />
+        {isAdmin && (
+          <div className="absolute top-2 right-2 flex space-x-2 z-5">
+            <button
+              onClick={handleEdit}
+              className="bg-blue-500 text-white p-2 rounded-full shadow-md hover:bg-blue-600 transition"
+            >
+              <Pencil className="w-5 h-5" />
+            </button>
+            <button
+              onClick={handleDelete}
+              className="bg-red-500 text-white p-2 rounded-full shadow-md hover:bg-red-600 transition"
+            >
+              <Trash2 className="w-5 h-5" />
+            </button>
+          </div>
+        )}
       </div>
-
-      {/* Card Content */}
-      <CardContent className="p-4 flex flex-col space-y-2">
+      <CardContent className="mt-5 p-4 flex flex-col space-y-2">
         <div className="flex items-center">
-          <p className="text-2xl text-[#7065F0] font-[800] leading-9 -tracking-[1px]">
-            ${price.toLocaleString()}
-            <span className="ml-1 text-[#000929] leading-6 text-[1rem] font-[400]">
-              / month
+          <p className="flex items-center text-2xl text-[#7065F0] font-[800] leading-9">
+            <Naira /> {price.toLocaleString()}
+            <span className="ml-1 text-[#000929] text-[1rem] font-[400]">
+              / year
             </span>
           </p>
-          {/* Favorite Icon */}
-          <div
-            className="p-4 cursor-pointer ml-auto rounded-full border border-[#E8E6F9] flex justify-end"
-            onClick={toggleFavorite}
-          >
-            <Heart
-              className={`w-6 h-6 text-[#7065F0] ${
-                isFavorite && 'fill-[#7065F0]'
-              }`}
-            />
-          </div>
         </div>
         <CardTitle className="text-2xl font-[700] -tracking-[1px] leading-9">
-          {title}
+          {name}
         </CardTitle>
         <p className="text-gray-500 text-sm">{address}</p>
       </CardContent>
-
       <CardFooter className="flex flex-col space-y-4">
         <div className="bg-[#F0EFFB] h-[1.5px]"></div>
-        {/* Details Section */}
         <div className="w-full flex justify-between items-center text-gray-700">
           <div className="flex items-center space-x-1">
             <BedDouble className="w-5 h-5 text-[#7065F0]" />
             <span className="capitalize">
-              {bedrooms} {bedrooms > 1 ? 'Beds' : 'Bed'}
+              {beds} {beds > 1 ? 'Beds' : 'Bed'}
             </span>
           </div>
           <div className="flex items-center space-x-1">
@@ -93,10 +162,6 @@ export default function HouseListingCard({
             <span className="capitalize">
               {bathrooms} {bathrooms > 1 ? 'Baths' : 'Bath'}
             </span>
-          </div>
-          <div className="flex items-center space-x-1">
-            <Diamond className="w-5 h-5 text-[#7065F0]" />
-            <span>{sqrFt} m²</span>
           </div>
         </div>
       </CardFooter>
