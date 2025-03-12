@@ -6,7 +6,7 @@ export const socialIcons: socialIcon[] = [
   },
   {
     label: 'facebook',
-    href: 'https://www.facebook.com/share/15rpMS6FDE/',
+    href: 'https://www.facebook.com/share/1HGaec4Hkb/?mibextid=LQQJ4d',
     icon: 'facebook.svg'
   },
   // { label: 'linkedIn', href: '#', icon: 'linkedIn.svg' },
