@@ -1,6 +1,6 @@
 import React from 'react';
 import MaxWidthWrapper from '../maxWidthWrapper';
-import { Home, Mail, Clock } from 'lucide-react';
+import { Clock, Home, Mail } from 'lucide-react';
 import Breadcrumb from '@/components/breadcrumb';
 
 export default function PropertyManagement() {

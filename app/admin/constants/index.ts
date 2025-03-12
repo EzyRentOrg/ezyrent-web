@@ -1,10 +1,10 @@
 import {
-  LayoutDashboard,
-  House,
   Banknote,
-  TrendingUpDownIcon,
   Book,
-  Star
+  House,
+  LayoutDashboard,
+  Star,
+  TrendingUpDownIcon
 } from 'lucide-react';
 
 export const siderbarItems: SidebarItemType[] = [

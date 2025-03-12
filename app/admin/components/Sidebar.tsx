@@ -1,14 +1,13 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { siderbarItems } from '../constants';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Settings, LogOut, X } from 'lucide-react';
+import { LogOut, Settings, X } from 'lucide-react';
 import { useWindowResizer } from '@/hooks/useWindowResizer';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 interface SidebarPropsType {

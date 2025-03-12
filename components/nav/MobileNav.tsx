@@ -1,7 +1,7 @@
 'use client';
 
 import { navbarMenu, navbarMenuAuth } from '@/config/navMenu';
-import { Menu, X, ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';

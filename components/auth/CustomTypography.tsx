@@ -1,6 +1,6 @@
 // src/components/CustomTypography.tsx
 import React from 'react';
-import { Typography, Link } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 
 export const AgreementText: React.FC = () => (
   <Typography

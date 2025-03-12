@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useCallback, use } from 'react';
+import React, { use, useCallback, useEffect, useState } from 'react';
 import MaxWidthWrapper from '../../maxWidthWrapper';
 import Breadcrumb from '@/components/breadcrumb';
 import Image from 'next/image';
@@ -10,10 +10,11 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { plusJakartaSans } from '@/lib/font';
 import SecurityTips from '@/components/SecurityTips';
-import RecommendedProperties from '@/components/Recommended';
 import { getCleanImageUrl } from '@/lib/getCleanImageUrl';
 import Naira from '@/components/ui/naira';
 import { RenderActiveTabContent } from '../components/activeTab';
+import ContactModal from '../components/bookModal';
+import PropertiesCarousel from '@/components/PropertiesCarousel';
 
 type TabType = 'details' | 'location' | 'contact';
 
@@ -23,6 +24,7 @@ interface ProductDetailsProp {
 export default function ProductDetails({ params }: ProductDetailsProp) {
   const [houseDetails, setHouseDetails] = useState<HouseListing | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>('details');
+  const [openModal, setOpenModal] = useState(false);
   const { id } = use(params);
 
   //fetch property by id, useCallback to prevent re-rendering
@@ -100,6 +102,9 @@ export default function ProductDetails({ params }: ProductDetailsProp) {
     );
   }
 
+  if (openModal) {
+    return <ContactModal openModal={openModal} setOpenModal={setOpenModal} />;
+  }
   return (
     <MaxWidthWrapper className="px-0 mx-0 lg:mx-auto lg:w-full">
       <div className="px-5 md:px-0 flex flex-col md:flex-row space-y-4 md:space-y-0 md:justify-between">
@@ -170,6 +175,7 @@ export default function ProductDetails({ params }: ProductDetailsProp) {
             <RenderActiveTabContent
               activeTab={activeTab}
               houseDetails={houseDetails}
+              setOpenModal={setOpenModal}
             />
           </section>
         </div>
@@ -196,7 +202,7 @@ export default function ProductDetails({ params }: ProductDetailsProp) {
         )}
         <SecurityTips />
         <div className="px-5 md:px-0">
-          <RecommendedProperties />
+          <PropertiesCarousel title="Recommended Properties" />
         </div>
       </main>
     </MaxWidthWrapper>

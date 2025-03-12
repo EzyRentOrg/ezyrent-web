@@ -15,7 +15,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { contactSchema } from '@/lib/validations';
 import { cn } from '@/lib/utils';
-import { Loader, Mail, User, ScanEye } from 'lucide-react';
+import { Loader, Mail, ScanEye, User } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { Separator } from '@/components/ui/separator';
 import { toast } from 'sonner';

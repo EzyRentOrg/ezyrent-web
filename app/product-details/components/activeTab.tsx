@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
 import CopyToClipboard from '@/components/CopyToClipboard';
 import Image from 'next/image';
+
 import {
   ArrowUp,
   BadgeCheck,
@@ -22,13 +23,18 @@ const DynamicHouseMap = dynamic(() => import('@/components/HouseMap'), {
 
 export const RenderActiveTabContent = ({
   activeTab,
-  houseDetails
+  houseDetails,
+  setOpenModal
 }: {
   activeTab: string;
   houseDetails: HouseListing;
+  setOpenModal: (openModal: boolean) => void;
 }) => {
   if (!houseDetails.user) return; // if houseDetails is null
-
+  const handleBook = () => {
+    setOpenModal(true);
+    window.scrollTo({ top: 90, behavior: 'smooth' });
+  };
   switch (activeTab) {
     case 'location':
       return <DynamicHouseMap address={houseDetails?.address} />;
@@ -109,12 +115,13 @@ export const RenderActiveTabContent = ({
 
           {/* Actions */}
           <div className="!mt-10 lg:!mt-5 flex flex-col space-y-4 md:flex-row md:space-y-0 md:items-center md:justify-between">
-            <a href="#">
-              <Button className="bg-[#7065F0] h-[67px] rounded-[40px] py-3 px-12">
-                Book Now
-                <ArrowUp className="rotate-[30deg]" />
-              </Button>
-            </a>
+            <Button
+              onClick={handleBook}
+              className="bg-[#7065F0] h-[67px] rounded-[40px] py-3 px-12"
+            >
+              Book Now
+              <ArrowUp className="rotate-[30deg]" />
+            </Button>
             <a href="#">
               <Button
                 variant="outline"

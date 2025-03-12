@@ -1,4 +1,4 @@
-import { FaGooglePlay, FaApple } from 'react-icons/fa';
+import { FaApple, FaGooglePlay } from 'react-icons/fa';
 import React from 'react';
 import MaxWidthWrapper from '../maxWidthWrapper';
 import Breadcrumb from '@/components/breadcrumb';

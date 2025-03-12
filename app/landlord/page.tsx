@@ -1,6 +1,6 @@
 import React from 'react';
 import MaxWidthWrapper from '@/app/maxWidthWrapper';
-import { FileText, Book, Calculator, Users } from 'lucide-react';
+import { Book, Calculator, FileText, Users } from 'lucide-react';
 import Breadcrumb from '@/components/breadcrumb';
 
 export default function LandlordResources() {

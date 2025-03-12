@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { CardContent, CardFooter, CardTitle } from './card';
-import { BedDouble, Bath, Trash2, Pencil } from 'lucide-react';
+import { Bath, BedDouble, Pencil, Trash2 } from 'lucide-react';
 import PopularLabel from '../PopularLabel';
 import Link from 'next/link';
 import Naira from './naira';

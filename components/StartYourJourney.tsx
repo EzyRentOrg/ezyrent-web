@@ -1,10 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import { Button } from './ui/button';
-import { cn } from '@/lib/utils';
-import { ArrowRight, PlayCircle, PauseCircle } from 'lucide-react';
-import Link from 'next/link';
+import { PauseCircle, PlayCircle } from 'lucide-react';
 
 const StartYourJourney: React.FC = () => {
   // Initialize refs for each video
@@ -110,21 +107,6 @@ const StartYourJourney: React.FC = () => {
       </div>
 
       {/* action btn */}
-      <div>
-        <p className="max-w-[632px] mx-auto capitalize text-2xl md:text-[3rem] font-semibold md:leading-[67.2px] text-[#000929] text-center">
-          Let’s Start Your Real Estate Journey Today
-        </p>
-        <div className="flex items-center justify-center w-full my-10">
-          <Link href={'/contact'}>
-            <Button
-              variant="default"
-              className={cn('h-[72px] text-xl bg-[#000929]')}
-            >
-              Send us a Message <ArrowRight size={32} className="h-8 w-8" />
-            </Button>
-          </Link>
-        </div>
-      </div>
     </div>
   );
 };
