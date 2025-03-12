@@ -48,7 +48,7 @@ export default function ServiceCard({
       </div>
 
       {/* Parent container */}
-      <div className="relative pt-20 flex flex-col items-center space-y-5 bg-white drop-shadow-lg border-l border-b shadow-black transform -skew-x-[13deg] skew-y-2 h-[400px] max-w-[250px] px-4 z-10">
+      <div className="relative pt-20 flex flex-col items-center space-y-5 bg-white drop-shadow-lg border-l border-b shadow-black transform -skew-x-[6deg] lg:-skew-x-[13deg] skew-y-2 h-[400px] max-w-[250px] px-4 z-10">
         {/* Label */}
         <div className="absolute top-3 -left-10 rounded-tl rounded-bl rounded-full h-16 w-[150px] bg-[#7065F0] shadow-lg shadow-gray-400 flex items-center justify-center">
           {/* Icon */}
@@ -70,4 +70,3 @@ export default function ServiceCard({
     </motion.div>
   );
 }
-
