@@ -41,7 +41,7 @@ const socialMedia: socialMedia[] = [
     icon: 'instagram.svg',
     title: 'Instagram',
     href: 'https://www.instagram.com/ezy_rent_hq?igsh=MWN3cXBtNHY1dzFvZA==',
-    placeholder: '@ezyrent50'
+    placeholder: '@ezy_rent_hq'
   },
   {
     label: 'twitter',
@@ -54,7 +54,7 @@ const socialMedia: socialMedia[] = [
     label: 'facebook',
     icon: 'facebook.svg',
     title: 'Facebook',
-    href: 'https://www.facebook.com/share/15rpMS6FDE/',
+    href: 'https://www.facebook.com/share/1HGaec4Hkb/?mibextid=LQQJ4d',
     placeholder: '@ezyrent'
   }
 ];
@@ -83,7 +83,7 @@ export default function ContactModal({
   if (!openModal || !mounted) return null;
 
   return createPortal(
-    <section className=" pt-10 bg-black bg-opacity-70 flex justify-center items-center z-100 inset-0 ">
+    <section className=" pt-10 bg-black  bg-opacity-70 flex justify-center items-center z-100 inset-0 ">
       <MaxWidthWrapper className="w-full  md:max-w-[880px] h-[600px] bg-[#FFFFFF] p-6  md:p-[80px] mb-10 rounded-[60px]">
         <button
           onClick={() => setOpenModal(false)}
@@ -110,7 +110,7 @@ export default function ContactModal({
             Our Team will reach out to you as soon as possible!
           </p>
         </div>
-        <div className="flex-col md:flex md:flex-row  md:justify-between gap-10 md:gap-4 md:px-10">
+        <div className="flex-col md:flex md:flex-row  justify-between md:gap-4 md:px-10">
           <div>
             <h2 className="text-[#475467]  text-[16px] mb-3">Customer Care</h2>
             {costumerCare.map((item, index) => (
