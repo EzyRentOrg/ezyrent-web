@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import { PlayCircle, PauseCircle } from 'lucide-react';
+import { PauseCircle, PlayCircle } from 'lucide-react';
 
 const StartYourJourney: React.FC = () => {
   // Initialize refs for each video

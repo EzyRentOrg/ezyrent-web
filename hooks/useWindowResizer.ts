@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export const useWindowResizer = () => {
   const [windowWidth, setWindowWidth] = useState(0);

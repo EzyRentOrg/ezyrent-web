@@ -14,7 +14,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import useDelay from '@/hooks/useDelay';
 import { cn } from '@/lib/utils';
-import { Eye, EyeOffIcon, ArrowLeft, Loader, Lock } from 'lucide-react';
+import { ArrowLeft, Eye, EyeOffIcon, Loader, Lock } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { Separator } from '@/components/ui/separator';
 import RightHandAuthPage from '@/components/RightHandAuthPage';

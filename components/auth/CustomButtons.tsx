@@ -1,7 +1,7 @@
 // src/components/CustomButtons.tsx
 import React from 'react';
 import { Button } from '@mui/material';
-import { GoogleIcon, AppleIcon } from './CustomIcons'; // Assuming you have these icon components
+import { AppleIcon, GoogleIcon } from './CustomIcons'; // Assuming you have these icon components
 import { handleSignInWithApple, useGoogleAuthHandler } from '@/lib/utils';
 
 interface SubmitButtonProps {

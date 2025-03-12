@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Breadcrumb from '@/components/breadcrumb';
 import MaxWidthWrapper from '../maxWidthWrapper';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -8,9 +8,9 @@ import HouseListingCard from '@/components/ui/house-listing-card';
 import { getCleanImageUrl } from '@/lib/getCleanImageUrl';
 import { FilterControls } from '@/components/FilterControls';
 import {
-  LoadingState,
+  EmptyState,
   ErrorState,
-  EmptyState
+  LoadingState
 } from '@/components/propertyState';
 import { ITEMS_PER_PAGE } from '../admin/constants';
 import PropertyFilterDialog from '@/components/PropertyFilterDialog';
