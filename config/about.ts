@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { House, Star, Wallet } from 'lucide-react';
 
 interface ServiceFeature {
