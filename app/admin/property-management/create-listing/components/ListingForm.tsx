@@ -2,23 +2,23 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Save, CloudUpload } from 'lucide-react';
+import { CloudUpload, Save } from 'lucide-react';
 import {
   Control,
-  UseFormWatch,
-  FieldErrors,
   Controller,
+  FieldErrors,
   UseFormReset,
-  UseFormSetValue
+  UseFormSetValue,
+  UseFormWatch
 } from 'react-hook-form';
 import {
   amenityOptions,
   bathOptions,
   bedOptions,
-  propertyTypes,
-  rentDurations,
   MAX_ADDRESS_LENGTH,
-  MAX_DESCRIPTION_LENGTH
+  MAX_DESCRIPTION_LENGTH,
+  propertyTypes,
+  rentDurations
 } from '@/app/admin/constants/property-form';
 import { Checkbox } from '@/components/ui/checkbox';
 import MediaUploadField from './mediaUploadField';

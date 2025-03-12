@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, useCallback, use } from 'react';
+import React, { use, useCallback, useEffect, useState } from 'react';
 import MaxWidthWrapper from '../../maxWidthWrapper';
 import Breadcrumb from '@/components/breadcrumb';
 import Image from 'next/image';
@@ -10,11 +10,11 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { plusJakartaSans } from '@/lib/font';
 import SecurityTips from '@/components/SecurityTips';
-import RecommendedProperties from '@/components/Recommended';
 import { getCleanImageUrl } from '@/lib/getCleanImageUrl';
 import Naira from '@/components/ui/naira';
 import { RenderActiveTabContent } from '../components/activeTab';
 import ContactModal from '../components/bookModal';
+import PropertiesCarousel from '@/components/PropertiesCarousel';
 
 type TabType = 'details' | 'location' | 'contact';
 
@@ -202,7 +202,7 @@ export default function ProductDetails({ params }: ProductDetailsProp) {
         )}
         <SecurityTips />
         <div className="px-5 md:px-0">
-          <RecommendedProperties />
+          <PropertiesCarousel title="Recommended Properties" />
         </div>
       </main>
     </MaxWidthWrapper>

@@ -1,12 +1,25 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import HouseListingCard from './ui/house-listing-card';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useWindowResizer } from '@/hooks/useWindowResizer';
+import { cn } from '@/lib/utils';
+import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { EmptyState, ErrorState } from '@/components/propertyState';
+import HouseListingCard from '@/components/ui/house-listing-card';
 import Link from 'next/link';
-import { LoadingState, ErrorState, EmptyState } from './propertyState';
 
-export default function BestDeal() {
+interface Location {
+  latitude: number;
+  longitude: number;
+}
+
+interface PropertiesCarousel {
+  title: string;
+  location?: Location | null;
+}
+
+export default function PropertiesCarousel({
+  title,
+  location
+}: PropertiesCarousel) {
   const [houseListing, setHouseListing] = useState<HouseListing[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -18,12 +31,13 @@ export default function BestDeal() {
   const { isLargeScreen } = useWindowResizer();
 
   // make api call
-  const fetchProperties = useCallback(async () => {
+  const fetchProperties = useCallback(async (location?: Location) => {
     try {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(`/api/fetch-listing`, {
+      const url = `/api/fetch-listing${location ? `?userLatitude=${location.latitude}&userLongitude=${location.longitude}` : ''}`;
+      const response = await fetch(url, {
         headers: { 'Content-Type': 'application/json' }
       });
 
@@ -38,7 +52,6 @@ export default function BestDeal() {
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : 'Failed to fetch properties';
-      console.error('Error fetching properties:', err);
       setError(errorMessage);
     } finally {
       setLoading(false);
@@ -46,8 +59,12 @@ export default function BestDeal() {
   }, []);
 
   useEffect(() => {
-    fetchProperties();
-  }, [fetchProperties]);
+    // We can go ahead and fetch properties if location is available or undefined
+    // If it is null, we wait for the user to provide a location
+    if (location !== null) {
+      void fetchProperties(location);
+    }
+  }, [fetchProperties, location]);
 
   const itemsPerPage = isLargeScreen ? 6 : 3;
   const isAtStart = currentIndex === 0;
@@ -72,17 +89,19 @@ export default function BestDeal() {
     currentIndex + itemsPerPage
   );
 
-  return (
+  return loading ? (
+    <></>
+  ) : (
     <section
       className="max-w-[1440px] py-10 lg:py-20 mx-auto px-5 md:px-10 lg:px-20 "
       aria-labelledby="location-houses-heading"
     >
-      <div className="flex items-center w-full ">
+      <div className="flex items-center w-full">
         <h3
           id="location-houses-heading"
           className="first-letter:capitalize font-semibold md:text-[1.5rem] text-[#7065F0]"
         >
-          Best deal
+          {title}
         </h3>
         <div className="flex items-center space-x-10 ml-auto">
           <button
@@ -114,9 +133,7 @@ export default function BestDeal() {
       </div>
 
       <div className="flex flex-col justify-center">
-        {loading ? (
-          <LoadingState />
-        ) : error ? (
+        {error ? (
           <ErrorState message={error} onRetry={fetchProperties} />
         ) : visibleHouses.length === 0 ? (
           <EmptyState />

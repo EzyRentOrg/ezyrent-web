@@ -1,6 +1,6 @@
 // src/components/RegisterForm.tsx
 import React, { useState } from 'react';
-import { Box, FormControl, TextField, Typography, Link } from '@mui/material';
+import { Box, FormControl, Link, TextField, Typography } from '@mui/material';
 
 // import { validateForm } from '@/lib/utils/formValidation'; // Import the validation function
 

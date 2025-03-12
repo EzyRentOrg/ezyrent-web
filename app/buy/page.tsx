@@ -1,7 +1,7 @@
 import React from 'react';
 import Breadcrumb from '@/components/breadcrumb';
 import MaxWidthWrapper from '../maxWidthWrapper';
-import { Home, ArrowRight } from 'lucide-react';
+import { ArrowRight, Home } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Buy() {
