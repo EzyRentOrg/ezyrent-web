@@ -1,5 +1,7 @@
 import { generateMetadata } from '@/lib/metadata';
 import React from 'react';
+import Header from '@/components/nav/Header';
+import Footer from '@/components/footer/Footer';
 
 export const metadata = generateMetadata({
   title: 'About',
@@ -11,5 +13,11 @@ export default function AboutLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <section className="mt-28">{children}</section>;
+  return (
+  <section className="mt-28">
+    <Header/>
+      {children}
+    <Footer/>
+  </section>
+  )
 }
