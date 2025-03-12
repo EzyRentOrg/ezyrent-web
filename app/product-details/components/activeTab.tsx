@@ -95,7 +95,6 @@ export const RenderActiveTabContent = ({
                   >
                     <u>ezyrent50@gmail.com</u>
                   </a>
-
                 </p>
                 {/* <CopyToClipboard textToCopy={userInfo.email} type="email" /> */}
                 <CopyToClipboard
