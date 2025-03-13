@@ -84,7 +84,7 @@ export default function ContactModal({
 
   return createPortal(
     <section className=" pt-10 bg-black  bg-opacity-70 flex justify-center items-center z-100 inset-0 ">
-      <MaxWidthWrapper className="w-full  md:max-w-[880px] h-[600px] bg-[#FFFFFF] p-6  md:p-[80px] mb-10 rounded-[60px]">
+      <MaxWidthWrapper className="w-full  md:max-w-[880px]  bg-[#FFFFFF] p-6  md:p-[80px] mb-10 rounded-[60px]">
         <button
           onClick={() => setOpenModal(false)}
           className="text-black-500 w-full font-bold text-xl hover:text-gray-700 flex justify-end items-end"

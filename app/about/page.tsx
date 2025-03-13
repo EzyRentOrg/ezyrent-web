@@ -1,12 +1,23 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Breadcrumb from '@/components/breadcrumb';
 import { serviceFeatures } from '@/config/about';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import ServiceCard from '@/components/about/service-card';
+import MessageModal from '@/components/MessageModal';
 
 export default function About() {
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleModalOpen = () => {
+    setOpenModal(true);
+    window.scrollTo({ top: 90, behavior: 'smooth' });
+  };
+  if (openModal) {
+    return <MessageModal setOpenModal={setOpenModal} />;
+  }
   return (
     <section className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 flex-1">
       <div className="pl-5">
@@ -79,14 +90,13 @@ export default function About() {
             Let’s Start Your Real Estate Journey Today
           </p>
           <div className="flex items-center justify-center w-full my-10">
-            <Link href="/contact">
-              <Button
-                variant="default"
-                className="h-[64px] md:h-[72px] text-lg md:text-xl bg-[#000929]"
-              >
-                Send us a Message <ArrowRight size={28} className="ml-2" />
-              </Button>
-            </Link>
+            <Button
+              onClick={handleModalOpen}
+              variant="default"
+              className="h-[64px] md:h-[72px] text-lg md:text-xl bg-[#000929]"
+            >
+              Send us a Message <ArrowRight size={28} className="ml-2" />
+            </Button>
           </div>
         </div>
       </main>
