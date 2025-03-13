@@ -4,6 +4,8 @@ export async function POST(req: NextRequest) {
   try {
     const { email } = await req.json();
 
+    console.log(email);
+
     // Validate email
     if (!email) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 });
