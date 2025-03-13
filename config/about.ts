@@ -1,26 +1,27 @@
-import { House, LucideIcon, Star, Wallet } from 'lucide-react';
+import React from 'react';
+import { House, Star, Wallet } from 'lucide-react';
 
 interface ServiceFeature {
-  icon: LucideIcon;
+  icon: string;
   title: string;
   description: string;
 }
 
 export const serviceFeatures: ServiceFeature[] = [
   {
-    icon: House,
+    icon: 'House',
     title: 'Affordable Housing Options',
     description:
       'A wide range of budget-friendly rental properties to suit various needs.'
   },
   {
-    icon: Star,
+    icon: 'Star',
     title: 'Efficient Property Management',
     description:
       'Support landlords with tools to manage properties, tenants, and payments.'
   },
   {
-    icon: Wallet,
+    icon: 'Wallet',
     title: 'Transparent Pricing',
     description:
       'Provide a wide range of budget-friendly rental properties to suit various needs.'

@@ -1,99 +1,95 @@
 import React from 'react';
-import MaxWidthWrapper from '../maxWidthWrapper';
 import Breadcrumb from '@/components/breadcrumb';
 import { serviceFeatures } from '@/config/about';
-import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
+import ServiceCard from '@/components/about/service-card';
 
 export default function About() {
   return (
-    <MaxWidthWrapper className="px-0">
-      <div className="px-5">
+    <section className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 flex-1">
+      <div className="pl-5">
         <Breadcrumb />
       </div>
-      <main>
+
+      <main className="flex-1 flex flex-col items-center justify-center space-y-12 mt-10 text-center">
         {/* Hero Section */}
-        <header className="mt-5 relative w-full max-w-[1240px] mx-auto h-[400px] md:h-[500px] lg:rounded-[40px] bg-[url('/about/about-image2479x1653.jpeg')] bg-no-repeat bg-center bg-cover overflow-hidden">
+        <header
+          className="mt-5 relative w-full max-w-[1240px] mx-auto h-[400px] md:h-[500px] lg:rounded-[40px] bg-[url('/about/about-image2479x1653.jpeg')] bg-no-repeat bg-center bg-cover overflow-hidden"
+          aria-label="EzyRent About Page Hero"
+        >
           <div className="absolute inset-0 bg-[#000929] bg-opacity-75 flex flex-col justify-center items-center text-white text-center h-full">
             <div className="max-w-[900px] mx-auto flex flex-col items-center justify-center h-full px-4">
-              <h1 className="mb-10 sm:text-[1.2rem] text-[1.5rem] md:text-[3rem] lg:text-[3.5rem] font-semibold !leading-[1.4]">
+              <h1 className="mb-10 text-[1.5rem] sm:text-[2rem] md:text-[3rem] lg:text-[3.5rem] font-semibold !leading-[1.4]">
                 Transforming Rentals, <br />
                 One Listing at a Time
               </h1>
-              <em className="text-xs md:text-xl lg:text-[1.5rem] mt-2 !leading-[1.5]">
-                <span className=" rounded-[40px] font-extrabold text-white">
-                  EzyRent
-                </span>{' '}
-                is revolutionizing property rentals across Nigeria and Africa.
+              <p className="text-xs md:text-xl lg:text-[1.5rem] mt-2 font-light italic !leading-[1.5]">
+                <span className="font-extrabold text-white">EzyRent</span> is
+                revolutionizing property rentals across Nigeria and Africa.
                 Making it seamless to find, rent or sell homes from anywhere in
-                the world. With user-first approach, we eliminate the hassle of
-                agent fees and bring transparency , convenience, and security to
-                the rental process - all from the comfort of your home.
-              </em>
+                the world. With a user-first approach, we eliminate agent fees
+                and bring transparency, convenience, and security to the rental
+                process.
+              </p>
             </div>
           </div>
         </header>
 
         {/* Mission Section */}
-        <section className="px-5 lg:px-0 py-10 lg:py-20 max-w-[900px] mx-auto">
-          <h2 className="lg:mb-10 text-2xl md:text-3xl lg:text-[2.5rem] 2xl:text-[3rem] font-medium text-[#7065F0] text-center">
+        <section className="py-10 lg:py-20 max-w-[900px] mx-auto">
+          <h2 className="lg:mb-10 text-2xl md:text-3xl lg:text-[2.5rem] font-medium text-[#7065F0] text-center">
             Our Mission
           </h2>
-          <p className="max-w-[800px] mx-auto mt-2 lg:mt-4 lg:text-center lg:text-[1.1rem] text-gray-600">
+          <p className="max-w-[800px] mx-auto mt-2 lg:mt-4 text-gray-600 text-[1rem] lg:text-[1.1rem] leading-relaxed">
             At <span className="font-extrabold">EzyRent</span>, our mission is
             to revolutionize the property rental experience by creating a
             seamless and trusted platform that bridges the gap between renters,
             landlords, and property managers. We empower renters with broader,
             reliable housing options and easy access to secure, affordable
             homes. We support landlords by providing them with an extensive pool
-            of verified tenants and the tools to manage their properties
+            of verified tenants and tools to manage their properties
             efficiently.
           </p>
         </section>
 
         {/* What We Offer Section */}
-        <section className="px-5 lg:px-0 py-10 max-w-[900px] mx-auto ">
-          <h2 className="text-2xl md:text-3xl lg:text-[2.5rem] 2xl:text-[3rem] font-medium text-[#7065F0] text-center mb-2 lg:mb-4">
+        <section className="py-10 w-full">
+          <h2 className="text-2xl md:text-3xl lg:text-[2.5rem] font-medium text-[#7065F0] text-center">
             What We Offer
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1240px]  mx-auto px-4">
+
+          <div className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 place-items-center mx-auto w-[90%]">
             {serviceFeatures.map((service, index) => (
-              <div
-                key={service.title + index}
-                className="max-w-[260px] mx-auto rounded-[40px] border-[2px] border-[#000929] border-opacity-15 flex flex-col items-center space-y-4 p-6 bg-white shadow text-center"
-              >
-                <div className="border-[2px] border-black border-opacity-20 w-fit p-2 rounded-full flex item-center justify-center">
-                  <service.icon size={20} />
-                </div>
-                <h3 className="text-base md:text-lg lg:text-2xl font-medium text-[#000929] text-center">
-                  {service.title}
-                </h3>
-                <p className="font-light text-sm md:text-lg text-center text-[#000929] text-opacity-50">
-                  {service.description}
-                </p>
-              </div>
+              <ServiceCard
+                key={service.title}
+                title={service.title}
+                text={service.description}
+                iconName={service.icon}
+                index={index + 1}
+              />
             ))}
           </div>
         </section>
-        {/* send us message */}
-        <div>
-          <p className="max-w-[632px] mx-auto capitalize text-2xl md:text-[3rem] font-semibold md:leading-[67.2px] text-[#000929] text-center">
+
+        {/* Contact Section */}
+        <div className="text-center">
+          <p className="max-w-[632px] mx-auto text-2xl md:text-[2.5rem] font-semibold leading-tight text-[#000929]">
             Let’s Start Your Real Estate Journey Today
           </p>
           <div className="flex items-center justify-center w-full my-10">
-            <Link href={'/contact'}>
+            <Link href="/contact">
               <Button
                 variant="default"
-                className={cn('h-[72px] text-xl bg-[#000929]')}
+                className="h-[64px] md:h-[72px] text-lg md:text-xl bg-[#000929]"
               >
-                Send us a Message <ArrowRight size={32} className="h-8 w-8" />
+                Send us a Message <ArrowRight size={28} className="ml-2" />
               </Button>
             </Link>
           </div>
         </div>
       </main>
-    </MaxWidthWrapper>
+    </section>
   );
 }
