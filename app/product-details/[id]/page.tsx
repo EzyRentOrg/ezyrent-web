@@ -26,6 +26,7 @@ export default function ProductDetails({ params }: ProductDetailsProp) {
   const [activeTab, setActiveTab] = useState<TabType>('details');
   const [openModal, setOpenModal] = useState(false);
   const { id } = use(params);
+  const [mainImage, setMainImage] = useState<string | null>(null);
 
   //fetch property by id, useCallback to prevent re-rendering
   const fetchPropertiesById = useCallback(async () => {
@@ -51,7 +52,12 @@ export default function ProductDetails({ params }: ProductDetailsProp) {
     fetchPropertiesById();
   }, [fetchPropertiesById]);
 
-  console.log('houseDetails: ', houseDetails);
+  // Set main image on load
+  useEffect(() => {
+    if (houseDetails?.mainImage) {
+      setMainImage(getCleanImageUrl(houseDetails.mainImage));
+    }
+  }, [houseDetails]);
 
   const Tab = () => (
     <div className="flex items-center justify-between lg:space-x-[150px] w-full lg:w-fit border-b-2 border-[#FAFAFA]">
@@ -102,6 +108,22 @@ export default function ProductDetails({ params }: ProductDetailsProp) {
     );
   }
 
+  const handleImageClick = (imageUrl: string) => {
+    if (!houseDetails) return;
+
+    setHouseDetails((prev) => {
+      if (!prev) return null;
+      return {
+        ...prev,
+        mainImage: imageUrl, // Swap clicked image with main image
+        additionalImages: prev.additionalImages?.map((img) =>
+          img === imageUrl ? mainImage! : img
+        )
+      };
+    });
+    setMainImage(imageUrl);
+  };
+
   if (openModal) {
     return <ContactModal openModal={openModal} setOpenModal={setOpenModal} />;
   }
@@ -113,39 +135,48 @@ export default function ProductDetails({ params }: ProductDetailsProp) {
       </div>
       <main className="mt-10">
         <div className="flex flex-col space-y-10 lg:space-y-0 lg:flex-row items-start lg:space-x-20 h-auto px-5 md:px-0">
+          {/* images */}
           <section className="relative flex flex-col w-full lg:w-[554px] h-[400px] md:h-[600px]">
-            {/* main image */}
-            <div className="h-full mb-4">
+            {/* Main image */}
+            <div className="relative h-full mb-4">
               <Image
                 src={getCleanImageUrl(houseDetails.mainImage)}
                 fill
                 alt={`Image of ${houseDetails.name}`}
                 className="rounded-lg object-cover"
               />
+              {/* Share button */}
+              <div className="absolute top-5 lg:top-10 right-3 lg:right-5 max-w-[429px] w-fit px-3 py-[10px] flex flex-col space-y-5 items-center">
+                <button
+                  onClick={handleShare}
+                  className="cursor-pointer flex items-center justify-center bg-[#f1f1f1] rounded-full size-12 hover:bg-[#e5e5e5] transition-colors"
+                >
+                  <Share2 stroke="#7065F0" />
+                </button>
+              </div>
             </div>
-            {/* share btn */}
-            <div className="absolute top-10 right-5 max-w-[429px] w-fit px-3 py-[10px] flex flex-col space-y-5 items-center">
-              <button
-                onClick={handleShare}
-                className="cursor-pointer flex items-center justify-center bg-[#f1f1f1] rounded-full size-12 hover:bg-[#e5e5e5] transition-colors"
-              >
-                <Share2 stroke="#7065F0" />
-              </button>
-            </div>
-            {/* other images */}
-            <div className=" bg-neutral-50 mt-auto rounded-[90px]  w-full z-5 h-20 px-3 py-[10px] flex justify-between items-center">
-              {houseDetails.additionalImages?.map((image, index) => (
-                <Image
-                  key={index}
-                  src={getCleanImageUrl(image)}
-                  width={60}
-                  height={60}
-                  alt={`Additional image ${index + 1} of ${houseDetails.name}`}
-                  className="object-cover size-[60px] rounded-tl-[39px] rounded-[8.94px] rounded-bl-[39px]"
-                />
-              ))}
-            </div>
+
+            {/* Additional images */}
+            {houseDetails.additionalImages?.length ? (
+              <div className="bg-neutral-50 border rounded-[90px] w-full px-3 py-[10px] grid grid-cols-5 gap-5">
+                {houseDetails.additionalImages.map((image, index) => (
+                  <Image
+                    key={index}
+                    src={getCleanImageUrl(image)}
+                    width={60}
+                    height={60}
+                    alt={`Additional image ${index + 1} of ${houseDetails.name}`}
+                    onClick={() => handleImageClick(image)}
+                    className="object-cover size-[60px] cursor-pointer rounded-lg"
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500">No additional images available</p>
+            )}
           </section>
+
+          {/* active tab */}
           <section className="w-full flex flex-col space-y-5 h-full lg:w-[560px]">
             {(activeTab === 'details' || activeTab === 'contact') && (
               <div className="w-full">
