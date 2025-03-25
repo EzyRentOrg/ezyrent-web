@@ -36,7 +36,7 @@ export default function PropertiesCarousel({
       setLoading(true);
       setError(null);
 
-      const url = `/api/fetch-listing${location ? `?userLatitude=${location.latitude}&userLongitude=${location.longitude}` : ''}`;
+      const url = `/api/fetch-listing${location ? `?latitude=${location.latitude}&longitude=${location.longitude}` : ''}`;
       const response = await fetch(url, {
         headers: { 'Content-Type': 'application/json' }
       });
