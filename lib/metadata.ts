@@ -15,7 +15,7 @@ export function generateMetadata({
   const normalizedPath = path.replace(/^\/|\/$/g, '');
 
   // Base URL with consistent trailing slash
-  const baseUrl = 'https://ezyrent-web.vercel.app/';
+  const baseUrl = 'https://www.ezyrent.org/';
 
   // full URL
   const fullUrl = new URL(normalizedPath, baseUrl)
@@ -47,8 +47,8 @@ export function generateMetadata({
       siteName: baseTitle,
       images: [
         {
-          url: new URL('/og-image.png', baseUrl).toString(),
-          secureUrl: new URL('/og-image.png', baseUrl).toString(),
+          url: new URL('/images/preview.jpg', baseUrl).toString(),
+          secureUrl: new URL('/images/preview.jpg', baseUrl).toString(),
           width: 1200,
           height: 630
         }
@@ -60,7 +60,7 @@ export function generateMetadata({
       card: 'summary_large_image',
       title: fullTitle,
       description,
-      images: [new URL('/og-image.png', baseUrl).toString()]
+      images: [new URL('/images/preview.jpg', baseUrl).toString()]
     },
     robots: {
       index: true,
