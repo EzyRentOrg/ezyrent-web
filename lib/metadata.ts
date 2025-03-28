@@ -47,8 +47,8 @@ export function generateMetadata({
       siteName: baseTitle,
       images: [
         {
-          url: new URL('/images/preview.jpg', baseUrl).toString(),
-          secureUrl: new URL('/images/preview.jpg', baseUrl).toString(),
+          url: new URL('/EzyRent-meta.jpg', baseUrl).toString(),
+          secureUrl: new URL('/EzyRent-meta.jpg', baseUrl).toString(),
           width: 1200,
           height: 630
         }
@@ -60,7 +60,7 @@ export function generateMetadata({
       card: 'summary_large_image',
       title: fullTitle,
       description,
-      images: [new URL('/images/preview.jpg', baseUrl).toString()]
+      images: [new URL('/EzyRent-meta.jpg', baseUrl).toString()]
     },
     robots: {
       index: true,
