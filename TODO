@@ -1,4 +1,3 @@
-
 ## a notification that encourages users to download the mobile app. there will be link for android and iOS apps
 ## when a user clicks on the favorite and user is not signed in, redirect the user to sign and save the house id so that when the user login in and the house will be saved to the user favorite property/house
 ## when a user clicks on share icon, the OGUrl should have the image of the house picked
