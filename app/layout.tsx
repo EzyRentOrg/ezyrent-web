@@ -6,8 +6,9 @@ import { generateMetadata } from '@/lib/metadata';
 import './globals.css';
 
 export const metadata = generateMetadata({
-  title: 'Home',
-  description: 'Welcome to EzyRent',
+  title: 'Rent Smarter, Live Easier',
+  description:
+    'Find and rent your dream home easily with EzyRent. No stress, no hidden fees!',
   path: ''
 });
 
