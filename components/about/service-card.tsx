@@ -1,4 +1,4 @@
-'use client'; 
+'use client';
 
 import React from 'react';
 import { motion } from 'framer-motion';
@@ -21,7 +21,12 @@ const getIcon = (iconName: string) => {
   return icons[iconName] || House; // Default to House if icon not found
 };
 
-export default function ServiceCard({ title, text, iconName, index }: ServiceCardProps) {
+export default function ServiceCard({
+  title,
+  text,
+  iconName,
+  index
+}: ServiceCardProps) {
   const Icon = getIcon(iconName); // Get the correct icon component
 
   return (
@@ -36,12 +41,14 @@ export default function ServiceCard({ title, text, iconName, index }: ServiceCar
       <div className="absolute w-0 h-0 top-[70px] -left-2 rotate-180 border-l-[50px] border-l-transparent border-r-[50px] border-r-transparent border-b-[100px] border-b-[#7065F0]" />
 
       {/* Large index number positioned to be partially visible */}
-      <div className={`hidden md:block absolute top-[50px] ${index !== 1 ? "-left-[90px]" : "-left-[70px]"} text-[15rem] text-[#7065F0] opacity-30 font-bold`}>
+      <div
+        className={`hidden md:block absolute top-[50px] ${index !== 1 ? '-left-[90px]' : '-left-[70px]'} text-[15rem] text-[#7065F0] opacity-30 font-bold`}
+      >
         {index}
       </div>
 
       {/* Parent container */}
-      <div className="relative pt-20 flex flex-col items-center space-y-5 bg-white drop-shadow-lg border-l border-b shadow-black transform -skew-x-[13deg] skew-y-2 h-[400px] max-w-[250px] px-4 z-10">
+      <div className="relative pt-20 flex flex-col items-center space-y-5 bg-white drop-shadow-lg border-l border-b shadow-black transform -skew-x-[6deg] lg:-skew-x-[13deg] skew-y-2 h-[400px] max-w-[250px] px-4 z-10">
         {/* Label */}
         <div className="absolute top-3 -left-10 rounded-tl rounded-bl rounded-full h-16 w-[150px] bg-[#7065F0] shadow-lg shadow-gray-400 flex items-center justify-center">
           {/* Icon */}
@@ -49,8 +56,16 @@ export default function ServiceCard({ title, text, iconName, index }: ServiceCar
             <Icon size={20} />
           </div>
         </div>
-        <h3 className="text-base md:text-lg lg:text-xl font-medium text-[#000929] text-left">{title}</h3>
-        <p className="font-light text-sm md:text-lg text-[#000929] text-opacity-50 text-left">{text}</p>
+
+        {/* Text Wrapper to Remove Skew */}
+        <div className="transform skew-x-[5deg] -skew-y-2 px-5 ">
+          <h3 className="text-lg my-5 md:text-xl lg:text-2xl font-semibold text-[#000929] text-left">
+            {title}
+          </h3>
+          <p className=" text-base md:text-lg text-[#000929] text-left">
+            {text}
+          </p>
+        </div>
       </div>
     </motion.div>
   );

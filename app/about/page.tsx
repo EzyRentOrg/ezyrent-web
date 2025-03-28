@@ -1,21 +1,32 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Breadcrumb from '@/components/breadcrumb';
 import { serviceFeatures } from '@/config/about';
-import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import ServiceCard from '@/components/about/service-card';
+import MessageModal from '@/components/MessageModal';
 
 export default function About() {
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleModalOpen = () => {
+    setOpenModal(true);
+    window.scrollTo({ top: 90, behavior: 'smooth' });
+  };
+  if (openModal) {
+    return <MessageModal setOpenModal={setOpenModal} />;
+  }
   return (
-    <section className='max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 flex-1'>
+    <section className="max-w-[1440px] mx-auto px-5 md:px-10 lg:px-20 flex-1">
       <div className="pl-5">
         <Breadcrumb />
       </div>
-     
-      <main className='flex-1 flex flex-col items-center justify-center space-y-12 mt-10 text-center'>
+
+      <main className="flex-1 flex flex-col items-center justify-center space-y-12 mt-10 text-center">
         {/* Hero Section */}
-        <header 
+        <header
           className="mt-5 relative w-full max-w-[1240px] mx-auto h-[400px] md:h-[500px] lg:rounded-[40px] bg-[url('/about/about-image2479x1653.jpeg')] bg-no-repeat bg-center bg-cover overflow-hidden"
           aria-label="EzyRent About Page Hero"
         >
@@ -26,13 +37,12 @@ export default function About() {
                 One Listing at a Time
               </h1>
               <p className="text-xs md:text-xl lg:text-[1.5rem] mt-2 font-light italic !leading-[1.5]">
-                <span className="font-extrabold text-white">
-                  EzyRent
-                </span>{' '}
-                is revolutionizing property rentals across Nigeria and Africa.
+                <span className="font-extrabold text-white">EzyRent</span> is
+                revolutionizing property rentals across Nigeria and Africa.
                 Making it seamless to find, rent or sell homes from anywhere in
                 the world. With a user-first approach, we eliminate agent fees
-                and bring transparency, convenience, and security to the rental process.
+                and bring transparency, convenience, and security to the rental
+                process.
               </p>
             </div>
           </div>
@@ -63,12 +73,12 @@ export default function About() {
 
           <div className="mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 place-items-center mx-auto w-[90%]">
             {serviceFeatures.map((service, index) => (
-              <ServiceCard 
-                key={service.title} 
-                title={service.title} 
-                text={service.description} 
-                iconName={service.icon} 
-                index={index + 1} 
+              <ServiceCard
+                key={service.title}
+                title={service.title}
+                text={service.description}
+                iconName={service.icon}
+                index={index + 1}
               />
             ))}
           </div>
@@ -80,11 +90,13 @@ export default function About() {
             Let’s Start Your Real Estate Journey Today
           </p>
           <div className="flex items-center justify-center w-full my-10">
-            <Link href="/contact">
-              <Button variant="default" className="h-[64px] md:h-[72px] text-lg md:text-xl bg-[#000929]">
-                Send us a Message <ArrowRight size={28} className="ml-2" />
-              </Button>
-            </Link>
+            <Button
+              onClick={handleModalOpen}
+              variant="default"
+              className="h-[64px] md:h-[72px] text-lg md:text-xl bg-[#000929]"
+            >
+              Send us a Message <ArrowRight size={28} className="ml-2" />
+            </Button>
           </div>
         </div>
       </main>
