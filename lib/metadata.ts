@@ -15,7 +15,7 @@ export function generateMetadata({
   const normalizedPath = path.replace(/^\/|\/$/g, '');
 
   // Base URL with consistent trailing slash
-  const baseUrl = 'https://www.ezyrent.org/';
+  const baseUrl = 'https://ezyrent-web.vercel.app/';
 
   // full URL
   const fullUrl = new URL(normalizedPath, baseUrl)
