@@ -1,9 +1,12 @@
 import type { NextConfig } from 'next';
 
-const allowedOrigin =
-  process.env.NODE_ENV === 'production'
-    ? "https://ezyrent-web.vercel.app"
-    : "http://localhost:3000";
+// const allowedOrigin =
+//   process.env.NODE_ENV === 'production'
+//     ? "https://ezyrent-web.vercel.app"
+//     : "http://localhost:3000";
+
+
+
 
 const nextConfig: NextConfig = {
   // webpack(config, { dev }) {
@@ -32,7 +35,7 @@ const nextConfig: NextConfig = {
       {
         source: "/(.*)",
         headers: [
-          { key: "Access-Control-Allow-Origin", value: allowedOrigin },
+          { key: "Access-Control-Allow-Origin", value: "*" },
           { key: "Access-Control-Allow-Methods", value: "GET, POST, PUT, DELETE, OPTIONS" },
           { key: "Access-Control-Allow-Headers", value: "Content-Type, Authorization, X-Requested-With" },
           { key: "Access-Control-Allow-Credentials", value: "true" },
@@ -46,7 +49,7 @@ const nextConfig: NextConfig = {
       {
         source: "/api/(.*)",
         headers: [
-          { key: "Access-Control-Allow-Origin", value: allowedOrigin },
+          { key: "Access-Control-Allow-Origin", value: "http://localhost:3000" },
           { key: "Access-Control-Allow-Methods", value: "OPTIONS, GET, POST, PUT, DELETE" },
           { key: "Access-Control-Allow-Headers", value: "Content-Type, Authorization" },
           { key: "Access-Control-Allow-Credentials", value: "true" },
