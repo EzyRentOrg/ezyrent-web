@@ -8,7 +8,7 @@ type PageMetadataProps = {
 
 export function generateMetadata({
   title = 'EzyRent',
-  description = 'A platform that is solving the rental issues in Nigeria.',
+  description = 'Find and rent your dream home easily with EzyRent. No stress, no hidden fees!',
   path = ''
 }: PageMetadataProps = {}): Metadata {
   // Normalize the path by removing leading and trailing slashes
