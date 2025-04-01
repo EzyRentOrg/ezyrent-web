@@ -7,8 +7,8 @@ import './globals.css';
 
 export const metadata = generateMetadata({
   title: 'Secure, Verified & Hassle-Free Home Rentals in Nigeria',
-  description:
-    'Find and rent your dream home easily with EzyRent. No stress, no hidden fees!',
+  description: `Find verified rental properties in Nigeria with EzyRent. No agents, no hidden fees—just easy home search, scheduling, and secure transactions.
+`,
   path: ''
 });
 
