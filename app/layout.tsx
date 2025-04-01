@@ -6,7 +6,7 @@ import { generateMetadata } from '@/lib/metadata';
 import './globals.css';
 
 export const metadata = generateMetadata({
-  title: 'Rent Smarter, Live Easier',
+  title: 'Secure, Verified & Hassle-Free Home Rentals in Nigeria',
   description:
     'Find and rent your dream home easily with EzyRent. No stress, no hidden fees!',
   path: ''
@@ -19,6 +19,50 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'RealEstateAgent',
+              name: 'EzyRent',
+              description:
+                'Secure, Verified & Hassle-Free Home Rentals in Nigeria',
+              url: 'https://www.ezyrent.org',
+              logo: 'https://www.ezyrent.org/images/logo.png',
+              sameAs: [
+                'https://www.facebook.com/share/1HGaec4Hkb/?mibextid=LQQJ4d',
+                'https://x.com/ezy_rent',
+                'https://www.instagram.com/ezy_rent_hq?igsh=MWN3cXBtNHY1dzFvZA=='
+              ],
+              // address: {
+              //   '@type': 'PostalAddress',
+              //   streetAddress: '4234 Adetounbo Ademola',
+              //   addressLocality: 'Victoria Island',
+              //   addressRegion: 'Lagos',
+              //   postalCode: '100001',
+              //   addressCountry: 'NG'
+              // },
+              // geo: {
+              //   '@type': 'GeoCoordinates',
+              //   latitude: '6.5244',
+              //   longitude: '3.3792'
+              // },
+              contactPoint: {
+                '@type': 'ContactPoint',
+                telephone: '+234-8127-518-838',
+                contactType: 'customer service'
+              }
+              // potentialAction: {
+              //   '@type': 'SearchAction',
+              //   target: 'https://ezyrent.ng/search?q={search_term_string}',
+              //   'query-input': 'required name=search_term_string'
+              // }
+            })
+          }}
+        />
+      </head>
       <body
         className={cn(dmSans.className, 'flex flex-col min-h-screen bg-white')}
       >

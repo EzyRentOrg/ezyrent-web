@@ -15,7 +15,7 @@ export function generateMetadata({
   const normalizedPath = path.replace(/^\/|\/$/g, '');
 
   // Base URL with consistent trailing slash
-  const baseUrl = 'https://ezyrent-web.vercel.app/';
+  const baseUrl = 'https://www.ezyrent.org/';
 
   // full URL
   const fullUrl = new URL(normalizedPath, baseUrl)
@@ -23,21 +23,21 @@ export function generateMetadata({
     .replace(/\/+$/, '/');
 
   const baseTitle = 'EzyRent';
-  const fullTitle = title === baseTitle ? baseTitle : `${title} - ${baseTitle}`;
+  const fullTitle =
+    title === baseTitle ? baseTitle : `${baseTitle} - ${title} `;
 
   return {
     title: fullTitle,
     description,
     keywords: [
-      'rent',
-      'ezyrent',
-      'EzyRent',
-      'Easy Rent',
-      'easy rent',
-      'house to rent',
-      'rent a house',
-      'easy',
-      'easyrent'
+      'Nigeria home rentals',
+      'Rent apartments in Lagos',
+      'Verified rental properties',
+      'Secure house search Nigeria',
+      'No agent fees rental platform',
+      'EzyRent property listings',
+      'Find houses for rent in Nigeria',
+      'Affordable rentals in Lagos'
     ],
     authors: [{ name: 'EzyRent Team' }],
     openGraph: {
@@ -50,7 +50,8 @@ export function generateMetadata({
           url: new URL('/EzyRent-meta.jpg', baseUrl).toString(),
           secureUrl: new URL('/EzyRent-meta.jpg', baseUrl).toString(),
           width: 1200,
-          height: 630
+          height: 630,
+          alt: "EzyRent - Nigeria's trusted rental platform"
         }
       ],
       locale: 'en_US',
@@ -72,6 +73,9 @@ export function generateMetadata({
         'max-image-preview': 'large',
         'max-snippet': -1
       }
+    },
+    icons: {
+      icon: '/favicon.ico'
     },
     alternates: {
       canonical: fullUrl
