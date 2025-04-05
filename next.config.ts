@@ -1,5 +1,6 @@
 import type { NextConfig } from 'next';
 
+//This has been handled in the middleware
 // const allowedOrigin =
 //   process.env.NODE_ENV === 'production'
 //     ? "https://ezyrent-web.vercel.app"
