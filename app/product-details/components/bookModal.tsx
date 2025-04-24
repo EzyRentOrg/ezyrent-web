@@ -31,7 +31,7 @@ const costumerCare: costumerCare[] = [
     label: 'email',
     icon: 'email.svg',
     title: 'Email Address',
-    placeholder: 'ezyrent50@gmail.com'
+    placeholder: 'info@ezyrent.org'
   }
 ];
 
