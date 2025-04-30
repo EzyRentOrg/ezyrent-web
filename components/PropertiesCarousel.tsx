@@ -5,6 +5,8 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { EmptyState, ErrorState } from '@/components/propertyState';
 import HouseListingCard from '@/components/ui/house-listing-card';
 import Link from 'next/link';
+import { Input } from '@/components/ui/input';
+import { useDebounce } from '@/hooks/useDebounce';
 
 interface Location {
   latitude: number;
@@ -14,11 +16,13 @@ interface Location {
 interface PropertiesCarousel {
   title: string;
   location?: Location | null;
+  staticMode?: boolean;
 }
 
 export default function PropertiesCarousel({
   title,
-  location
+  location,
+  staticMode = false
 }: PropertiesCarousel) {
   const [houseListing, setHouseListing] = useState<HouseListing[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -28,43 +32,67 @@ export default function PropertiesCarousel({
     'slideRight' | 'slideLeft'
   >('slideRight');
 
+  const [search, setSearch] = useState('');
+
+  const debouncedSearch = useDebounce(search, 1000);
+
   const { isLargeScreen } = useWindowResizer();
 
   // make api call
-  const fetchProperties = useCallback(async (location?: Location) => {
-    try {
-      setLoading(true);
-      setError(null);
+  const fetchProperties = useCallback(
+    async (location?: Location) => {
+      try {
+        setLoading(true);
+        setError(null);
+        const queryParams = new URLSearchParams();
 
-      const url = `/api/fetch-listing${location ? `?latitude=${location.latitude}&longitude=${location.longitude}` : ''}`;
-      const response = await fetch(url, {
-        headers: { 'Content-Type': 'application/json' }
-      });
+        if (staticMode === false) {
+          queryParams.set('search', debouncedSearch || '');
+          if (location) {
+            queryParams.set('latitude', location.latitude.toString());
+            queryParams.set('longitude', location.longitude.toString());
+          }
+        }
 
-      if (!response.ok) {
-        throw new Error(`Failed to fetch properties: ${response.statusText}`);
+        const url = `/api/fetch-listing?${queryParams.toString()}`;
+        const response = await fetch(url, {
+          headers: { 'Content-Type': 'application/json' }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to fetch properties: ${response.statusText}`);
+        }
+
+        const {
+          data: { data }
+        } = await response.json();
+        setHouseListing(data);
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : 'Failed to fetch properties';
+        setError(errorMessage);
+      } finally {
+        setLoading(false);
       }
-
-      const {
-        data: { data }
-      } = await response.json();
-      setHouseListing(data);
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : 'Failed to fetch properties';
-      setError(errorMessage);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    },
+    [debouncedSearch, staticMode]
+  );
 
   useEffect(() => {
-    // We can go ahead and fetch properties if location is available or undefined
-    // If it is null, we wait for the user to provide a location
-    if (location !== null) {
+    if (staticMode) {
+      // Only fetch once on mount
+      void fetchProperties();
+    } else if (location && !debouncedSearch) {
       void fetchProperties(location);
     }
-  }, [fetchProperties, location]);
+  }, [location, staticMode]);
+
+  useEffect(() => {
+    // Dynamic mode: run search-only fetch when user types
+    if (!staticMode && debouncedSearch) {
+      void fetchProperties();
+    }
+  }, [debouncedSearch, staticMode]);
 
   const itemsPerPage = isLargeScreen ? 6 : 3;
   const isAtStart = currentIndex === 0;
@@ -132,11 +160,28 @@ export default function PropertiesCarousel({
         </div>
       </div>
 
+      {!staticMode && (
+        <div className="flex mt-4 items-center justify-center ">
+          <div className="space-y-2 w-full max-w-md">
+            <Input
+              disabled={loading}
+              placeholder="Enter location to search..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="border rounded-3xl p-6 md:mt-2"
+            />
+          </div>
+        </div>
+      )}
       <div className="flex flex-col justify-center">
         {error ? (
           <ErrorState message={error} onRetry={fetchProperties} />
         ) : visibleHouses.length === 0 ? (
-          <EmptyState />
+          !staticMode ? (
+            <EmptyState message="No property in your current/search location" />
+          ) : (
+            <EmptyState />
+          )
         ) : (
           <div className="mt-5 grid sm:grid-cols-[repeat(auto-fill,_minmax(280px,_1fr))] gap-6 p-2">
             {visibleHouses.map((house, index) => (

@@ -48,8 +48,8 @@ export default function Home() {
         <HeroPage />
       </div>
       <AboutUs />
-      <PropertiesCarousel title="Based on your location" location={location} />
-      <PropertiesCarousel title="Best deal" />
+      <PropertiesCarousel title="Based on location" location={location} />
+      <PropertiesCarousel title="Best deal" staticMode />
       <AboutUsVideo />
       <OfferSection />
       <AboutUsCarousel />
