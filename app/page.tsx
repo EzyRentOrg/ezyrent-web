@@ -40,6 +40,7 @@ export default function Home() {
     };
 
     fetchLocation();
+    console.log('Location:', location);
   }, []);
   return (
     <div>
@@ -48,7 +49,7 @@ export default function Home() {
         <HeroPage />
       </div>
       <AboutUs />
-      <PropertiesCarousel title="Based on location" location={location} />
+      <PropertiesCarousel title="Based on location" />
       <PropertiesCarousel title="Best deal" staticMode />
       <AboutUsVideo />
       <OfferSection />

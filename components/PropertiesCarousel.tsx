@@ -2,26 +2,28 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useWindowResizer } from '@/hooks/useWindowResizer';
 import { cn } from '@/lib/utils';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { EmptyState, ErrorState } from '@/components/propertyState';
+import {
+  EmptyState,
+  ErrorState,
+  LoadingState
+} from '@/components/propertyState';
 import HouseListingCard from '@/components/ui/house-listing-card';
 import Link from 'next/link';
 import { Input } from '@/components/ui/input';
 import { useDebounce } from '@/hooks/useDebounce';
 
-interface Location {
-  latitude: number;
-  longitude: number;
-}
+// interface Location {
+//   latitude: number;
+//   longitude: number;
+// }
 
 interface PropertiesCarousel {
   title: string;
-  location?: Location | null;
   staticMode?: boolean;
 }
 
 export default function PropertiesCarousel({
   title,
-  location,
   staticMode = false
 }: PropertiesCarousel) {
   const [houseListing, setHouseListing] = useState<HouseListing[]>([]);
@@ -39,57 +41,51 @@ export default function PropertiesCarousel({
   const { isLargeScreen } = useWindowResizer();
 
   // make api call
-  const fetchProperties = useCallback(
-    async (location?: Location) => {
-      try {
-        setLoading(true);
-        setError(null);
-        const queryParams = new URLSearchParams();
+  const fetchProperties = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const queryParams = new URLSearchParams();
 
-        if (staticMode === false) {
-          queryParams.set('search', debouncedSearch || '');
-          if (location) {
-            queryParams.set('latitude', location.latitude.toString());
-            queryParams.set('longitude', location.longitude.toString());
-          }
-        }
-
-        const url = `/api/fetch-listing?${queryParams.toString()}`;
-        const response = await fetch(url, {
-          headers: { 'Content-Type': 'application/json' }
-        });
-
-        if (!response.ok) {
-          throw new Error(`Failed to fetch properties: ${response.statusText}`);
-        }
-
-        const {
-          data: { data }
-        } = await response.json();
-        setHouseListing(data);
-      } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : 'Failed to fetch properties';
-        setError(errorMessage);
-      } finally {
-        setLoading(false);
+      if (staticMode === false) {
+        queryParams.set('search', debouncedSearch || '');
       }
-    },
-    [debouncedSearch, staticMode]
-  );
+
+      const url = `/api/fetch-listing?${queryParams.toString()}`;
+      const response = await fetch(url, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch properties: ${response.statusText}`);
+      }
+
+      const {
+        data: { data }
+      } = await response.json();
+      setHouseListing(data);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : 'Failed to fetch properties';
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  }, [debouncedSearch, staticMode]);
 
   useEffect(() => {
     if (staticMode) {
-      // Only fetch once on mount
+      // Only fetch once on mount for static carousel
       void fetchProperties();
-    } else if (location && !debouncedSearch) {
-      void fetchProperties(location);
+    } else {
+      setLoading(false);
     }
-  }, [location, staticMode]);
+  }, [staticMode]);
 
   useEffect(() => {
-    // Dynamic mode: run search-only fetch when user types
+    // Dynamic carousel: run search-only fetch when user types
     if (!staticMode && debouncedSearch) {
+      setLoading(true);
       void fetchProperties();
     }
   }, [debouncedSearch, staticMode]);
@@ -117,8 +113,24 @@ export default function PropertiesCarousel({
     currentIndex + itemsPerPage
   );
 
+  const renderEmptyState = () => {
+    if (!staticMode) {
+      return !debouncedSearch ? (
+        <></>
+      ) : (
+        <EmptyState message="No property in your current/search location" />
+      );
+    } else {
+      return <EmptyState />;
+    }
+  };
+
   return loading ? (
-    <></>
+    !staticMode && debouncedSearch ? (
+      <LoadingState />
+    ) : (
+      <></>
+    )
   ) : (
     <section
       className="max-w-[1440px] py-10 lg:py-20 mx-auto px-5 md:px-10 lg:px-20 "
@@ -177,11 +189,7 @@ export default function PropertiesCarousel({
         {error ? (
           <ErrorState message={error} onRetry={fetchProperties} />
         ) : visibleHouses.length === 0 ? (
-          !staticMode ? (
-            <EmptyState message="No property in your current/search location" />
-          ) : (
-            <EmptyState />
-          )
+          renderEmptyState()
         ) : (
           <div className="mt-5 grid sm:grid-cols-[repeat(auto-fill,_minmax(280px,_1fr))] gap-6 p-2">
             {visibleHouses.map((house, index) => (
