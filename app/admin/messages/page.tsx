@@ -1,16 +1,17 @@
 'use client';
-import React, { useState } from 'react';
-import DashboardLayout from '../components/Layouts';
-import Dashboard from '../components/dashboard';
 
-export default function Home() {
+import { useState } from 'react';
+import DashboardLayout from '../components/Layouts';
+import Messages from '../components/messages';
+
+export default function MessagesPage() {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   return (
     <DashboardLayout
-      title="Admin Dashboard"
+      title="Messages"
       sidebarProps={{ onSidebarHoverChange: setIsSidebarExpanded }}
     >
-      <Dashboard isSidebarExpanded={isSidebarExpanded} />
+      <Messages isSideBarOpen={isSidebarExpanded} />
     </DashboardLayout>
   );
 }

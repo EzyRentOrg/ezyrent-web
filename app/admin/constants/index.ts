@@ -6,6 +6,7 @@ import {
   Star,
   TrendingUpDownIcon
 } from 'lucide-react';
+import { BiMessageRoundedDetail } from 'react-icons/bi';
 
 export const siderbarItems: SidebarItemType[] = [
   { title: 'dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
@@ -16,6 +17,7 @@ export const siderbarItems: SidebarItemType[] = [
   },
   { title: 'finance', href: '/admin/finance', icon: Banknote },
   { title: 'analytics', href: '/admin/analytics', icon: TrendingUpDownIcon },
+  { title: 'messages', href: '/admin/messages', icon: BiMessageRoundedDetail },
   { title: 'blogs', href: '/admin/blogs', icon: Book },
   { title: 'reviews', href: '/admin/reviews', icon: Star }
 ];
