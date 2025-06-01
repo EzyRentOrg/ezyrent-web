@@ -119,7 +119,7 @@ export default function Messages({
     <div className="flex relative flex-col gap-3 px-5 md:px-10 overflow-hidden md:pt-20">
       {/* Fixed search and messages state toggler */}
       <div
-        className={`relative md:fixed   md:top-[110px] ${isSideBarOpen ? 'left-[180px]' : 'md:left-14 '} md:right-10 z-20 md:pt-5 pt-2 pb-4 px-5 md:px-10 flex flex-wrap gap-3 justify-between items-start md:items-center`}
+        className={`relative md:fixed   md:top-[110px] ${isSideBarOpen ? 'left-[180px]' : 'md:left-14 '} md:right-10 md:z-20 md:pt-5 pt-2 pb-4 px-5 md:px-10 flex flex-wrap gap-3 justify-between items-start md:items-center`}
       >
         {/* Status buttons */}
         <div className="flex gap-3  bg-[#EBEBEB]  rounded-full px-4 py-1 md:py-2">
@@ -153,7 +153,7 @@ export default function Messages({
         {/* messages notification */}
 
         {/* desktop */}
-        <div className="hidden w-[30%] bg-white pb-0 lg:flex flex-col gap-5 ">
+        <div className="hidden w-[30%] bg-white pb-0 lg:flex flex-col overflow-y-auto gap-5 ">
           {messageState === 'all'
             ? messages.map((message) => (
                 <UserMessageList
@@ -265,7 +265,7 @@ export default function Messages({
         {/* mobile */}
         {isMobile &&
           (!isMobileChat ? (
-            <div className="w-full bg-white pb-0 flex flex-col gap-5 ">
+            <div className="w-full bg-white overflow-y-auto pb-0 flex flex-col gap-5 ">
               {messageState === 'all'
                 ? messages.map((message) => (
                     <UserMessageList

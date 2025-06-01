@@ -57,7 +57,7 @@ export default function Dashboard({ isSidebarExpanded }: DashboardProps) {
                 : 'text-[#DC1313]'
           }`}
           >
-            <GoDotFill size={18} className="text-[#7065F0]" /> {value}
+            <GoDotFill size={18} /> {value}
           </span>
         );
       }
