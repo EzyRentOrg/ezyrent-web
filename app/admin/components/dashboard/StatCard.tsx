@@ -16,9 +16,11 @@ interface StatsCardProps {
 export function StatsCard({ title, value, percentage }: StatsCardProps) {
   return (
     <Card className="w-full p-1 bg-white">
-      <CardHeader className="flex flex-col gap-3">
-        <CardTitle className="font-light text-[#000000E5]">{title}</CardTitle>
-        <CardDescription className="text-3xl font-bold">
+      <CardHeader className="flex items-center flex-col gap-3">
+        <CardTitle className="font-light text-center text-[#000000E5]">
+          {title}
+        </CardTitle>
+        <CardDescription className="text-3xl text-center font-bold">
           {value}
         </CardDescription>
       </CardHeader>

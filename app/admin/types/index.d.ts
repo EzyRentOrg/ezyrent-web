@@ -78,3 +78,29 @@ declare interface FilterParams {
   minPrice?: number;
   maxPrice?: number;
 }
+
+// Admin dashboard types
+declare type Metric = {
+  title: string;
+  count: number;
+  percentageChange: number;
+};
+
+declare type Revenue = {
+  title: string;
+  amount: number;
+  percentageChange: number;
+};
+declare type PropertyListedByMonth = {
+  month: string;
+  count: number;
+};
+
+declare type ListingByMonthData = PropertyListedByMonth[];
+
+declare interface DashboardMetrics {
+  totalProperties: Metric;
+  bookedTours: Metric;
+  totalUsers: Metric;
+  totalRevenue: Metric | Revenue;
+}

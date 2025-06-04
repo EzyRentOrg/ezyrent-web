@@ -5,7 +5,7 @@ import Analytics from '../components/analytics';
 
 export default function AnalyticsPage() {
   return (
-    <DashboardLayout title="Admin Dashboard">
+    <DashboardLayout title="Analytics">
       <Analytics />
     </DashboardLayout>
   );

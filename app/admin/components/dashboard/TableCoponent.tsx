@@ -1,13 +1,19 @@
 'use client';
 
 import { Paper } from '@mui/material';
-import { DataGrid, GridColDef, GridRowParams } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridColDef,
+  GridRowParams,
+  GridPaginationModel
+} from '@mui/x-data-grid';
 
 type TableComponentProps = {
   columns: GridColDef[];
   rows: { [key: string]: string | number }[];
   paginationActive: boolean;
   pageSize: number;
+  setPageSize: (newSize: number) => void;
   rowHeight?: number;
   showCheckbox?: boolean;
   headerStyle?: {
@@ -20,19 +26,19 @@ type TableComponentProps = {
 export default function MuiTableComponent({
   columns,
   rows,
-  paginationActive,
   pageSize,
+  setPageSize,
   rowHeight,
   showCheckbox,
   headerStyle,
   onRowClick
 }: TableComponentProps) {
-  const paginationModel = { page: 0, pageSize };
-  // Handle row click
+  const handlePaginationChange = (model: GridPaginationModel) => {
+    setPageSize(model.pageSize);
+  };
+
   const handleRowClick = (params: GridRowParams) => {
-    if (onRowClick) {
-      onRowClick(params);
-    }
+    onRowClick?.(params);
   };
 
   return (
@@ -40,14 +46,13 @@ export default function MuiTableComponent({
       <DataGrid
         rows={rows}
         columns={columns}
-        initialState={{
-          pagination: paginationActive ? { paginationModel } : undefined
-        }}
-        pageSizeOptions={[5, 10, 15, 20]}
+        paginationModel={{ page: 0, pageSize }}
+        onPaginationModelChange={handlePaginationChange}
+        pageSizeOptions={[5, 10, 20, 50]}
         checkboxSelection={showCheckbox}
-        disableColumnFilter={true}
-        disableColumnMenu={true}
-        disableRowSelectionOnClick={true}
+        disableColumnFilter
+        disableColumnMenu
+        disableRowSelectionOnClick
         rowHeight={rowHeight}
         onRowClick={handleRowClick}
         sx={{
@@ -60,7 +65,7 @@ export default function MuiTableComponent({
             fontWeight: headerStyle?.fontWeight ?? 'normal'
           },
           '& .MuiDataGrid-row': {
-            cursor: `${onRowClick && 'pointer'}` // Always show pointer cursor on rows
+            cursor: `${onRowClick && 'pointer'}`
           }
         }}
       />
