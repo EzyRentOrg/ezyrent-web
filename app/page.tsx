@@ -48,17 +48,24 @@ export default function Home() {
       <div>
         <HeroPage />
       </div>
-      <AboutUs />
-      <PropertiesCarousel title="Based on location" />
-      <PropertiesCarousel title="Best deal" staticMode />
-      <AboutUsVideo />
-      <OfferSection />
-      <AboutUsCarousel />
-      <GetStarted />
-      <StartYourJourney />
-      <Testimonial />
-      <FAQs />
-      {/* <StartYourJourney /> */}
+      <main>
+        <AboutUs />
+        <PropertiesCarousel title="Based on location" />
+        <PropertiesCarousel
+          title="Best deal"
+          headingId="best-deals"
+          staticMode
+        />
+        <AboutUsVideo />
+        <OfferSection />
+        <AboutUsCarousel />
+        <GetStarted />
+        <StartYourJourney />
+        <Testimonial />
+        <FAQs />
+
+        {/* <StartYourJourney /> */}
+      </main>
       <Footer />
     </div>
   );

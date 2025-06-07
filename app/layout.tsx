@@ -4,6 +4,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Toaster } from 'sonner';
 import { generateMetadata } from '@/lib/metadata';
 import './globals.css';
+import Script from 'next/script';
 
 export const metadata = generateMetadata({
   title: 'Secure, Verified & Hassle-Free Home Rentals in Nigeria',
@@ -20,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <script
+        <Script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
@@ -61,6 +62,12 @@ export default function RootLayout({
               // }
             })
           }}
+          strategy="beforeInteractive" // loads in head before React hydration
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/hero/desktopHeroImage_1102x617.webp"
         />
       </head>
       <body

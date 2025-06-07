@@ -20,11 +20,13 @@ import { useDebounce } from '@/hooks/useDebounce';
 interface PropertiesCarousel {
   title: string;
   staticMode?: boolean;
+  headingId?: string;
 }
 
 export default function PropertiesCarousel({
   title,
-  staticMode = false
+  staticMode = false,
+  headingId = 'location-houses-heading'
 }: PropertiesCarousel) {
   const [houseListing, setHouseListing] = useState<HouseListing[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -134,15 +136,15 @@ export default function PropertiesCarousel({
   ) : (
     <section
       className="max-w-[1440px] py-10 lg:py-20 mx-auto px-5 md:px-10 lg:px-20 "
-      aria-labelledby="location-houses-heading"
+      aria-labelledby={headingId}
     >
       <div className="flex items-center w-full">
-        <h3
-          id="location-houses-heading"
+        <h2
+          id={headingId}
           className="first-letter:capitalize font-semibold md:text-[1.5rem] text-[#7065F0]"
         >
           {title}
-        </h3>
+        </h2>
         <div className="flex items-center space-x-10 ml-auto">
           <button
             onClick={handlePrev}
