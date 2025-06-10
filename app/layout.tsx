@@ -22,6 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <Script
+          id="EzyRent description"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
