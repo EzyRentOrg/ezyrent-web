@@ -10,7 +10,12 @@ import {
 
 type TableComponentProps = {
   columns: GridColDef[];
-  rows: { [key: string]: string | number }[];
+  rows: {
+    [key: string]:
+      | string
+      | number
+      | { [key: string]: string | number | boolean };
+  }[];
   paginationActive: boolean;
   pageSize: number;
   setPageSize: (newSize: number) => void;

@@ -67,6 +67,47 @@ export const DashboardTableRows = () => {
   return rowData;
 };
 
+export const UserMgtTableRows = () => {
+  const statuses = ['Suspended', 'Active', 'Inactive'];
+  const roles = ['Landlord', 'Tenant'];
+  const vStatuses = ['Verified', 'Unverified'];
+
+  const rowData = Array.from({ length: 10 }, (_, index) => ({
+    id: index + 1,
+    name: `Olawale Abolade`,
+    role: roles[index % 2], // Repeats 0, 1, 2 → Landlord, User, Agent
+    contact: { email: 'john.smith@email.com', phone: '+234 123 4567' },
+    location: 'Lagos, Nigeria',
+    status: statuses[index % 3], // Repeats 0, 1 → Suspended, Active
+    verificationStatus: vStatuses[index % 2] // Repeats 0, 1 → Verified, Unverified
+  }));
+
+  return rowData;
+};
+
+export const FinanceTableRows = () => {
+  const statuses = ['paid', 'refunded', 'failed', 'pending'];
+  const roles = ['landlord', 'tenant'];
+  const properties = ['Palm Harbor', 'Sunset Park', 'The Venice'];
+  const paymentMethods = ['card', 'transfer'];
+
+  const rowData = Array.from({ length: 10 }, (_, index) => ({
+    id: index + 1,
+    date: new Date().toLocaleDateString(),
+    paymentType: `Payment Type ${index + 1}`,
+    amount: `$${(index + 1) * 100}`,
+    senderName: `Olawale Abolade`,
+    role: roles[index % 2], // Repeats 0, 1, 2 → Landlord, User, Agent
+    property: properties[index % 3], // Repeats 0, 1, 2 → Palm Harbor, Sunset Park, The Venice
+    ezyRentCharge: `$${(index + 1) * 10}`,
+    netToReceiver: `$${(index + 1) * 90}`,
+    paymentMethod: paymentMethods[index % 2], // Repeats 0,
+    status: statuses[index % 4] // Repeats 0, 1 → paid, refunded, failed, pending
+  }));
+
+  return rowData;
+};
+
 export const DashboardAreaChartData = [
   { name: 'Jan', value: 3000 },
   { name: 'Feb', value: 4500 },

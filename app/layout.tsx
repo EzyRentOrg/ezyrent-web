@@ -22,6 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <Script
+          id="schema-org"
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({

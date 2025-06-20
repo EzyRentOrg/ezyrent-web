@@ -28,6 +28,8 @@ export default function AdminHeader({
   const pathName = usePathname();
   const hideTitle = windowWidth <= 768 && handleClick;
 
+  const pathswithoutSearchBar = ['/admin/messages', '/admin/users'];
+
   return (
     <header
       className="bg-white py-8 border-b w-full flex items-center justify-between sticky top-0 z-10 px-2 lg:px-5"
@@ -55,7 +57,7 @@ export default function AdminHeader({
       )}
 
       {/* Search */}
-      {pathName !== '/admin/messages' && (
+      {!pathswithoutSearchBar.includes(pathName) && (
         <div className="hidden lg:block relative" role="search">
           <label htmlFor="search-input" className="sr-only">
             Search {title}

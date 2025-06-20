@@ -118,7 +118,8 @@ export default function Messages({
   return (
     <div className="flex relative flex-col gap-3 px-5 md:px-10 overflow-hidden md:pt-20">
       {/* Fixed search and messages state toggler */}
-      <div
+      <nav
+        id="messages-nav"
         className={`relative md:fixed   md:top-[110px] ${isSideBarOpen ? 'left-[180px]' : 'md:left-14 '} md:right-10 md:z-20 md:pt-5 pt-2 pb-4 px-5 md:px-10 flex flex-wrap gap-3 justify-between items-start md:items-center`}
       >
         {/* Status buttons */}
@@ -147,9 +148,9 @@ export default function Messages({
           />
           <GoSearch size={24} />
         </div>
-      </div>
+      </nav>
 
-      <div className="flex flex-col md:flex-row">
+      <section id="message-list" className="flex flex-col md:flex-row">
         {/* messages notification */}
 
         {/* desktop */}
@@ -373,7 +374,7 @@ export default function Messages({
               </div>
             </div>
           ))}
-      </div>
+      </section>
     </div>
   );
 }
