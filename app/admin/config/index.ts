@@ -108,6 +108,33 @@ export const FinanceTableRows = () => {
   return rowData;
 };
 
+export const TourTableRows = () => {
+  const statuses = ['completed', 'pending', 'assigned'];
+  const users = [
+    'Charles Emmanuel',
+    'Igashi Michael',
+    'Dieli Precious',
+    'Helen Doe'
+  ];
+  const staffs = ['Olawale Abolade', 'John Smith', 'Jane Doe'];
+  const locations = [
+    'Palm Harbor, Lekki',
+    'Sunset Park, Ikoyi',
+    'The Venice, Victoria Island'
+  ];
+
+  const rowData = Array.from({ length: 10 }, (_, index) => ({
+    id: `tour ${index + 1}`,
+    date: new Date().toLocaleDateString(),
+    staff: staffs[index % 3], // Repeats 0, 1, 2 → Olawale Abolade, John Smith, Jane Doe
+    location: locations[index % 3], // Repeats 0, 1, 2 → Palm Harbor, Sunset Park, The Venice
+    user: users[index % 4], // Repeats 0, 1, 2 → Palm Harbor, Sunset Park, The Venice //
+    status: statuses[index % 3] // Repeats 0, 1 → completed, pending, assigned
+  }));
+
+  return rowData;
+};
+
 export const DashboardAreaChartData = [
   { name: 'Jan', value: 3000 },
   { name: 'Feb', value: 4500 },

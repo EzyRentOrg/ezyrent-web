@@ -8,14 +8,9 @@ import {
   GridPaginationModel
 } from '@mui/x-data-grid';
 
-type TableComponentProps = {
+type TableComponentProps<T> = {
   columns: GridColDef[];
-  rows: {
-    [key: string]:
-      | string
-      | number
-      | { [key: string]: string | number | boolean };
-  }[];
+  rows: T[];
   paginationActive: boolean;
   pageSize: number;
   setPageSize: (newSize: number) => void;
@@ -28,7 +23,7 @@ type TableComponentProps = {
   onRowClick?: (params: GridRowParams) => void;
 };
 
-export default function MuiTableComponent({
+export default function MuiTableComponent<T>({
   columns,
   rows,
   pageSize,
@@ -37,7 +32,7 @@ export default function MuiTableComponent({
   showCheckbox,
   headerStyle,
   onRowClick
-}: TableComponentProps) {
+}: TableComponentProps<T>) {
   const handlePaginationChange = (model: GridPaginationModel) => {
     setPageSize(model.pageSize);
   };

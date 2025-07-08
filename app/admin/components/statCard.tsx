@@ -31,7 +31,7 @@ export const UserStatsCard = ({
             defaultValue="week"
             variant="standard"
             disableUnderline
-            className={`ml-2 ${dropDownBgColor} ${dropDowntextColor} rounded-xl  px-3 py-1`}
+            className={`ml-2 ${dropDownBgColor} text-xs ${dropDowntextColor} rounded-xl  px-2 py-1`}
           >
             <MenuItem value="week">Weekly</MenuItem>
             <MenuItem value="month">Monthly</MenuItem>
