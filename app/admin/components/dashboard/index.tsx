@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import StatsCard from './StatCard';
 import { Button } from '@/components/ui/button';
 import { MesssageCard } from './MessageCard';
@@ -11,6 +11,7 @@ import MuiTableComponent from './TableCoponent';
 import { AreaLineChart } from './AreaChart';
 import { DashboardMessages, DashboardTableRows } from '../../config';
 import Link from 'next/link';
+import { ITEMS_PER_PAGE } from '../../constants';
 
 interface DashboardProps {
   isSidebarExpanded: boolean;
@@ -19,6 +20,9 @@ interface DashboardProps {
 export default function Dashboard({ isSidebarExpanded }: DashboardProps) {
   const [dataLenght, setDataLength] = useState(3);
   const [allMessages, setAllMessages] = useState(false);
+  const [properties, setProperties] = useState<HouseListing[]>([]);
+  const [page, setPage] = useState(1);
+  // const [error, setError] = useState<string | null>(null);
   const [DashboardMetrics, setDashboardMetrics] = useState({
     totalProperties: {
       title: 'Total Properties',
@@ -44,7 +48,7 @@ export default function Dashboard({ isSidebarExpanded }: DashboardProps) {
       flex: 1
     },
     {
-      field: 'type',
+      field: 'propertyType',
       headerName: 'Type',
       flex: 0.5
     },
@@ -58,20 +62,22 @@ export default function Dashboard({ isSidebarExpanded }: DashboardProps) {
           <span
             className={` flex gap-1  font-medium text-sm
           ${
-            value === 'Published'
+            value === 'published'
               ? ' text-[#7065F0]'
-              : value === 'Pending'
+              : value === 'pending'
                 ? ' text-[#FFA500]'
-                : 'text-[#DC1313]'
+                : value === 'available'
+                  ? 'text-green-500'
+                  : 'text-[#DC1313]'
           }`}
           >
             <GoDotFill size={18} /> {value}
           </span>
         );
       }
-    },
+    }
 
-    { field: 'inquiry', headerName: 'Inquiries', flex: 0.7 }
+    // { field: 'inquiry', headerName: 'Inquiries', flex: 0.7 }
   ];
 
   useEffect(() => {
@@ -132,6 +138,38 @@ export default function Dashboard({ isSidebarExpanded }: DashboardProps) {
     fetchOverview();
     fetchPropertyListedByMonth();
   }, []);
+
+  const fetchProperties = useCallback(async () => {
+    try {
+      // setError(null);
+      const queryParams = new URLSearchParams({
+        page: page > 0 ? page.toString() : '1',
+        limit: ITEMS_PER_PAGE.toString()
+      });
+
+      const response = await fetch(`/api/fetch-listing?${queryParams}`, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch properties: ${response.statusText}`);
+      }
+
+      const {
+        data: { data }
+      } = await response.json();
+      setProperties(data);
+    } catch (err) {
+      // const errorMessage =
+      //   err instanceof Error ? err.message : 'Failed to fetch properties';
+      console.error('Error fetching properties:', err);
+      // setError(errorMessage);
+    }
+  }, [page]);
+
+  useEffect(() => {
+    fetchProperties();
+  }, [fetchProperties]);
 
   const metricsArray: Metric[] = Object.values(DashboardMetrics);
   const DashboardStats = metricsArray.map((metric) => ({
@@ -221,12 +259,14 @@ export default function Dashboard({ isSidebarExpanded }: DashboardProps) {
 
         <div className="w-full min-h-[200px]">
           <MuiTableComponent
-            rows={DashboardTableRows()}
+            rows={properties}
             columns={columns}
             pageSize={dataLenght}
             setPageSize={setDataLength}
             paginationActive={true}
             showCheckbox={false}
+            page={page} // DataGrid uses 0-based index for pages
+            setPage={setPage}
           />
         </div>
       </div>

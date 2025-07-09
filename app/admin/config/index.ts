@@ -58,7 +58,7 @@ export const DashboardTableRows = () => {
   const rowData = Array.from({ length: 10 }, (_, index) => ({
     id: index + 1,
     name: `Property ${index + 1}`,
-    type: types[index % 3], // Repeats 0, 1, 2 → House, Land, Car
+    propertyType: types[index % 3], // Repeats 0, 1, 2 → House, Land, Car
     status: statuses[index % 3], // Repeats 0, 1, 2 → Published, Pending, Failed
     inquiry: `Enquiry ${index + 1}`,
     price: `$${(index + 1) * 1000}`

@@ -1,10 +1,26 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
 export async function GET() {
-  // Extract the property ID from the URL params
   try {
+    // Get auth token from cookies
+    const cookieStore = await cookies();
+    const token = cookieStore.get('ezyrent_auth_token')?.value;
+
+    if (!token) {
+      return NextResponse.json(
+        { success: false, message: 'Authentication required' },
+        { status: 401 }
+      );
+    }
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/admin/properties-listed-by-month`
+      `${process.env.NEXT_PUBLIC_BASE_URL}/admin/properties-listed-by-month`,
+      {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     );
 
     if (!response.ok) {

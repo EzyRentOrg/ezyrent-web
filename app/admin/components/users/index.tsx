@@ -248,7 +248,20 @@ export default function UserMgt({ isSidebarExpanded }: UserMgtProps) {
       }
     };
 
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch('/api/users');
+        if (!response.ok) {
+          throw new Error('Failed to fetch users data');
+        }
+        const { data } = await response.json();
+        console.log('Users Data:', data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
     fetchUsersMgt();
+    fetchUsers();
   }, []);
 
   const metricsArray: Metric[] = Object.values(UserMetrics);
@@ -295,43 +308,6 @@ export default function UserMgt({ isSidebarExpanded }: UserMgtProps) {
             Download
           </button>
         </div>
-
-        {/* <div className="flex justify-between items-center ">
-          <div className="flex items-center gap-5 ">
-            <Select
-              defaultValue="all"
-              variant="standard"
-              disableUnderline
-              className="ml-2 text-gray-600 rounded-lg border border-[#ADADAD] px-3 py-1"
-            >
-              <MenuItem value="all">All Roles</MenuItem>
-              <MenuItem value="landlords">Landlords</MenuItem>
-              <MenuItem value="users">Users</MenuItem>
-            </Select>
-
-            <Select
-              defaultValue="all"
-              variant="standard"
-              disableUnderline
-              className="ml-2 text-gray-600 rounded-lg border border-[#ADADAD] px-3 py-1"
-            >
-              <MenuItem value="all">All Statuses</MenuItem>
-              <MenuItem value="active">Active</MenuItem>
-              <MenuItem value="suspended">Suspended</MenuItem>
-            </Select>
-
-            <Select
-              defaultValue="all"
-              variant="standard"
-              disableUnderline
-              className="ml-2 text-gray-600 rounded-lg border border-[#ADADAD] px-3 py-1"
-            >
-              <MenuItem value="all">All Verification</MenuItem>
-              <MenuItem value="verified">Verified</MenuItem>
-              <MenuItem value="unverified">Unverified</MenuItem>
-            </Select>
-          </div>
-        </div> */}
 
         <div className="w-full min-h-[200px]">
           <MuiTableComponent

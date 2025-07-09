@@ -11,8 +11,10 @@ import {
 type TableComponentProps<T> = {
   columns: GridColDef[];
   rows: T[];
-  paginationActive: boolean;
+  paginationActive?: boolean;
   pageSize: number;
+  page?: number; // Optional page prop for controlled pagination
+  setPage?: (newPage: number) => void;
   setPageSize: (newSize: number) => void;
   rowHeight?: number;
   showCheckbox?: boolean;
@@ -28,13 +30,19 @@ export default function MuiTableComponent<T>({
   rows,
   pageSize,
   setPageSize,
+  paginationActive,
+  page = 0, // Default to 0 if not provided
+  setPage,
   rowHeight,
   showCheckbox,
   headerStyle,
   onRowClick
 }: TableComponentProps<T>) {
   const handlePaginationChange = (model: GridPaginationModel) => {
-    setPageSize(model.pageSize);
+    if (setPage) {
+      return setPage(model.page); // update page
+    }
+    setPageSize(model.pageSize); // update page size
   };
 
   const handleRowClick = (params: GridRowParams) => {
@@ -46,7 +54,7 @@ export default function MuiTableComponent<T>({
       <DataGrid
         rows={rows}
         columns={columns}
-        paginationModel={{ page: 0, pageSize }}
+        paginationModel={{ page: page, pageSize }}
         onPaginationModelChange={handlePaginationChange}
         pageSizeOptions={[5, 10, 20, 50]}
         checkboxSelection={showCheckbox}
@@ -55,6 +63,7 @@ export default function MuiTableComponent<T>({
         disableRowSelectionOnClick
         rowHeight={rowHeight}
         onRowClick={handleRowClick}
+        pagination={paginationActive ? true : undefined}
         sx={{
           border: 0,
           paddingLeft: 2,
