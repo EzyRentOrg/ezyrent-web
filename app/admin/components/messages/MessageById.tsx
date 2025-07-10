@@ -96,6 +96,7 @@ export default function MessagesById({ params }: MessageProps) {
 
   const handleNotificationClick = (id: number) => {
     // Handle notification click logic here
+    console.log('Notification clicked', id);
     const clickedMessage = messages.find((message) => message.id === id);
     setActiveChat(clickedMessage as Message);
   };

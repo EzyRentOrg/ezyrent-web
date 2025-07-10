@@ -42,7 +42,7 @@ type MetricsState = {
 const initialMetrics: MetricsState = {
   totalTourReq: { title: 'Total Tour Requests', count: 0, percentageChange: 0 },
   pendingTour: { title: 'Pending Tour', count: 0, percentageChange: 0 },
-  assignedTour: { title: 'Assigned Tour', count: 0, percentageChange: 0 },
+  assignedTour: { title: 'Assigned Tour', count: 0, percentageChange: 0 }
 };
 
 export default function TourMgt({ isSidebarExpanded }: TourMgtProps) {
@@ -72,7 +72,7 @@ export default function TourMgt({ isSidebarExpanded }: TourMgtProps) {
       flex: 0.5,
       renderCell: ({ value }) => (
         <span className="text-[#7065F0] text-sm font-medium">{value}</span>
-      ),
+      )
     },
     {
       field: 'propertyAddress',
@@ -80,7 +80,7 @@ export default function TourMgt({ isSidebarExpanded }: TourMgtProps) {
       flex: 0.7,
       renderCell: ({ value }) => (
         <span className="text-[#7065F0] text-sm font-medium">{value}</span>
-      ),
+      )
     },
     {
       field: 'tourDate',
@@ -90,7 +90,7 @@ export default function TourMgt({ isSidebarExpanded }: TourMgtProps) {
         <span className="text-[#7065F0] text-sm font-medium">
           {formatDateTime(row.tourDate, row.tourTime)}
         </span>
-      ),
+      )
     },
     {
       field: 'status',
@@ -99,16 +99,17 @@ export default function TourMgt({ isSidebarExpanded }: TourMgtProps) {
       renderCell: ({ value }) => (
         <span
           className={`font-medium text-sm rounded-full px-2 py-1
-            ${value === 'CONFIRMED'
-              ? 'text-[#0AB626] bg-[#0AB62633]'
-              : value === 'PENDING'
-                ? 'text-[#9747FF] bg-[#9747FF33]'
-                : 'text-[#999999] bg-[#99999933]'
+            ${
+              value === 'CONFIRMED'
+                ? 'text-[#0AB626] bg-[#0AB62633]'
+                : value === 'PENDING'
+                  ? 'text-[#9747FF] bg-[#9747FF33]'
+                  : 'text-[#999999] bg-[#99999933]'
             }`}
         >
           {value}
         </span>
-      ),
+      )
     },
     {
       field: 'staff',
@@ -118,7 +119,7 @@ export default function TourMgt({ isSidebarExpanded }: TourMgtProps) {
         <span className="text-[#7065F0] text-sm font-medium">
           {value || '—'}
         </span>
-      ),
+      )
     },
     {
       field: 'Action',
@@ -167,8 +168,8 @@ export default function TourMgt({ isSidebarExpanded }: TourMgtProps) {
             </Popper>
           </div>
         </div>
-      ),
-    },
+      )
+    }
   ];
 
   useEffect(() => {
@@ -184,28 +185,30 @@ export default function TourMgt({ isSidebarExpanded }: TourMgtProps) {
         if (!Array.isArray(bookings)) throw new Error('Invalid response');
         setTableData(bookings);
 
-
-        const pending = bookings.filter((item) => item.status === 'PENDING').length;
-        const assigned = bookings.filter((item) => item.status === 'ASSIGNED').length;
+        const pending = bookings.filter(
+          (item) => item.status === 'PENDING'
+        ).length;
+        const assigned = bookings.filter(
+          (item) => item.status === 'ASSIGNED'
+        ).length;
 
         setTourMetrics({
           totalTourReq: {
             title: 'Total Tour Requests',
             count: bookings.length,
-            percentageChange: 20,
+            percentageChange: 20
           },
           pendingTour: {
             title: 'Pending Tour',
             count: pending,
-            percentageChange: 15,
+            percentageChange: 15
           },
           assignedTour: {
             title: 'Assigned Tour',
             count: assigned,
-            percentageChange: 10,
-          },
+            percentageChange: 10
+          }
         });
-
 
         setTableData(bookings);
       } catch (error) {
@@ -221,7 +224,7 @@ export default function TourMgt({ isSidebarExpanded }: TourMgtProps) {
   const TourMgtStats = Object.values(tourMetrics).map((metric) => ({
     title: metric.title,
     value: metric.count.toLocaleString(),
-    percentage: metric.percentageChange,
+    percentage: metric.percentageChange
   }));
 
   return (
@@ -244,8 +247,9 @@ export default function TourMgt({ isSidebarExpanded }: TourMgtProps) {
 
       {/* table section */}
       <section
-        className={`flex flex-col gap-2 ${isSidebarExpanded ? 'w-[1100px] mx-auto' : 'ml-0 w-full'
-          } rounded-2xl`}
+        className={`flex flex-col gap-2 ${
+          isSidebarExpanded ? 'w-[1100px] mx-auto' : 'ml-0 w-full'
+        } rounded-2xl`}
       >
         <div className="flex flex-col gap-5 md:gap-0 md:flex-row justify-between p-5 md:items-center">
           <div className="flex items-center gap-8">
@@ -274,7 +278,7 @@ export default function TourMgt({ isSidebarExpanded }: TourMgtProps) {
               rows={tableData}
               columns={columns}
               pageSize={10}
-              setPageSize={() => { }}
+              setPageSize={() => {}}
               paginationActive={true}
               showCheckbox={false}
             />
