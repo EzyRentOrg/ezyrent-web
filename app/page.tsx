@@ -41,7 +41,7 @@ export default function Home() {
 
     fetchLocation();
     console.log('Location:', location);
-  }, []);
+  }, [location]);
   return (
     <div>
       <Header />

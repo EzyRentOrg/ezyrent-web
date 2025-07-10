@@ -3,6 +3,7 @@ import { GoSearch } from 'react-icons/go';
 import profile1 from '../../assets/Ellipse-4.png';
 import profile2 from '../../assets/Ellipse-6.png';
 import { BsSend, BsThreeDotsVertical } from 'react-icons/bs';
+import Image from 'next/image';
 
 export interface MessageProps {
   params: Promise<{ id: string }>;
@@ -74,7 +75,6 @@ export default function MessagesById({ params }: MessageProps) {
   } as Message);
   // Get the id using React.use()
   const { id } = use(params);
-  console.log(id);
 
   const SendMessage = () => {
     if (!adminMessages.trim()) return;
@@ -96,7 +96,6 @@ export default function MessagesById({ params }: MessageProps) {
 
   const handleNotificationClick = (id: number) => {
     // Handle notification click logic here
-    console.log('Notification clicked', id);
     const clickedMessage = messages.find((message) => message.id === id);
     setActiveChat(clickedMessage as Message);
   };
@@ -146,8 +145,10 @@ export default function MessagesById({ params }: MessageProps) {
               onClick={() => handleNotificationClick(message.id)}
               className={`flex items-center cursor-pointer  border-b gap-5 p-3  bg-white`}
             >
-              <img
+              <Image
                 src={message.photo.src}
+                width={12}
+                height={12}
                 alt="Profile"
                 className="w-12 h-12 rounded-full"
               />
@@ -172,8 +173,10 @@ export default function MessagesById({ params }: MessageProps) {
           <div className="flex justify-between items-center mb-4 border-b">
             <div className="flex items-center  gap-5 mb-5">
               <div className="relative">
-                <img
+                <Image
                   src={activeChat.photo.src}
+                  width={12}
+                  height={12}
                   alt="profile image"
                   className="w-12 h-12 rounded-full"
                 />

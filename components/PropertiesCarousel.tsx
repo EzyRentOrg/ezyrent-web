@@ -82,7 +82,7 @@ export default function PropertiesCarousel({
     } else {
       setLoading(false);
     }
-  }, [staticMode]);
+  }, [staticMode, fetchProperties]);
 
   useEffect(() => {
     // Dynamic carousel: run search-only fetch when user types
@@ -90,7 +90,7 @@ export default function PropertiesCarousel({
       setLoading(true);
       void fetchProperties();
     }
-  }, [debouncedSearch, staticMode]);
+  }, [debouncedSearch, staticMode, fetchProperties]);
 
   const itemsPerPage = isLargeScreen ? 6 : 3;
   const isAtStart = currentIndex === 0;

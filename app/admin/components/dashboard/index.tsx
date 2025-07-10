@@ -84,7 +84,7 @@ export default function Dashboard({ isSidebarExpanded }: DashboardProps) {
     const fetchOverview = async () => {
       try {
         const response = await fetch('/api/overview');
-        console.log('response', response);
+        // console.log('response', response);
         if (!response.ok) {
           throw new Error('Failed to fetch dashboard overview data');
         }
