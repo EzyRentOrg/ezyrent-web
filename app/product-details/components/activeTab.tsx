@@ -11,8 +11,7 @@ import {
   Bath,
   BedDouble,
   Diamond,
-  Mail,
-  Phone
+  Mail
 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { MdWhatsapp } from 'react-icons/md';

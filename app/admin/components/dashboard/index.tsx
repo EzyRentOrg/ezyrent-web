@@ -12,6 +12,7 @@ import { AreaLineChart } from './AreaChart';
 import { DashboardMessages, DashboardTableRows } from '../../config';
 import Link from 'next/link';
 import { ITEMS_PER_PAGE } from '../../constants';
+import { formatAmount } from '@/app/util';
 
 interface DashboardProps {
   isSidebarExpanded: boolean;
@@ -52,7 +53,18 @@ export default function Dashboard({ isSidebarExpanded }: DashboardProps) {
       headerName: 'Type',
       flex: 0.5
     },
-    { field: 'price', headerName: 'Price', flex: 0.7 },
+    {
+      field: 'price',
+      headerName: 'Price',
+      renderCell: ({ value }) => {
+        return (
+          <span className="text-[#7065F0] font-medium text-sm">
+            {formatAmount(value)}
+          </span>
+        );
+      },
+      flex: 0.7
+    },
     {
       field: 'status',
       headerName: 'Status',

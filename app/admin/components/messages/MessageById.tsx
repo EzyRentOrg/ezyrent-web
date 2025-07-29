@@ -75,7 +75,7 @@ export default function MessagesById({ params }: MessageProps) {
   } as Message);
   // Get the id using React.use()
   const { id } = use(params);
-console.log(id)
+  console.log(id);
   const SendMessage = () => {
     if (!adminMessages.trim()) return;
 
