@@ -22,7 +22,7 @@ export async function GET() {
         }
       }
     );
-    console.log('api response:', response);
+
     if (!response.ok) {
       // Handle specific auth errors
       if (response.status === 401 || response.status === 403) {

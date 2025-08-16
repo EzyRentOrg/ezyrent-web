@@ -12,6 +12,8 @@ import {
 type AreaChartProps = {
   data: { [key: string]: number | string }[];
   dataKey: string;
+  dataKey2?: string;
+  color2?: string;
   xKey: string;
   color?: string;
   height?: number;

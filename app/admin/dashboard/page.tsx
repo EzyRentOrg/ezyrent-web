@@ -7,7 +7,7 @@ export default function Home() {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   return (
     <DashboardLayout
-      title="Admin Dashboard"
+      title="Dashboard"
       sidebarProps={{ onSidebarHoverChange: setIsSidebarExpanded }}
     >
       <Dashboard isSidebarExpanded={isSidebarExpanded} />

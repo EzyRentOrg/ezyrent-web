@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { GridColDef } from '@mui/x-data-grid';
 import { FinanceTableRows } from '../../config';
-import MuiTableComponent from '../dashboard/TableCoponent';
+import MuiTableComponent from '../TableComponent';
 import { PiSlidersHorizontalFill } from 'react-icons/pi';
 import { UserStatsCard } from '../statCard';
 import Link from 'next/link';

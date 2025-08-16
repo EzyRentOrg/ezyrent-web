@@ -8,9 +8,9 @@ import {
   AnalyticsPieChartData
 } from '../../config';
 import StatsCard from '../dashboard/StatCard';
-import { AreaLineChart } from '../dashboard/AreaChart';
-import TwoArcPieChart from './PieChart';
-import ReusableLineChart from './LineChart';
+import { AreaLineChart } from '../Charts/AreaChart';
+import TwoArcPieChart from '../Charts/PieChart';
+import ReusableLineChart from '../Charts/LineChart';
 import dayjs from 'dayjs';
 
 export default function Analytics() {

@@ -11,7 +11,7 @@ import { Popper } from '@mui/material';
 import { LuEye } from 'react-icons/lu';
 import { UserStatsCard } from '../statCard';
 import { formatDateTime } from '@/lib/utils';
-import MuiTableComponent from '../dashboard/TableCoponent';
+import MuiTableComponent from '../TableComponent';
 
 interface TourMgtProps {
   isSidebarExpanded: boolean;
