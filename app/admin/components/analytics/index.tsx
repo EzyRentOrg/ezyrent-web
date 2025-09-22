@@ -12,8 +12,10 @@ import { AreaLineChart } from '../Charts/AreaChart';
 import TwoArcPieChart from '../Charts/PieChart';
 import ReusableLineChart from '../Charts/LineChart';
 import dayjs from 'dayjs';
+import { DashboardLoadingState } from '../DashboardLoadingState';
 
 export default function Analytics() {
+  const [loading, setLoading] = useState(true);
   const [DashboardMetrics, setDashboardMetrics] = useState({
     totalProperties: {
       title: 'Total Properties',
@@ -61,6 +63,8 @@ export default function Analytics() {
         }));
       } catch (error) {
         console.error('Error fetching dashboard overview:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -78,6 +82,8 @@ export default function Analytics() {
         setPropertyListedByMonth(formattedData);
       } catch (error) {
         console.error('Error fetching dashboard overview:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -91,7 +97,9 @@ export default function Analytics() {
     value: metric.count.toLocaleString(),
     percentage: metric.percentageChange
   }));
-  return (
+  return loading ? (
+    <DashboardLoadingState />
+  ) : (
     <div className="flex flex-col gap-5 px-4 md:px-10 py-5">
       {/* statistics section */}
       <section

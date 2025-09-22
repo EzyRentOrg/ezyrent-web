@@ -4,15 +4,15 @@ import React, { useCallback, useEffect, useState } from 'react';
 import StatsCard from './StatCard';
 import { Button } from '@/components/ui/button';
 import { MesssageCard } from './MessageCard';
-import { GridColDef } from '@mui/x-data-grid';
 import dayjs from 'dayjs';
-import { GoDotFill } from 'react-icons/go';
-import MuiTableComponent from '../TableComponent';
+import MuiTableComponent from '../Table/TableComponent';
 import { AreaLineChart } from '../Charts/AreaChart';
 import { DashboardMessages, DashboardTableRows } from '../../config';
 import Link from 'next/link';
 import { ITEMS_PER_PAGE } from '../../constants';
-import { formatAmount } from '@/app/util';
+import { DashboardColumns } from '../Table/columns';
+import { ErrorState } from '@/components/propertyState';
+import { DashboardLoadingState } from '../DashboardLoadingState';
 
 interface DashboardProps {
   isSidebarExpanded: boolean;
@@ -23,7 +23,8 @@ export default function Dashboard({ isSidebarExpanded }: DashboardProps) {
   const [allMessages, setAllMessages] = useState(false);
   const [properties, setProperties] = useState<HouseListing[]>([]);
   const [page, setPage] = useState(1);
-  // const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [DashboardMetrics, setDashboardMetrics] = useState({
     totalProperties: {
       title: 'Total Properties',
@@ -37,67 +38,13 @@ export default function Dashboard({ isSidebarExpanded }: DashboardProps) {
   const [propertyListedByMonth, setPropertyListedByMonth] =
     useState<ListingByMonthData>([]);
 
-  const columns: GridColDef[] = [
-    {
-      field: 'id',
-      headerName: 'Track ID',
-      flex: 0.5
-    },
-    {
-      field: 'name',
-      headerName: 'Title',
-      flex: 1
-    },
-    {
-      field: 'propertyType',
-      headerName: 'Type',
-      flex: 0.5
-    },
-    {
-      field: 'price',
-      headerName: 'Price',
-      renderCell: ({ value }) => {
-        return (
-          <span className="text-[#7065F0] font-medium text-sm">
-            {formatAmount(value)}
-          </span>
-        );
-      },
-      flex: 0.7
-    },
-    {
-      field: 'status',
-      headerName: 'Status',
-      flex: 0.9,
-      renderCell: ({ value }) => {
-        return (
-          <span
-            className={` flex gap-1  font-medium text-sm
-          ${
-            value === 'published'
-              ? ' text-[#7065F0]'
-              : value === 'pending'
-                ? ' text-[#FFA500]'
-                : value === 'available'
-                  ? 'text-green-500'
-                  : 'text-[#DC1313]'
-          }`}
-          >
-            <GoDotFill size={18} /> {value}
-          </span>
-        );
-      }
-    }
-
-    // { field: 'inquiry', headerName: 'Inquiries', flex: 0.7 }
-  ];
-
   useEffect(() => {
     const fetchOverview = async () => {
       try {
         const response = await fetch('/api/overview');
         // console.log('response', response);
         if (!response.ok) {
+          setError('Failed to fetch dashboard overview data');
           throw new Error('Failed to fetch dashboard overview data');
         }
         const { data } = await response.json();
@@ -127,6 +74,8 @@ export default function Dashboard({ isSidebarExpanded }: DashboardProps) {
         }));
       } catch (error) {
         console.error('Error fetching dashboard overview:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -190,7 +139,14 @@ export default function Dashboard({ isSidebarExpanded }: DashboardProps) {
     percentage: metric.percentageChange
   }));
 
-  return (
+  const reTry = () => {
+    window.location.reload();
+  };
+  return loading ? (
+    <DashboardLoadingState />
+  ) : error ? (
+    <ErrorState message={error} onRetry={reTry} />
+  ) : (
     <div className="flex flex-col gap-5 px-4 md:px-10 py-5">
       {/* statistics section */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -272,7 +228,7 @@ export default function Dashboard({ isSidebarExpanded }: DashboardProps) {
         <div className="w-full min-h-[200px]">
           <MuiTableComponent
             rows={properties}
-            columns={columns}
+            columns={DashboardColumns}
             pageSize={dataLenght}
             setPageSize={setDataLength}
             paginationActive={true}

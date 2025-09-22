@@ -1,18 +1,19 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import { GridColDef } from '@mui/x-data-grid';
 import { FinanceTableRows } from '../../config';
-import MuiTableComponent from '../TableComponent';
+import MuiTableComponent from '../Table/TableComponent';
 import { PiSlidersHorizontalFill } from 'react-icons/pi';
 import { UserStatsCard } from '../statCard';
-import Link from 'next/link';
 import { formatAmount } from '@/app/util';
+import { FinanceColumns } from '../Table/columns';
+import { DashboardLoadingState } from '../DashboardLoadingState';
 
 interface FinanceProps {
   isSidebarExpanded: boolean;
 }
 
 export default function Finance({ isSidebarExpanded }: FinanceProps) {
+  const [loading, setLoading] = useState(true);
   const [UserMetrics, setUserMetrics] = useState({
     totalRevenue: {
       title: 'Total Revenue',
@@ -30,164 +31,6 @@ export default function Finance({ isSidebarExpanded }: FinanceProps) {
       percentageChange: 0
     }
   });
-
-  const columns: GridColDef[] = [
-    {
-      field: 'date',
-      headerName: 'Date',
-      renderCell: ({ value }) => {
-        return (
-          <span className="text-[#7065F0] text-sm font-medium">{value}</span>
-        );
-      },
-      flex: 0.5
-    },
-
-    {
-      field: 'paymentType',
-      headerName: 'Payment Type',
-      flex: 0.6,
-      renderCell: ({ value }) => {
-        return (
-          <span className="text-[#7065F0] text-sm font-medium">{value}</span>
-        );
-      }
-    },
-    {
-      field: 'senderName',
-      headerName: 'Sender Name',
-      renderCell: ({ value }) => {
-        return (
-          <span className="text-[#7065F0] text-sm font-medium">{value}</span>
-        );
-      },
-      flex: 0.5
-    },
-    {
-      field: 'role',
-      headerName: 'Sender Type',
-      renderCell: ({ value }) => {
-        return (
-          <span
-            className={`  font-medium text-sm rounded-full px-2 py-1
-            ${
-              value === 'Landlord'
-                ? ' bg-[#9747FF33] text-[#9747FF] border '
-                : ' text-[#7065F0] bg-[#7065F033] border'
-            }`}
-          >
-            {value}
-          </span>
-        );
-      },
-      flex: 0.5
-    },
-
-    {
-      field: 'property',
-      headerName: 'Property',
-      flex: 0.5,
-      renderCell: ({ value }) => {
-        return (
-          <span className="text-[#7065F0] text-sm font-medium">{value}</span>
-        );
-      }
-    },
-    {
-      field: 'amount',
-      headerName: 'Amount',
-      flex: 0.5,
-      renderCell: ({ value }) => {
-        return (
-          <span className="text-[#7065F0] text-sm font-medium">{value}</span>
-        );
-      }
-    },
-
-    {
-      field: 'ezyRentCharge',
-      headerName: 'EzyRent Charge',
-      flex: 0.5,
-      renderCell: ({ value }) => {
-        return (
-          <span className="text-[#7065F0] text-sm font-medium">{value}</span>
-        );
-      }
-    },
-    {
-      field: 'netToReceiver',
-      headerName: 'Net To Receiver',
-      flex: 0.5,
-      renderCell: ({ value }) => {
-        return (
-          <span className="text-[#7065F0] text-sm font-medium">{value}</span>
-        );
-      }
-    },
-
-    {
-      field: 'status',
-      headerName: 'Status',
-      flex: 0.5,
-      renderCell: ({ value }) => {
-        return (
-          <span
-            className={` font-medium text-sm rounded-full px-2 py-1
-            ${
-              value === 'paid'
-                ? ' text-[#32A071] bg-[#32A07133]'
-                : value === 'refunded'
-                  ? ' text-[#9747FF] bg-[#9747FF33]'
-                  : value === 'failed'
-                    ? ' text-[#E30000CC] bg-[#E3000026]'
-                    : 'text-[#F7CE45] bg-[#F7CE4533] '
-            }`}
-          >
-            {value}
-          </span>
-        );
-      }
-    },
-    {
-      field: 'Action',
-      flex: 0.5,
-      renderCell: ({ row }) => {
-        return (
-          <div className="w-20">
-            {row.status === 'paid' ? (
-              <Link
-                href={'/'}
-                className="bg-[#7065F0] font-medium flex items-center justify-center gap-1 text-sm rounded-full px-4 py-1 text-white"
-              >
-                View
-              </Link>
-            ) : row.status === 'refunded' ? (
-              <Link
-                href={'/'}
-                className="bg-[#7065F0] font-medium flex items-center justify-center gap-1 text-sm rounded-full px-4 py-1 text-white"
-              >
-                Message
-              </Link>
-            ) : row.status === 'failed' ? (
-              <Link
-                href={'/'}
-                className="bg-[#7065F0] font-medium flex items-center justify-center gap-1 text-sm rounded-full px-4 py-1 text-white"
-              >
-                Retry
-              </Link>
-            ) : (
-              <Link
-                href={'/'}
-                className="bg-[#7065F0] font-medium flex items-center justify-center gap-1 text-sm rounded-full px-4 py-1 text-white"
-              >
-                Cancel
-              </Link>
-            )}
-          </div>
-        );
-      }
-    }
-  ];
 
   useEffect(() => {
     const fetchUsersMgt = async () => {
@@ -219,6 +62,8 @@ export default function Finance({ isSidebarExpanded }: FinanceProps) {
         }));
       } catch (error) {
         console.error('Error fetching User mgt:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -232,7 +77,9 @@ export default function Finance({ isSidebarExpanded }: FinanceProps) {
     percentage: metric.percentageChange
   }));
 
-  return (
+  return loading ? (
+    <DashboardLoadingState grid1Cols={3} grid2Cols={1} />
+  ) : (
     <div className="flex flex-col gap-5 px-4 md:px-10 py-5">
       {/* statistics section */}
       <section
@@ -267,8 +114,9 @@ export default function Finance({ isSidebarExpanded }: FinanceProps) {
         <div className="w-full min-h-[200px]">
           <MuiTableComponent
             rows={FinanceTableRows()}
-            columns={columns}
+            columns={FinanceColumns}
             pageSize={10}
+            loading={loading}
             setPageSize={() => {}}
             paginationActive={true}
             showCheckbox={false}
