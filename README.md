@@ -64,7 +64,6 @@ ezyrent-web/
   ├── assets/             # Static assets (images, fonts, etc.)
   └── scripts/            # Automation and other scripts
 ```
-
 ---
 
 ## Tech Stack
