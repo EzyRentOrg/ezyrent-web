@@ -38,7 +38,6 @@ Welcome to the **EzyRent Web** repository! This project is the web version of Ez
 - Aggregates changes from `develop` and prepares them for deployment to `main`.
 
 ---
-
 ## Project Architecture
 
 ### Overview
