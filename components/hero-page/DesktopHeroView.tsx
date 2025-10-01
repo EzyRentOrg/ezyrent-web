@@ -1,6 +1,7 @@
 import { House, MapPin, Wallet } from 'lucide-react';
 import HeroBanner from '@/components/HeroBanner';
 import { ReactNode } from 'react';
+import Image from 'next/image';
 
 interface HeroBannerContentType {
   icon?: ReactNode;
@@ -44,13 +45,22 @@ export default function DesktopHeroView() {
             <p className="text-left font-[300] italic py-5 text-[1.1rem] xl:text-[1.25rem] leading-7 text-[#f1f1f1] ">
               Looking for a home that truly fits you?
               <br />
-              We’re here to help you discover the ideal place for
+              We&apo;re here to help you discover the ideal place for
               <br />
               your needs, your style, and your life.
             </p>
           </div>
           {/* left side */}
-          <div className="rounded-tr-3xl rounded-br-3xl md:hidden lg:block bg-[url('/hero/desktopHeroImage_1102x617.webp')] bg-cover w-[1540px] h-[817px] -mt-[104px]  ml-28 lg:ml-[456px] bg-no-repeat" />
+          {/* <div className="rounded-tr-3xl rounded-br-3xl md:hidden lg:block bg-[url('/hero/desktopHeroImage_1102x617.webp')] bg-cover w-[1540px] h-[817px] -mt-[104px]  ml-28 lg:ml-[456px] bg-no-repeat" /> */}
+          <div className="relative rounded-tr-3xl rounded-br-3xl overflow-hidden w-[1540px] h-[817px] -mt-[104px] ml-28 lg:ml-[456px] md:hidden lg:block">
+            <Image
+              src="/hero/desktopHeroImage_1102x617.webp"
+              alt="Hero background"
+              fill
+              priority
+              className="object-cover"
+            />
+          </div>
         </div>
         {/* banner */}
         <div className=" -mt-20 lg:-mt-20 xl:-mt-14 hero_banner hero_banner-border bg-opacity-60 shadow-md backdrop-blur-md h-28 max-w-[1116px] mx-auto z-5 flex items-center justify-between px-8 rounded-full">
