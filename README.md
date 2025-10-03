@@ -16,7 +16,6 @@ Welcome to the **EzyRent Web** repository! This project is the web version of Ez
 6. [Key Commands](#key-commands)
 7. [Contributing](#contributing)
 8. [Contact](#contact)
-
 ---
 
 ## Branch Overview
